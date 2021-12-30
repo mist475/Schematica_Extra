@@ -16,15 +16,19 @@ schematica.gui.save=保存
 schematica.gui.moveschematic=移动Schematic文件
 schematica.gui.layers=层
 schematica.gui.operations=操作
+schematica.gui.unload=卸载
 schematica.gui.point.red=红点
 schematica.gui.point.blue=蓝点
 schematica.gui.saveselection=将选区保存为Schematic文件
+schematica.gui.on=开
+schematica.gui.off=关
 schematica.gui.x=X:
 schematica.gui.y=Y:
 schematica.gui.z=Z:
 schematica.gui.materials=材料
 schematica.gui.materialname=材料
 schematica.gui.materialamount=数量
+schematica.gui.materialdump=保存到文件
 schematica.gui.printer=投影
 
 # gui - config - categories
@@ -42,9 +46,12 @@ schematica.gui.printer=投影
 # gui - config - server
 
 # keys
+schematica.key.category=Schematica
 schematica.key.load=载入Schematic文件
 schematica.key.save=保存Schematic文件
 schematica.key.control=调整Schematic文件
+schematica.key.layerInc=下一层
+schematica.key.layerDec=上一层
 
 # commands - save
 

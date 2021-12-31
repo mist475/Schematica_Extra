@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 public class Reference {
     public static final String MODID = "Schematica";
     public static final String NAME = "Schematica";
-    public static final String VERSION = "${version}";
+    public static final String VERSION = "GRADLETOKEN_VERSION";
     public static final String FORGE = "${forgeversion}";
     public static final String MINECRAFT = "${mcversion}";
     public static final String PROXY_SERVER = "com.github.lunatrius.schematica.proxy.ServerProxy";

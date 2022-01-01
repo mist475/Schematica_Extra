@@ -2,19 +2,19 @@
 	"modListVersion": 2,
 	"modList": [
 		{
-			"modid": "Schematica",
-			"name": "Schematica",
+			"modid": "${modId}",
+			"name": "${modName}",
 			"description": "Import and export Minecraft schematic files in Minecraft!",
-			"mcversion": "${mcversion}",
-			"version": "${version}",
+			"mcversion": "${modVersion}",
+			"version": "${minecraftVersion}",
 			"authorList": [
 				"Lunatrius"
 			],
 			"credits": "AbrarSyed, AtomicBlom, UltraMoogleMan",
 			"dependants": [  ],
-			"dependencies": [ "Forge@[${minforgeversion},)", "LunatriusCore@[${coreversion},)" ],
+			"dependencies": [ ],
 			"parent": "",
-			"requiredMods": [ "Forge@[${minforgeversion},)", "LunatriusCore@[${coreversion},)" ],
+			"requiredMods": [ ],
 			"logoFile": "/assets/schematica/logo.png",
 			"screenshots": [  ],
 			"updateUrl": "http://mc.lunatri.us/",

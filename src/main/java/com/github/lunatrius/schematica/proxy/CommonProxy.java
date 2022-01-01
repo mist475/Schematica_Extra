@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.proxy;
 
 import com.github.lunatrius.core.util.vector.Vector3i;
-import com.github.lunatrius.core.version.VersionChecker;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.command.CommandSchematicaList;
 import com.github.lunatrius.schematica.command.CommandSchematicaRemove;
@@ -41,8 +40,6 @@ public abstract class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         Reference.logger = event.getModLog();
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-
-        VersionChecker.registerMod(event.getModMetadata(), Reference.FORGE);
     }
 
     public void init(FMLInitializationEvent event) {

@@ -1,25 +1,19 @@
-{
-	"modListVersion": 2,
-	"modList": [
-		{
-			"modid": "${modId}",
-			"name": "${modName}",
-			"description": "Import and export Minecraft schematic files in Minecraft!",
-			"mcversion": "${modVersion}",
-			"version": "${minecraftVersion}",
-			"authorList": [
-				"Lunatrius"
-			],
-			"credits": "AbrarSyed, AtomicBlom, UltraMoogleMan",
-			"dependants": [  ],
-			"dependencies": [ ],
-			"parent": "",
-			"requiredMods": [ ],
-			"logoFile": "/assets/schematica/logo.png",
-			"screenshots": [  ],
-			"updateUrl": "http://mc.lunatri.us/",
-			"url": "http://mc.lunatri.us/",
-			"useDependencyInformation": true
-		}
-	]
-}
+[{
+	"modid": "${modId}",
+	"name": "${modName}",
+	"description": "Import and export Minecraft schematic files in Minecraft!",
+	"mcversion": "${modVersion}",
+	"version": "${minecraftVersion}",
+	"authorList": ["Lunatrius"],
+	"credits": "AbrarSyed, AtomicBlom, UltraMoogleMan",
+	"dependants": [  ],
+	"dependencies": [ ],
+	"parent": "",
+	"requiredMods": ["LunatriusCore"],
+	"logoFile": "/assets/schematica/logo.png",
+	"screenshots": [  ],
+	"updateUrl": "",
+	"url": "http://mc.lunatri.us/",
+	"useDependencyInformation": true
+}]
+

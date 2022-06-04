@@ -1,4 +1,12 @@
 ## Welcome to Schematica!
+Fork of Schematica, based of the GTNH fork.
+This fork is intended for the following things:
+- Adding the [Fairplay mode](https://www.planetminecraft.com/mod/schematica-fairplay/) to the base build script
+- Add an option to store coordinates of schematics per world/server
+- Add compatibility with the Lord of the Rings mod (fix a few edge cases with the printer)
+- Update the README as it still refers to Jdk 7, among other things
+After the following changes have been made I will submit a pull request, if it's accepted these changes will be merged into the GTNH fork of Schematica. Otherwise, I'll host this version elsewhere (Probably Github, maybe Modrinth)
+
 [Compiling Schematica](#compile-schematica) - for those that want the latest unreleased features
 
 [Contributing](#contributing) - for those that want to help out
@@ -18,19 +26,14 @@
 The Java JDK is used to compile Schematica.
 
 1. Download and install the Java JDK.
-    * [Windows/Mac download link](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html). Scroll down, accept the `Oracle Binary Code License Agreement for Java SE`, and download it (if you have a 64-bit OS, please download the 64-bit version).
-    * Linux: Installation methods for certain popular flavors of Linux are listed below. If your distribution is not listed, follow the instructions specific to your package manager or install it manually [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
-        * Gentoo: `emerge dev-java/oracle-jdk-bin`
-        * Archlinux: `pacman -S jdk7-openjdk`
-        * Ubuntu/Debian: `apt-get install openjdk-7-jdk`
-        * Fedora: `yum install java-1.7.0-openjdk`
+    * [Download link](https://adoptium.net/temurin/releases/?version=8). Select the appropriate version for your OS
 2. Set up the environment.
     * Windows: Set environment variables for the JDK.
         1. Go to `Control Panel\System and Security\System`, and click on `Advanced System Settings` on the left-hand side.
         2. Click on `Environment Variables`.
         3. Under `System Variables`, click `New`.
         4. For `Variable Name`, input `JAVA_HOME`.
-        5. For `Variable Value`, input something similar to `C:\Program Files\Java\jdk1.7.0_45` exactly as shown (or wherever your Java JDK installation is), and click `Ok`.
+        5. For `Variable Value`, input something similar to `C:\Program Files\Java\8u332` exactly as shown (or wherever your Java JDK installation is), and click `Ok`.
         6. Scroll down to a variable named `Path`, and double-click on it.
         7. Append `;%JAVA_HOME%\bin` EXACTLY AS SHOWN and click `Ok`. Make sure the location is correct; double-check just to make sure.
 3. Open up your command line and run `javac`. If it spews out a bunch of possible options and the usage, then you're good to go. If not try the steps again.
@@ -42,6 +45,11 @@ Git is used to clone Schematica and update your local copy.
 2. *Optional* Download and install a Git GUI client, such as Github for Windows/Mac, SmartGitHg, TortoiseGit, etc. A nice list is available [here](http://git-scm.com/downloads/guis).
 
 #### Setup Schematica
+
+##### IntelliJ
+Import this repository. or, if you're planning modifications, a fork. IntelliJ will automatically execute the `gradlew setupDevWorkspace` task. After that there's a high chance the following error is thrown: `Could not find :forgeBin:1.7.10-10.13.4.1614-1.7.10.` or something similar. If that happens, execute `./gradlew setupDecompWorkspace` in your terminal. After this refresh gradle, and you should be ready to go.
+
+##### Command line
 This section assumes that you're using the command-line version of Git.
 
 1. Open up your command line.
@@ -56,6 +64,8 @@ This section assumes that you're using the command-line version of Git.
 ***
 
 #### Compile Schematica
+
+If you use IntelliJ IDEA you can skip step one
 1. Execute `gradlew setupDevWorkspace`. This sets up Forge and downloads the necessary libraries to build Schematica. This might take some time, be patient.
     * You will generally only have to do this once until the Forge version in `build.properties` changes.
 2. Execute `gradlew build`. If you did everything right, `BUILD SUCCESSFUL` will be displayed after it finishes. This should be relatively quick.
@@ -97,7 +107,7 @@ When you finish up your PR you'll want to [squash](http://davidwalsh.name/squash
 2. Execute `git rebase -i HEAD~X` where `X` is the amount of your commits. This will make sure you squash only your own commits.
 3. You should now see a list of all your commits, prefixed with `pick`. Change all instances of `pick` (excluding the first!) into `squash` or simply `s`. Then save/quit the editor once.
 4. A second screen should show up, displaying all the commit messages (you may edit them, delete or add some). After your done save/quit the editor again.
-5. If git successfuly rebased things simply push your cleaned up commits by executing `git push -f`.
+5. If git successfully rebased things simply push your cleaned up commits by executing `git push -f`.
 
 #### Creating an Issue
 Crashing? Have a suggestion? Found a bug? Create an issue now!
@@ -112,4 +122,4 @@ Crashing? Have a suggestion? Found a bug? Create an issue now!
         * Detailed description of the bug
 5. Click `Submit new issue`, and wait for feedback!
 
-Shamelessly based this README off [pahimar's version](https://github.com/pahimar/Equivalent-Exchange-3).
+Partially based off this README off [pahimar's version](https://github.com/pahimar/Equivalent-Exchange-3).

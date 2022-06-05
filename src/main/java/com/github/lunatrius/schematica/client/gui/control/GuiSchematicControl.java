@@ -10,6 +10,8 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -17,28 +19,6 @@ import net.minecraft.client.resources.I18n;
 public class GuiSchematicControl extends GuiScreenBase {
     private final SchematicWorld schematic;
     private final SchematicPrinter printer;
-
-    private int centerX = 0;
-    private int centerY = 0;
-
-    private GuiNumericField numericX = null;
-    private GuiNumericField numericY = null;
-    private GuiNumericField numericZ = null;
-
-    private GuiButton btnUnload = null;
-    private GuiButton btnLayerMode = null;
-    private GuiNumericField nfLayer = null;
-
-    private GuiButton btnHide = null;
-    private GuiButton btnMove = null;
-    private GuiButton btnFlip = null;
-    private GuiButton btnRotate = null;
-
-    private GuiButton btnMaterials = null;
-    private GuiButton btnPrint = null;
-
-    private GuiButton btnSaveCoordinates = null;
-
     private final String strSaveCoordinates = I18n.format(Names.Gui.Control.SAVE_COORDINATES);
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
@@ -54,6 +34,21 @@ public class GuiSchematicControl extends GuiScreenBase {
     private final String strZ = I18n.format(Names.Gui.Z);
     private final String strOn = I18n.format(Names.Gui.ON);
     private final String strOff = I18n.format(Names.Gui.OFF);
+    private int centerX = 0;
+    private int centerY = 0;
+    private GuiNumericField numericX = null;
+    private GuiNumericField numericY = null;
+    private GuiNumericField numericZ = null;
+    private GuiButton btnUnload = null;
+    private GuiButton btnLayerMode = null;
+    private GuiNumericField nfLayer = null;
+    private GuiButton btnHide = null;
+    private GuiButton btnMove = null;
+    private GuiButton btnFlip = null;
+    private GuiButton btnRotate = null;
+    private GuiButton btnMaterials = null;
+    private GuiButton btnPrint = null;
+    private GuiButton btnSaveCoordinates = null;
 
     public GuiSchematicControl(GuiScreen guiScreen) {
         super(guiScreen);
@@ -199,6 +194,16 @@ public class GuiSchematicControl extends GuiScreenBase {
             } else if (guiButton.id == this.btnPrint.id && this.printer.isEnabled()) {
                 boolean isPrinting = this.printer.togglePrinting();
                 this.btnPrint.displayString = isPrinting ? this.strOn : this.strOff;
+            } else if (guiButton.id == this.btnSaveCoordinates.id) {
+                //Goal one, print the info we're gonna store: name of world/server in servers.dat, name of schematic, coordinates
+                String WorldOrServerName;
+                if (this.mc.isSingleplayer()) {
+                    WorldOrServerName = FMLCommonHandler.instance().getMinecraftServerInstance().getWorldName();
+                } else {
+                    //Gets the server data, only works if you're playing on a server. if you're using direct connect the name will be "Minecraft Server". Crashes if singleplayer
+                    WorldOrServerName = this.mc.func_147104_D().serverName;
+                }
+                Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {} {}\nSchematic Name: {}\nWorld Name/server Name: {}",this.numericX.getValue(),this.numericY.getValue(),this.numericZ.getValue(),this.schematic.name,WorldOrServerName);
             }
         }
     }

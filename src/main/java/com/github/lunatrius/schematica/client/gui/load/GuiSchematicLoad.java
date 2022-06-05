@@ -26,17 +26,13 @@ import java.util.List;
 public class GuiSchematicLoad extends GuiScreenBase {
     private static final FileFilterSchematic FILE_FILTER_FOLDER = new FileFilterSchematic(true);
     private static final FileFilterSchematic FILE_FILTER_SCHEMATIC = new FileFilterSchematic(false);
-
-    private GuiSchematicLoadSlot guiSchematicLoadSlot;
-
-    private GuiButton btnOpenDir = null;
-    private GuiButton btnDone = null;
-
+    protected final List<GuiSchematicEntry> schematicFiles = new ArrayList<GuiSchematicEntry>();
     private final String strTitle = I18n.format(Names.Gui.Load.TITLE);
     private final String strFolderInfo = I18n.format(Names.Gui.Load.FOLDER_INFO);
-
     protected File currentDirectory = ConfigurationHandler.schematicDirectory;
-    protected final List<GuiSchematicEntry> schematicFiles = new ArrayList<GuiSchematicEntry>();
+    private GuiSchematicLoadSlot guiSchematicLoadSlot;
+    private GuiButton btnOpenDir = null;
+    private GuiButton btnDone = null;
 
     public GuiSchematicLoad(GuiScreen guiScreen) {
         super(guiScreen);
@@ -114,7 +110,8 @@ public class GuiSchematicLoad extends GuiScreenBase {
         this.schematicFiles.clear();
 
         try {
-            if (!this.currentDirectory.getCanonicalPath().equals(ConfigurationHandler.schematicDirectory.getCanonicalPath())) {
+            if (!this.currentDirectory.getCanonicalPath()
+                .equals(ConfigurationHandler.schematicDirectory.getCanonicalPath())) {
                 this.schematicFiles.add(new GuiSchematicEntry("..", Items.lava_bucket, 0, true));
             }
         } catch (IOException e) {
@@ -161,6 +158,7 @@ public class GuiSchematicLoad extends GuiScreenBase {
                     SchematicWorld schematic = ClientProxy.schematic;
                     if (schematic != null) {
                         ClientProxy.moveSchematicToPlayer(schematic);
+                        //TODO: Look up stored coordinates and load these instead
                     }
                 }
             }

@@ -224,7 +224,7 @@ public class ClientProxy extends CommonProxy {
             return false;
         }
 
-        SchematicWorld world = new SchematicWorld(schematic);
+        SchematicWorld world = new SchematicWorld(schematic,filename);
 
         Reference.logger.debug("Loaded {} [w:{},h:{},l:{}]", filename, world.getWidth(), world.getHeight(), world.getLength());
 

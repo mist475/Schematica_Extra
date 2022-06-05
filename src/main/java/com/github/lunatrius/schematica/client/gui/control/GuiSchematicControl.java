@@ -37,6 +37,9 @@ public class GuiSchematicControl extends GuiScreenBase {
     private GuiButton btnMaterials = null;
     private GuiButton btnPrint = null;
 
+    private GuiButton btnSaveCoordinates = null;
+
+    private final String strSaveCoordinates = I18n.format(Names.Gui.Control.SAVE_COORDINATES);
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
     private final String strUnload = I18n.format(Names.Gui.Control.UNLOAD);
@@ -103,6 +106,9 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnPrint = new GuiButton(id++, 10, this.height - 30, 80, 20, this.printer.isPrinting() ? this.strOn : this.strOff);
         this.buttonList.add(this.btnPrint);
 
+        this.btnSaveCoordinates = new GuiButton(id++, this.centerX - 50, this.height - 200, 100, 20, this.strSaveCoordinates);
+        this.buttonList.add(this.btnSaveCoordinates);
+
         this.numericX.setEnabled(this.schematic != null);
         this.numericY.setEnabled(this.schematic != null);
         this.numericZ.setEnabled(this.schematic != null);
@@ -118,6 +124,8 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnRotate.enabled = this.schematic != null;
         this.btnMaterials.enabled = this.schematic != null;
         this.btnPrint.enabled = this.schematic != null && this.printer.isEnabled();
+
+        this.btnSaveCoordinates.enabled = this.schematic != null;
 
         setMinMax(this.numericX);
         setMinMax(this.numericY);

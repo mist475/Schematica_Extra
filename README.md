@@ -1,8 +1,8 @@
 ## Welcome to Schematica!
 Fork of Schematica, based of the GTNH fork.
 This fork is intended for the following things:
-- Adding the [Fairplay mode](https://www.planetminecraft.com/mod/schematica-fairplay/) to the base build script
-- Add an option to store coordinates of schematics per world/server
+- Adding the [Fairplay mode](https://www.planetminecraft.com/mod/schematica-fairplay/) to the base build script (Possibly, as disabling the printer can also be done server side)
+- Add an option to store coordinates of schematics per world/server (Main goal)
 - Add compatibility with the Lord of the Rings mod (fix a few edge cases with the printer)
 - Update the README as it still refers to Jdk 7, among other things
 After the following changes have been made I will submit a pull request, if it's accepted these changes will be merged into the GTNH fork of Schematica. Otherwise, I'll host this version elsewhere (Probably Github, maybe Modrinth)

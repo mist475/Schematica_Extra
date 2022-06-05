@@ -277,6 +277,8 @@ public class SchematicPrinter {
             return true;
         }
 
+        //TODO: LOTR mod chisel, plates, weapon racks
+
         return false;
     }
 

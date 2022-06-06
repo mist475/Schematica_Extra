@@ -71,6 +71,10 @@ public final class Names {
 
         public static final String LANG_PREFIX = Reference.MODID.toLowerCase() + ".config";
     }
+        public static final class Chat {
+            public static final String SAVE_COORDINATES_SUCCESS = "Schematica.chat.saveCoordinatesSuccess";
+            public static final String SAVE_COORDINATES_FAIL = "Schematica.chat.saveCoordinatesFail";
+        }
 
     public static final class Command {
         public static final class Save {

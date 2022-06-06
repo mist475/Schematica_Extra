@@ -108,6 +108,10 @@ schematica.config.schematicDirectory.tooltip=Schematic directory.
 schematica.config.extraAirBlocks=Extra Air Blocks
 schematica.config.extraAirBlocks.tooltip=Extra blocks to consider as air for the schematic renderer.
 
+# chat
+Schematica.chat.saveCoordinatesSuccess=Successfully saved coordinates
+Schematica.chat.saveCoordinatesFail=Failed to save coordinates
+
 # gui - config - server
 schematica.config.printerEnabled=Allow Printer
 schematica.config.printerEnabled.tooltip=Allow players to use the printer.

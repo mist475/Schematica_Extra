@@ -10,11 +10,13 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
-import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ChatComponentText;
+
+import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
 
 public class GuiSchematicControl extends GuiScreenBase {
     private final SchematicWorld schematic;
@@ -34,6 +36,8 @@ public class GuiSchematicControl extends GuiScreenBase {
     private final String strZ = I18n.format(Names.Gui.Z);
     private final String strOn = I18n.format(Names.Gui.ON);
     private final String strOff = I18n.format(Names.Gui.OFF);
+    private final String strSaveCoordinatesSuccess = I18n.format(Names.Chat.SAVE_COORDINATES_SUCCESS);
+    private final String strSaveCoordinatesFail = I18n.format(Names.Chat.SAVE_COORDINATES_FAIL);
     private int centerX = 0;
     private int centerY = 0;
     private GuiNumericField numericX = null;
@@ -101,7 +105,7 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnPrint = new GuiButton(id++, 10, this.height - 30, 80, 20, this.printer.isPrinting() ? this.strOn : this.strOff);
         this.buttonList.add(this.btnPrint);
 
-        this.btnSaveCoordinates = new GuiButton(id++, this.centerX - 50, this.height - 200, 100, 20, this.strSaveCoordinates);
+        this.btnSaveCoordinates = new GuiButton(id++, this.centerX - 50, this.centerY + 45, 100, 20, this.strSaveCoordinates);
         this.buttonList.add(this.btnSaveCoordinates);
 
         this.numericX.setEnabled(this.schematic != null);
@@ -195,15 +199,16 @@ public class GuiSchematicControl extends GuiScreenBase {
                 boolean isPrinting = this.printer.togglePrinting();
                 this.btnPrint.displayString = isPrinting ? this.strOn : this.strOff;
             } else if (guiButton.id == this.btnSaveCoordinates.id) {
-                //Goal one, print the info we're gonna store: name of world/server in servers.dat, name of schematic, coordinates
-                String WorldOrServerName;
-                if (this.mc.isSingleplayer()) {
-                    WorldOrServerName = FMLCommonHandler.instance().getMinecraftServerInstance().getWorldName();
-                } else {
-                    //Gets the server data, only works if you're playing on a server. if you're using direct connect the name will be "Minecraft Server". Crashes if singleplayer
-                    WorldOrServerName = this.mc.func_147104_D().serverName;
+                String worldServerName = worldServerName(this.mc);
+                //Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {} {}\nSchematic Name: {}\nWorld Name/server Name: {}", this.numericX.getValue(), this.numericY.getValue(), this.numericZ.getValue(), this.schematic.name, worldServerName);
+                EntityPlayerSP player = mc.thePlayer;
+                if (player != null) {
+                    if (ClientProxy.addCoordinates(worldServerName, this.schematic.name, this.numericX.getValue(), this.numericY.getValue(), this.numericZ.getValue())) {
+                        mc.thePlayer.addChatMessage(new ChatComponentText(strSaveCoordinatesSuccess));
+                    } else {
+                        mc.thePlayer.addChatMessage(new ChatComponentText(strSaveCoordinatesFail));
+                    }
                 }
-                Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {} {}\nSchematic Name: {}\nWorld Name/server Name: {}",this.numericX.getValue(),this.numericY.getValue(),this.numericZ.getValue(),this.schematic.name,WorldOrServerName);
             }
         }
     }

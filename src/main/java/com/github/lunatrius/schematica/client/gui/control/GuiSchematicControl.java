@@ -21,6 +21,30 @@ import static com.github.lunatrius.schematica.client.util.WorldServerName.worldS
 public class GuiSchematicControl extends GuiScreenBase {
     private final SchematicWorld schematic;
     private final SchematicPrinter printer;
+
+    private int centerX = 0;
+    private int centerY = 0;
+
+    private GuiNumericField numericX = null;
+    private GuiNumericField numericY = null;
+    private GuiNumericField numericZ = null;
+
+    private GuiButton btnUnload = null;
+    private GuiButton btnLayerMode = null;
+    private GuiNumericField nfLayer = null;
+
+    private GuiButton btnHide = null;
+    private GuiButton btnMove = null;
+    private GuiButton btnFlip = null;
+    private GuiButton btnRotate = null;
+
+    private GuiButton btnMaterials = null;
+    private GuiButton btnPrint = null;
+
+    private GuiButton btnSaveCoordinates = null;
+
+    private final String strSaveCoordinatesSuccess = I18n.format(Names.Chat.SAVE_COORDINATES_SUCCESS);
+    private final String strSaveCoordinatesFail = I18n.format(Names.Chat.SAVE_COORDINATES_FAIL);
     private final String strSaveCoordinates = I18n.format(Names.Gui.Control.SAVE_COORDINATES);
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
@@ -36,23 +60,6 @@ public class GuiSchematicControl extends GuiScreenBase {
     private final String strZ = I18n.format(Names.Gui.Z);
     private final String strOn = I18n.format(Names.Gui.ON);
     private final String strOff = I18n.format(Names.Gui.OFF);
-    private final String strSaveCoordinatesSuccess = I18n.format(Names.Chat.SAVE_COORDINATES_SUCCESS);
-    private final String strSaveCoordinatesFail = I18n.format(Names.Chat.SAVE_COORDINATES_FAIL);
-    private int centerX = 0;
-    private int centerY = 0;
-    private GuiNumericField numericX = null;
-    private GuiNumericField numericY = null;
-    private GuiNumericField numericZ = null;
-    private GuiButton btnUnload = null;
-    private GuiButton btnLayerMode = null;
-    private GuiNumericField nfLayer = null;
-    private GuiButton btnHide = null;
-    private GuiButton btnMove = null;
-    private GuiButton btnFlip = null;
-    private GuiButton btnRotate = null;
-    private GuiButton btnMaterials = null;
-    private GuiButton btnPrint = null;
-    private GuiButton btnSaveCoordinates = null;
 
     public GuiSchematicControl(GuiScreen guiScreen) {
         super(guiScreen);

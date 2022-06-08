@@ -1,7 +1,7 @@
 ## Welcome to Schematica!
 Planned future additions:
 - Add compatibility with the Lord of the Rings mod (fix a few edge cases with the printer)
-- Adding the [Fairplay mode](https://www.planetminecraft.com/mod/schematica-fairplay/) to the base build script (Possibly, as disabling the printer can also be done server side)
+- Add the [Fairplay mode](https://www.planetminecraft.com/mod/schematica-fairplay/) to the base build script
 
 Changes from Original:
 - Store Coordinates per world/server. No more re-entering coordinates for large builds!
@@ -122,4 +122,4 @@ Crashing? Have a suggestion? Found a bug? Create an issue now!
         * Detailed description of the bug
 5. Click `Submit new issue`, and wait for feedback!
 
-Partially based off this README off [pahimar's version](https://github.com/pahimar/Equivalent-Exchange-3).
+Shamelessly based off this README off [pahimar's version](https://github.com/pahimar/Equivalent-Exchange-3).

@@ -7,14 +7,13 @@ import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RendererSchematicGlobal;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.handler.client.ChatEventHandler;
-import com.github.lunatrius.schematica.handler.client.InputHandler;
-import com.github.lunatrius.schematica.handler.client.OverlayHandler;
-import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
-import com.github.lunatrius.schematica.handler.client.TickHandler;
-import com.github.lunatrius.schematica.handler.client.WorldHandler;
+import com.github.lunatrius.schematica.handler.client.*;
+import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import cpw.mods.fml.client.config.GuiConfigEntries;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -28,30 +27,31 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientProxy extends CommonProxy {
-    public static boolean isRenderingGuide = false;
-    public static boolean isPendingReset = false;
-
     public static final Vector3d playerPosition = new Vector3d();
-    public static ForgeDirection orientation = ForgeDirection.UNKNOWN;
-    public static int rotationRender = 0;
-
-    public static SchematicWorld schematic = null;
-
     public static final Vector3i pointA = new Vector3i();
     public static final Vector3i pointB = new Vector3i();
     public static final Vector3i pointMin = new Vector3i();
     public static final Vector3i pointMax = new Vector3i();
-
-    public static MovingObjectPosition movingObjectPosition = null;
-
     private static final Minecraft MINECRAFT = Minecraft.getMinecraft();
-
-    private SchematicWorld schematicWorld = null;
+    public static boolean isRenderingGuide = false;
+    public static boolean isPendingReset = false;
+    public static ForgeDirection orientation = ForgeDirection.UNKNOWN;
+    public static int rotationRender = 0;
+    public static SchematicWorld schematic = null;
+    public static MovingObjectPosition movingObjectPosition = null;
+    private final SchematicWorld schematicWorld = null;
 
     public static void setPlayerData(EntityPlayer player, float partialTicks) {
         playerPosition.x = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
@@ -70,14 +70,14 @@ public class ClientProxy extends CommonProxy {
             return ForgeDirection.UP;
         } else {
             switch (MathHelper.floor_double(player.rotationYaw / 90.0 + 0.5) & 3) {
-            case 0:
-                return ForgeDirection.SOUTH;
-            case 1:
-                return ForgeDirection.WEST;
-            case 2:
-                return ForgeDirection.NORTH;
-            case 3:
-                return ForgeDirection.EAST;
+                case 0:
+                    return ForgeDirection.SOUTH;
+                case 1:
+                    return ForgeDirection.WEST;
+                case 2:
+                    return ForgeDirection.NORTH;
+                case 3:
+                    return ForgeDirection.EAST;
             }
         }
 
@@ -100,22 +100,22 @@ public class ClientProxy extends CommonProxy {
         point.z = (int) Math.floor(playerPosition.z);
 
         switch (rotationRender) {
-        case 0:
-            point.x -= 1;
-            point.z += 1;
-            break;
-        case 1:
-            point.x -= 1;
-            point.z -= 1;
-            break;
-        case 2:
-            point.x += 1;
-            point.z -= 1;
-            break;
-        case 3:
-            point.x += 1;
-            point.z += 1;
-            break;
+            case 0:
+                point.x -= 1;
+                point.z += 1;
+                break;
+            case 1:
+                point.x -= 1;
+                point.z -= 1;
+                break;
+            case 2:
+                point.x += 1;
+                point.z -= 1;
+                break;
+            case 3:
+                point.x += 1;
+                point.z += 1;
+                break;
         }
     }
 
@@ -127,23 +127,119 @@ public class ClientProxy extends CommonProxy {
             position.z = (int) Math.floor(playerPosition.z);
 
             switch (rotationRender) {
-            case 0:
-                position.x -= schematic.getWidth();
-                position.z += 1;
-                break;
-            case 1:
-                position.x -= schematic.getWidth();
-                position.z -= schematic.getLength();
-                break;
-            case 2:
-                position.x += 1;
-                position.z -= schematic.getLength();
-                break;
-            case 3:
-                position.x += 1;
-                position.z += 1;
-                break;
+                case 0:
+                    position.x -= schematic.getWidth();
+                    position.z += 1;
+                    break;
+                case 1:
+                    position.x -= schematic.getWidth();
+                    position.z -= schematic.getLength();
+                    break;
+                case 2:
+                    position.x += 1;
+                    position.z -= schematic.getLength();
+                    break;
+                case 3:
+                    position.x += 1;
+                    position.z += 1;
+                    break;
             }
+        }
+    }
+
+    public static void moveSchematic(SchematicWorld schematic, Integer x, Integer y, Integer z) {
+        if (schematic != null) {
+            Vector3i position = schematic.position;
+            position.x = x;
+            position.y = y;
+            position.z = z;
+        }
+    }
+
+    public static Map<String, Map<String, Map<String, Integer>>> openCoordinatesFile() throws ClassCastException, IOException {
+        Gson gson = new Gson();
+        File coordinatesFile = new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json");
+        Map<String, Map<String, Map<String, Integer>>> coordinates = new HashMap<>();
+        if (coordinatesFile.exists() && coordinatesFile.canRead() && coordinatesFile.canWrite()) {
+            try (Reader reader = Files.newBufferedReader(new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json").toPath())) {
+                //Map<?,?> test = gson.fromJson(reader, Map.class);
+                coordinates = gson.fromJson(reader, new TypeToken<Map<String, Map<String, Map<String, Integer>>>>() {
+                }.getType());
+            } catch (Exception e) {
+                throw new ClassCastException("Failed to convert json file to Map<String,Map<String,Integer>>");
+            }
+
+        } else if (!coordinatesFile.exists()) {
+            if (saveCoordinatesFile(coordinates)) {
+                Reference.logger.info("Created new coordinates file");
+            } else throw new IOException("Failed to create coordinates file");
+        } else {
+            throw new IOException("No read/write permission for coordinates file");
+        }
+        return coordinates;
+    }
+
+    public static boolean saveCoordinatesFile(Map<String, Map<String, Map<String, Integer>>> map) {
+        Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
+        File coordinatesFile = new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json");
+        try (FileWriter writer = new FileWriter(coordinatesFile.getAbsoluteFile())) {
+            gsonBuilder.toJson(map, new TypeToken<Map<String, Map<String, Map<String, Integer>>>>() {
+            }.getType(), writer);
+            writer.flush();
+            Reference.logger.info("Successfully written to coordinates file");
+            return true;
+        } catch (IOException e) {
+            Reference.logger.info("Failed to write to coordinates file");
+            return false;
+        }
+    }
+
+    public static boolean addCoordinates(String worldServerName, String schematicName, Integer X, Integer Y, Integer Z) {
+        try {
+            Map<String, Map<String, Map<String, Integer>>> coordinates = openCoordinatesFile();
+            if (coordinates.containsKey(worldServerName)) {
+                coordinates.get(worldServerName).put(schematicName, new HashMap<String, Integer>() {{
+                    put("X", X);
+                    put("Y", Y);
+                    put("Z", Z);
+                }});
+            } else {
+                coordinates.put(worldServerName, new HashMap<String, Map<String, Integer>>() {{
+                    put(schematicName, new HashMap<String, Integer>() {{
+                        put("X", X);
+                        put("Y", Y);
+                        put("Z", Z);
+                    }});
+                }});
+            }
+            saveCoordinatesFile(coordinates);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * gets the coordinates if present
+     *
+     * @return {@link ImmutablePair} with bool (true if coordinates found, false if not) and {@link ImmutableTriple} storing X,Y,Z {@link Integer}
+     */
+    public static ImmutablePair<Boolean, ImmutableTriple<Integer, Integer, Integer>> getCoordinates(String worldServerName, String schematicName) {
+        try {
+            Map<String, Map<String, Map<String, Integer>>> coordinates = openCoordinatesFile();
+            if (coordinates.containsKey(worldServerName)) {
+                Map<String, Map<String, Integer>> schematicMap = coordinates.get(worldServerName);
+                if (schematicMap.containsKey(schematicName)) {
+                    Map<String, Integer> coordinateMap = schematicMap.get(schematicName);
+                    if (coordinateMap.containsKey("X") && coordinateMap.containsKey("Y") && coordinateMap.containsKey("Z")) {
+                        return new ImmutablePair<>(true, new ImmutableTriple<>(coordinateMap.get("X"), coordinateMap.get("Y"), coordinateMap.get("Z")));
+                    }
+                }
+            }
+            return new ImmutablePair<>(false, null);
+        } catch (Exception e) {
+
+            return new ImmutablePair<>(false, null);
         }
     }
 
@@ -151,12 +247,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
-        final Property[] sliders = {
-                ConfigurationHandler.propAlpha,
-                ConfigurationHandler.propBlockDelta,
-                ConfigurationHandler.propPlaceDelay,
-                ConfigurationHandler.propTimeout
-        };
+        final Property[] sliders = {ConfigurationHandler.propAlpha, ConfigurationHandler.propBlockDelta, ConfigurationHandler.propPlaceDelay, ConfigurationHandler.propTimeout};
         for (Property prop : sliders) {
             prop.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class);
         }
@@ -224,7 +315,7 @@ public class ClientProxy extends CommonProxy {
             return false;
         }
 
-        SchematicWorld world = new SchematicWorld(schematic);
+        SchematicWorld world = new SchematicWorld(schematic, filename);
 
         Reference.logger.debug("Loaded {} [w:{},h:{},l:{}]", filename, world.getWidth(), world.getHeight(), world.getLength());
 

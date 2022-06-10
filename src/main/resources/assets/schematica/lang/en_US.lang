@@ -13,6 +13,7 @@ schematica.gui.movehere=Move here
 schematica.gui.flip=Flip
 schematica.gui.rotate=Rotate
 schematica.gui.save=Save
+schematica.gui.savecoordinates=Save Coordinates
 schematica.gui.moveschematic=Move schematic
 schematica.gui.layers=Layers
 schematica.gui.operations=Operations
@@ -106,6 +107,10 @@ schematica.config.schematicDirectory=Schematic Directory
 schematica.config.schematicDirectory.tooltip=Schematic directory.
 schematica.config.extraAirBlocks=Extra Air Blocks
 schematica.config.extraAirBlocks.tooltip=Extra blocks to consider as air for the schematic renderer.
+
+# chat
+Schematica.chat.saveCoordinatesSuccess=Successfully saved coordinates
+Schematica.chat.saveCoordinatesFail=Failed to save coordinates
 
 # gui - config - server
 schematica.config.printerEnabled=Allow Printer

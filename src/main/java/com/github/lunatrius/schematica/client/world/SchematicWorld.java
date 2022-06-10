@@ -29,6 +29,7 @@ import java.util.List;
 public class SchematicWorld extends World {
     private static final WorldSettings WORLD_SETTINGS = new WorldSettings(0, WorldSettings.GameType.CREATIVE, false, false, WorldType.FLAT);
 
+    public String name = "";
     public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);
 
     private ISchematic schematic;
@@ -49,6 +50,10 @@ public class SchematicWorld extends World {
         this.isRendering = false;
         this.isRenderingLayer = false;
         this.renderingLayer = 0;
+    }
+    public SchematicWorld(ISchematic schematic, String filename) {
+        this(schematic);
+        this.name = filename.replace(".schematic","");
     }
 
     @Override

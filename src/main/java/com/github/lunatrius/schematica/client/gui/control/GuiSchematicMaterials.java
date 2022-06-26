@@ -10,17 +10,16 @@ import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.ItemStackSortType;
 import cpw.mods.fml.client.config.GuiUnicodeGlyphButton;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Formatter;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Formatter;
-import java.util.List;
 
 public class GuiSchematicMaterials extends GuiScreenBase {
     private GuiSchematicMaterialsSlot guiSchematicMaterialsSlot;
@@ -48,10 +47,19 @@ public class GuiSchematicMaterials extends GuiScreenBase {
     public void initGui() {
         int id = 0;
 
-        this.btnSort = new GuiUnicodeGlyphButton(++id, this.width / 2 - 154, this.height - 30, 100, 20, " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label), this.sortType.glyph, 2.0f);
+        this.btnSort = new GuiUnicodeGlyphButton(
+                ++id,
+                this.width / 2 - 154,
+                this.height - 30,
+                100,
+                20,
+                " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label),
+                this.sortType.glyph,
+                2.0f);
         this.buttonList.add(this.btnSort);
 
-        this.btnDump = new GuiButton(++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
+        this.btnDump = new GuiButton(
+                ++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
         this.buttonList.add(this.btnDump);
 
         this.btnDone = new GuiButton(++id, this.width / 2 + 54, this.height - 30, 100, 20, I18n.format(Names.Gui.DONE));
@@ -91,7 +99,12 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         this.guiSchematicMaterialsSlot.drawScreen(x, y, partialTicks);
 
         drawString(this.fontRendererObj, this.strMaterialName, this.width / 2 - 108, 4, 0x00FFFFFF);
-        drawString(this.fontRendererObj, this.strMaterialAmount, this.width / 2 + 108 - this.fontRendererObj.getStringWidth(this.strMaterialAmount), 4, 0x00FFFFFF);
+        drawString(
+                this.fontRendererObj,
+                this.strMaterialAmount,
+                this.width / 2 + 108 - this.fontRendererObj.getStringWidth(this.strMaterialAmount),
+                4,
+                0x00FFFFFF);
         super.drawScreen(x, y, partialTicks);
     }
 
@@ -103,7 +116,8 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         int maxLengthName = 0;
         int maxSize = 0;
         for (final BlockList.WrappedItemStack wrappedItemStack : blockList) {
-            maxLengthName = Math.max(maxLengthName, wrappedItemStack.getItemStackDisplayName().length());
+            maxLengthName = Math.max(
+                    maxLengthName, wrappedItemStack.getItemStackDisplayName().length());
             maxSize = Math.max(maxSize, wrappedItemStack.total);
         }
 
@@ -122,7 +136,8 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
         final File dumps = Schematica.proxy.getDirectory("dumps");
         try {
-            final FileOutputStream outputStream = new FileOutputStream(new File(dumps, Reference.MODID + "-materials.txt"));
+            final FileOutputStream outputStream =
+                    new FileOutputStream(new File(dumps, Reference.MODID + "-materials.txt"));
             try {
                 IOUtils.write(stringBuilder.toString(), outputStream);
             } finally {

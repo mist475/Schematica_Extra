@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.world.chunk;
 
+import java.util.List;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.ChunkPosition;
@@ -7,8 +8,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.EmptyChunk;
 import net.minecraft.world.chunk.IChunkProvider;
-
-import java.util.List;
 
 public class ChunkProviderSchematic implements IChunkProvider {
     private Chunk emptyChunk;

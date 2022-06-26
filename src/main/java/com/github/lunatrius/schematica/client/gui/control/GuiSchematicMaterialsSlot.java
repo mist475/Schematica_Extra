@@ -3,7 +3,6 @@ package com.github.lunatrius.schematica.client.gui.control;
 import com.github.lunatrius.schematica.client.gui.GuiHelper;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.reference.Names;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
@@ -43,12 +42,10 @@ class GuiSchematicMaterialsSlot extends GuiSlot {
     }
 
     @Override
-    protected void drawBackground() {
-    }
+    protected void drawBackground() {}
 
     @Override
-    protected void drawContainerBackground(Tessellator tessellator) {
-    }
+    protected void drawContainerBackground(Tessellator tessellator) {}
 
     @Override
     protected void drawSlot(int index, int x, int y, int par4, Tessellator tessellator, int mouseX, int mouseY) {
@@ -57,13 +54,24 @@ class GuiSchematicMaterialsSlot extends GuiSlot {
 
         final String itemName = wrappedItemStack.getItemStackDisplayName();
         final String amount = wrappedItemStack.getFormattedAmount();
-        final String amountrequired = wrappedItemStack.getFormattedAmountRequired(strMaterialRequired, strMaterialAvailable);
+        final String amountrequired =
+                wrappedItemStack.getFormattedAmountRequired(strMaterialRequired, strMaterialAvailable);
 
         GuiHelper.drawItemStack(this.minecraft.renderEngine, this.minecraft.fontRenderer, x, y, itemStack);
 
         this.guiSchematicMaterials.drawString(this.minecraft.fontRenderer, itemName, x + 24, y + 6, 0xFFFFFF);
-        this.guiSchematicMaterials.drawString(this.minecraft.fontRenderer, amount, x + 215 - this.minecraft.fontRenderer.getStringWidth(amount), y + 6, 0xFFFFFF);
-        this.guiSchematicMaterials.drawString(this.minecraft.fontRenderer, amountrequired, x + 215 - this.minecraft.fontRenderer.getStringWidth(amountrequired), y + 16, 0xFFFFFF);
+        this.guiSchematicMaterials.drawString(
+                this.minecraft.fontRenderer,
+                amount,
+                x + 215 - this.minecraft.fontRenderer.getStringWidth(amount),
+                y + 6,
+                0xFFFFFF);
+        this.guiSchematicMaterials.drawString(
+                this.minecraft.fontRenderer,
+                amountrequired,
+                x + 215 - this.minecraft.fontRenderer.getStringWidth(amountrequired),
+                y + 16,
+                0xFFFFFF);
 
         if (mouseX > x && mouseY > y && mouseX <= x + 18 && mouseY <= y + 18) {
             this.guiSchematicMaterials.renderToolTip(itemStack, mouseX, mouseY);

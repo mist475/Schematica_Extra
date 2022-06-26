@@ -13,7 +13,13 @@ public class GuiSchematicLoadSlot extends GuiSlot {
     protected int selectedIndex = -1;
 
     public GuiSchematicLoadSlot(GuiSchematicLoad guiSchematicLoad) {
-        super(Minecraft.getMinecraft(), guiSchematicLoad.width, guiSchematicLoad.height, 16, guiSchematicLoad.height - 40, 24);
+        super(
+                Minecraft.getMinecraft(),
+                guiSchematicLoad.width,
+                guiSchematicLoad.height,
+                16,
+                guiSchematicLoad.height - 40,
+                24);
         this.guiSchematicLoad = guiSchematicLoad;
     }
 
@@ -39,12 +45,10 @@ public class GuiSchematicLoadSlot extends GuiSlot {
     }
 
     @Override
-    protected void drawBackground() {
-    }
+    protected void drawBackground() {}
 
     @Override
-    protected void drawContainerBackground(Tessellator tessellator) {
-    }
+    protected void drawContainerBackground(Tessellator tessellator) {}
 
     @Override
     protected void drawSlot(int index, int x, int y, int par4, Tessellator tessellator, int par6, int par7) {
@@ -61,7 +65,8 @@ public class GuiSchematicLoadSlot extends GuiSlot {
             schematicName = schematicName.replaceAll("(?i)\\.schematic$", "");
         }
 
-        GuiHelper.drawItemStack(this.minecraft.renderEngine, this.minecraft.fontRenderer, x, y, schematic.getItemStack());
+        GuiHelper.drawItemStack(
+                this.minecraft.renderEngine, this.minecraft.fontRenderer, x, y, schematic.getItemStack());
 
         this.guiSchematicLoad.drawString(this.minecraft.fontRenderer, schematicName, x + 24, y + 6, 0x00FFFFFF);
     }

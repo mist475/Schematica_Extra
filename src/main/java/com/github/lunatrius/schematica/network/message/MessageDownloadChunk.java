@@ -11,13 +11,12 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
 import cpw.mods.fml.common.registry.GameData;
 import io.netty.buffer.ByteBuf;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MessageDownloadChunk implements IMessage, IMessageHandler<MessageDownloadChunk, IMessage> {
     public static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
@@ -31,16 +30,17 @@ public class MessageDownloadChunk implements IMessage, IMessageHandler<MessageDo
     public List<TileEntity> tileEntities;
     public List<Entity> entities;
 
-    public MessageDownloadChunk() {
-    }
+    public MessageDownloadChunk() {}
 
     public MessageDownloadChunk(ISchematic schematic, int baseX, int baseY, int baseZ) {
         this.baseX = baseX;
         this.baseY = baseY;
         this.baseZ = baseZ;
 
-        this.blocks = new short[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT][Constants.SchematicChunk.LENGTH];
-        this.metadata = new byte[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT][Constants.SchematicChunk.LENGTH];
+        this.blocks = new short[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT]
+                [Constants.SchematicChunk.LENGTH];
+        this.metadata = new byte[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT]
+                [Constants.SchematicChunk.LENGTH];
         this.tileEntities = new ArrayList<TileEntity>();
         this.entities = new ArrayList<Entity>();
 
@@ -84,8 +84,10 @@ public class MessageDownloadChunk implements IMessage, IMessageHandler<MessageDo
         this.baseY = buf.readShort();
         this.baseZ = buf.readShort();
 
-        this.blocks = new short[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT][Constants.SchematicChunk.LENGTH];
-        this.metadata = new byte[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT][Constants.SchematicChunk.LENGTH];
+        this.blocks = new short[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT]
+                [Constants.SchematicChunk.LENGTH];
+        this.metadata = new byte[Constants.SchematicChunk.WIDTH][Constants.SchematicChunk.HEIGHT]
+                [Constants.SchematicChunk.LENGTH];
         this.tileEntities = new ArrayList<TileEntity>();
         this.entities = new ArrayList<Entity>();
 

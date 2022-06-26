@@ -2,8 +2,8 @@ package com.github.lunatrius.schematica.api.event;
 
 import com.github.lunatrius.schematica.api.ISchematic;
 import cpw.mods.fml.common.eventhandler.Event;
-import net.minecraft.nbt.NBTTagCompound;
 import java.util.Map;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * This event is fired after the schematic has been Captured, but before it is serialized to the schematic format.
@@ -48,12 +48,9 @@ public class PreSchematicSaveEvent extends Event {
      */
     public boolean replaceMapping(String oldName, String newName) throws DuplicateMappingException {
         if (this.mappings.containsKey(newName)) {
-            throw new DuplicateMappingException(
-                    String.format(
-                            "Could not replace block type %s, the block type %s already exists in the schematic.",
-                            oldName, newName
-                    )
-            );
+            throw new DuplicateMappingException(String.format(
+                    "Could not replace block type %s, the block type %s already exists in the schematic.",
+                    oldName, newName));
         }
 
         Short id = this.mappings.get(oldName);

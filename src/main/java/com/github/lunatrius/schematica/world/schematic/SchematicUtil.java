@@ -4,13 +4,12 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import cpw.mods.fml.common.registry.GameData;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
 
 public final class SchematicUtil {
     public static NBTTagCompound readTagCompoundFromFile(File file) throws IOException {

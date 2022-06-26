@@ -13,8 +13,7 @@ public class MessageDownloadChunkAck implements IMessage, IMessageHandler<Messag
     private int baseY;
     private int baseZ;
 
-    public MessageDownloadChunkAck() {
-    }
+    public MessageDownloadChunkAck() {}
 
     public MessageDownloadChunkAck(final int baseX, final int baseY, final int baseZ) {
         this.baseX = baseX;

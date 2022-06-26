@@ -16,8 +16,7 @@ public class MessageDownloadBegin implements IMessage, IMessageHandler<MessageDo
     public int height;
     public int length;
 
-    public MessageDownloadBegin() {
-    }
+    public MessageDownloadBegin() {}
 
     public MessageDownloadBegin(ISchematic schematic) {
         this.icon = schematic.getIcon();

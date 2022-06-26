@@ -5,10 +5,15 @@ import com.github.lunatrius.schematica.reference.Constants;
 
 public class SchematicTransfer {
     public enum State {
-        BEGIN_WAIT(true), BEGIN, CHUNK_WAIT(true), CHUNK, END_WAIT(true), END;
+        BEGIN_WAIT(true),
+        BEGIN,
+        CHUNK_WAIT(true),
+        CHUNK,
+        END_WAIT(true),
+        END;
         private boolean waiting;
 
-        State() { }
+        State() {}
 
         State(boolean waiting) {
             this.waiting = waiting;

@@ -9,6 +9,9 @@ import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.FileUtils;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -16,10 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 import org.apache.commons.io.FilenameUtils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommandSchematicaDownload extends CommandSchematicaBase {
     private static final FileFilterSchematic FILE_FILTER_SCHEMATIC = new FileFilterSchematic(false);
@@ -78,7 +77,8 @@ public class CommandSchematicaDownload extends CommandSchematicaBase {
 
         if (schematic != null) {
             DownloadHandler.INSTANCE.transferMap.put(player, new SchematicTransfer(schematic, filename));
-            sender.addChatMessage(new ChatComponentTranslation(Names.Command.Download.Message.DOWNLOAD_STARTED, filename));
+            sender.addChatMessage(
+                    new ChatComponentTranslation(Names.Command.Download.Message.DOWNLOAD_STARTED, filename));
         } else {
             throw new CommandException(Names.Command.Download.Message.DOWNLOAD_FAILED);
         }

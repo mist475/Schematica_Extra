@@ -3,16 +3,15 @@ package com.github.lunatrius.schematica.world.storage;
 import com.github.lunatrius.schematica.api.ISchematic;
 import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
 import cpw.mods.fml.common.registry.GameData;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Schematic implements ISchematic {
     private static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);

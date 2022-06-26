@@ -1,5 +1,5 @@
 // Add your dependencies here
 
 dependencies {
-    compile('com.github.GTNewHorizons:LunatriusCore:1.1.5-GTNH:dev')
+	compile('com.github.GTNewHorizons:LunatriusCore:1.1.5-GTNH:dev')
 }

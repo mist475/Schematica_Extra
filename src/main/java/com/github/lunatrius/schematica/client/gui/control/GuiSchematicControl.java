@@ -12,6 +12,8 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+import java.util.Objects;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -147,7 +149,8 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnFlip.enabled = false;
         this.btnRotate.enabled = this.schematic != null;
         this.btnMaterials.enabled = this.schematic != null;
-        this.btnPrint.enabled = this.schematic != null && this.printer.isEnabled();
+        this.btnPrint.enabled =
+                Objects.equals(Reference.MODID, "Schematica") && (this.schematic != null && this.printer.isEnabled());
 
         this.btnSaveCoordinates.enabled = this.schematic != null;
 

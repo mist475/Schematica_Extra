@@ -1,5 +1,6 @@
 package com.github.lunatrius.schematica.world.storage;
 
+import java.io.File;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.MinecraftException;
 import net.minecraft.world.WorldProvider;
@@ -7,8 +8,6 @@ import net.minecraft.world.chunk.storage.IChunkLoader;
 import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
-
-import java.io.File;
 
 public class SaveHandlerSchematic implements ISaveHandler {
     @Override

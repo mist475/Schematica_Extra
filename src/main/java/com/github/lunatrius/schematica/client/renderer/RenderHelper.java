@@ -2,9 +2,8 @@ package com.github.lunatrius.schematica.client.renderer;
 
 import com.github.lunatrius.core.util.vector.Vector3f;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import org.lwjgl.BufferUtils;
-
 import java.nio.FloatBuffer;
+import org.lwjgl.BufferUtils;
 
 public class RenderHelper {
     public static final int QUAD_DOWN = 0x01;
@@ -27,7 +26,18 @@ public class RenderHelper {
     public static final int LINE_NORTH_EAST = 0x24;
     public static final int LINE_SOUTH_WEST = 0x18;
     public static final int LINE_SOUTH_EAST = 0x28;
-    public static final int LINE_ALL = LINE_DOWN_WEST | LINE_UP_WEST | LINE_DOWN_EAST | LINE_UP_EAST | LINE_DOWN_NORTH | LINE_UP_NORTH | LINE_DOWN_SOUTH | LINE_UP_SOUTH | LINE_NORTH_WEST | LINE_NORTH_EAST | LINE_SOUTH_WEST | LINE_SOUTH_EAST;
+    public static final int LINE_ALL = LINE_DOWN_WEST
+            | LINE_UP_WEST
+            | LINE_DOWN_EAST
+            | LINE_UP_EAST
+            | LINE_DOWN_NORTH
+            | LINE_UP_NORTH
+            | LINE_DOWN_SOUTH
+            | LINE_UP_SOUTH
+            | LINE_NORTH_WEST
+            | LINE_NORTH_EAST
+            | LINE_SOUTH_WEST
+            | LINE_SOUTH_EAST;
 
     public static final Vector3f VEC_ZERO = new Vector3f(0, 0, 0);
 
@@ -81,13 +91,15 @@ public class RenderHelper {
     }
 
     public static FloatBuffer getQuadVertexBuffer() {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(quadVertexBuffer.length).put(quadVertexBuffer);
+        FloatBuffer buffer =
+                BufferUtils.createFloatBuffer(quadVertexBuffer.length).put(quadVertexBuffer);
         buffer.flip();
         return buffer;
     }
 
     public static FloatBuffer getQuadColorBuffer() {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(quadColorBuffer.length).put(quadColorBuffer);
+        FloatBuffer buffer =
+                BufferUtils.createFloatBuffer(quadColorBuffer.length).put(quadColorBuffer);
         buffer.flip();
         return buffer;
     }
@@ -97,13 +109,15 @@ public class RenderHelper {
     }
 
     public static FloatBuffer getLineVertexBuffer() {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(lineVertexBuffer.length).put(lineVertexBuffer);
+        FloatBuffer buffer =
+                BufferUtils.createFloatBuffer(lineVertexBuffer.length).put(lineVertexBuffer);
         buffer.flip();
         return buffer;
     }
 
     public static FloatBuffer getLineColorBuffer() {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(lineColorBuffer.length).put(lineColorBuffer);
+        FloatBuffer buffer =
+                BufferUtils.createFloatBuffer(lineColorBuffer.length).put(lineColorBuffer);
         buffer.flip();
         return buffer;
     }
@@ -118,9 +132,16 @@ public class RenderHelper {
         return tempBuffer;
     }
 
-    public static void drawCuboidSurface(Vector3f zero, Vector3f size, int sides, float red, float green, float blue, float alpha) {
-        vecZero.set(zero.x - ConfigurationHandler.blockDelta, zero.y - ConfigurationHandler.blockDelta, zero.z - ConfigurationHandler.blockDelta);
-        vecSize.set(size.x + ConfigurationHandler.blockDelta, size.y + ConfigurationHandler.blockDelta, size.z + ConfigurationHandler.blockDelta);
+    public static void drawCuboidSurface(
+            Vector3f zero, Vector3f size, int sides, float red, float green, float blue, float alpha) {
+        vecZero.set(
+                zero.x - ConfigurationHandler.blockDelta,
+                zero.y - ConfigurationHandler.blockDelta,
+                zero.z - ConfigurationHandler.blockDelta);
+        vecSize.set(
+                size.x + ConfigurationHandler.blockDelta,
+                size.y + ConfigurationHandler.blockDelta,
+                size.z + ConfigurationHandler.blockDelta);
 
         if (quadCount + 24 >= quadSize) {
             quadSize *= 2;
@@ -283,9 +304,16 @@ public class RenderHelper {
         }
     }
 
-    public static void drawCuboidOutline(Vector3f zero, Vector3f size, int sides, float red, float green, float blue, float alpha) {
-        vecZero.set(zero.x - ConfigurationHandler.blockDelta, zero.y - ConfigurationHandler.blockDelta, zero.z - ConfigurationHandler.blockDelta);
-        vecSize.set(size.x + ConfigurationHandler.blockDelta, size.y + ConfigurationHandler.blockDelta, size.z + ConfigurationHandler.blockDelta);
+    public static void drawCuboidOutline(
+            Vector3f zero, Vector3f size, int sides, float red, float green, float blue, float alpha) {
+        vecZero.set(
+                zero.x - ConfigurationHandler.blockDelta,
+                zero.y - ConfigurationHandler.blockDelta,
+                zero.z - ConfigurationHandler.blockDelta);
+        vecSize.set(
+                size.x + ConfigurationHandler.blockDelta,
+                size.y + ConfigurationHandler.blockDelta,
+                size.z + ConfigurationHandler.blockDelta);
 
         if (lineCount + 24 >= lineSize) {
             lineSize *= 2;
@@ -351,7 +379,6 @@ public class RenderHelper {
 
             total += 2;
         }
-
 
         if ((sides & LINE_DOWN_NORTH) != 0) {
             lineVertexBuffer[lineVertexIndex++] = vecZero.x;

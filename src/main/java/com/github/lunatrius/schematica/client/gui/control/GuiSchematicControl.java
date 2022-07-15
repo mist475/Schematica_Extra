@@ -1,5 +1,7 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
+import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
+
 import com.github.lunatrius.core.client.gui.GuiNumericField;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.core.util.vector.Vector3i;
@@ -15,8 +17,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentText;
-
-import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
 
 public class GuiSchematicControl extends GuiScreenBase {
     private final SchematicWorld schematic;
@@ -48,6 +48,7 @@ public class GuiSchematicControl extends GuiScreenBase {
     private final String strSaveCoordinates = I18n.format(Names.Gui.Control.SAVE_COORDINATES);
     private final String strMoveSchematic = I18n.format(Names.Gui.Control.MOVE_SCHEMATIC);
     private final String strOperations = I18n.format(Names.Gui.Control.OPERATIONS);
+    private final String strName = I18n.format(Names.Gui.Control.NAME);
     private final String strUnload = I18n.format(Names.Gui.Control.UNLOAD);
     private final String strAll = I18n.format(Names.Gui.Control.MODE_ALL);
     private final String strLayers = I18n.format(Names.Gui.Control.MODE_LAYERS);
@@ -88,31 +89,48 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnUnload = new GuiButton(id++, this.width - 90, this.height - 200, 80, 20, this.strUnload);
         this.buttonList.add(this.btnUnload);
 
-        this.btnLayerMode = new GuiButton(id++, this.width - 90, this.height - 150 - 25, 80, 20, this.schematic != null && this.schematic.isRenderingLayer ? this.strLayers : this.strAll);
+        this.btnLayerMode = new GuiButton(
+                id++,
+                this.width - 90,
+                this.height - 150 - 25,
+                80,
+                20,
+                this.schematic != null && this.schematic.isRenderingLayer ? this.strLayers : this.strAll);
         this.buttonList.add(this.btnLayerMode);
 
         this.nfLayer = new GuiNumericField(this.fontRendererObj, id++, this.width - 90, this.height - 150, 80, 20);
         this.buttonList.add(this.nfLayer);
 
-        this.btnHide = new GuiButton(id++, this.width - 90, this.height - 105, 80, 20, this.schematic != null && this.schematic.isRendering ? this.strHide : this.strShow);
+        this.btnHide = new GuiButton(
+                id++,
+                this.width - 90,
+                this.height - 105,
+                80,
+                20,
+                this.schematic != null && this.schematic.isRendering ? this.strHide : this.strShow);
         this.buttonList.add(this.btnHide);
 
-        this.btnMove = new GuiButton(id++, this.width - 90, this.height - 80, 80, 20, I18n.format(Names.Gui.Control.MOVE_HERE));
+        this.btnMove = new GuiButton(
+                id++, this.width - 90, this.height - 80, 80, 20, I18n.format(Names.Gui.Control.MOVE_HERE));
         this.buttonList.add(this.btnMove);
 
-        this.btnFlip = new GuiButton(id++, this.width - 90, this.height - 55, 80, 20, I18n.format(Names.Gui.Control.FLIP));
+        this.btnFlip =
+                new GuiButton(id++, this.width - 90, this.height - 55, 80, 20, I18n.format(Names.Gui.Control.FLIP));
         this.buttonList.add(this.btnFlip);
 
-        this.btnRotate = new GuiButton(id++, this.width - 90, this.height - 30, 80, 20, I18n.format(Names.Gui.Control.ROTATE));
+        this.btnRotate =
+                new GuiButton(id++, this.width - 90, this.height - 30, 80, 20, I18n.format(Names.Gui.Control.ROTATE));
         this.buttonList.add(this.btnRotate);
 
         this.btnMaterials = new GuiButton(id++, 10, this.height - 70, 80, 20, this.strMaterials);
         this.buttonList.add(this.btnMaterials);
 
-        this.btnPrint = new GuiButton(id++, 10, this.height - 30, 80, 20, this.printer.isPrinting() ? this.strOn : this.strOff);
+        this.btnPrint =
+                new GuiButton(id++, 10, this.height - 30, 80, 20, this.printer.isPrinting() ? this.strOn : this.strOff);
         this.buttonList.add(this.btnPrint);
 
-        this.btnSaveCoordinates = new GuiButton(id++, this.centerX - 50, this.centerY + 45, 100, 20, this.strSaveCoordinates);
+        this.btnSaveCoordinates =
+                new GuiButton(id++, this.centerX - 50, this.centerY + 45, 100, 20, this.strSaveCoordinates);
         this.buttonList.add(this.btnSaveCoordinates);
 
         this.numericX.setEnabled(this.schematic != null);
@@ -207,10 +225,17 @@ public class GuiSchematicControl extends GuiScreenBase {
                 this.btnPrint.displayString = isPrinting ? this.strOn : this.strOff;
             } else if (guiButton.id == this.btnSaveCoordinates.id) {
                 String worldServerName = worldServerName(this.mc);
-                //Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {} {}\nSchematic Name: {}\nWorld Name/server Name: {}", this.numericX.getValue(), this.numericY.getValue(), this.numericZ.getValue(), this.schematic.name, worldServerName);
+                // Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {} {}\nSchematic Name:
+                // {}\nWorld Name/server Name: {}", this.numericX.getValue(), this.numericY.getValue(),
+                // this.numericZ.getValue(), this.schematic.name, worldServerName);
                 EntityPlayerSP player = mc.thePlayer;
                 if (player != null) {
-                    if (ClientProxy.addCoordinates(worldServerName, this.schematic.name, this.numericX.getValue(), this.numericY.getValue(), this.numericZ.getValue())) {
+                    if (ClientProxy.addCoordinates(
+                            worldServerName,
+                            this.schematic.name,
+                            this.numericX.getValue(),
+                            this.numericY.getValue(),
+                            this.numericZ.getValue())) {
                         mc.thePlayer.addChatMessage(new ChatComponentText(strSaveCoordinatesSuccess));
                     } else {
                         mc.thePlayer.addChatMessage(new ChatComponentText(strSaveCoordinatesFail));
@@ -230,6 +255,10 @@ public class GuiSchematicControl extends GuiScreenBase {
         drawCenteredString(this.fontRendererObj, this.strLayers, this.width - 50, this.height - 165, 0xFFFFFF);
         drawCenteredString(this.fontRendererObj, this.strOperations, this.width - 50, this.height - 120, 0xFFFFFF);
 
+        if (this.schematic != null) {
+            drawString(
+                    this.fontRendererObj, this.strName + ": " + this.schematic.name, 10, this.height - 195, 0xFFFFFF);
+        }
         drawString(this.fontRendererObj, this.strX, this.centerX - 65, this.centerY - 24, 0xFFFFFF);
         drawString(this.fontRendererObj, this.strY, this.centerX - 65, this.centerY + 1, 0xFFFFFF);
         drawString(this.fontRendererObj, this.strZ, this.centerX - 65, this.centerY + 26, 0xFFFFFF);

@@ -1,16 +1,17 @@
 package com.github.lunatrius.schematica.client.printer.registry;
 
-import net.minecraft.block.Block;
-import net.minecraftforge.common.util.ForgeDirection;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.block.Block;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class PlacementData {
     public static enum PlacementType {
-        BLOCK, PLAYER, PISTON
+        BLOCK,
+        PLAYER,
+        PISTON
     }
 
     public static final ForgeDirection[] VALID_DIRECTIONS = ForgeDirection.VALID_DIRECTIONS;

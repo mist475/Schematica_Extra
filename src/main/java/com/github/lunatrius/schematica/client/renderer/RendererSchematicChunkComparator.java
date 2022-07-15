@@ -3,7 +3,6 @@ package com.github.lunatrius.schematica.client.renderer;
 import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.core.util.vector.Vector3i;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
-
 import java.util.Comparator;
 
 public class RendererSchematicChunkComparator implements Comparator<RendererSchematicChunk> {

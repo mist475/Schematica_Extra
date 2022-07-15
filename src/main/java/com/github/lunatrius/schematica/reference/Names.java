@@ -18,13 +18,15 @@ public final class Names {
         public static final String ALPHA_ENABLED = "alphaEnabled";
         public static final String ALPHA_ENABLED_DESC = "Enable transparent textures.";
         public static final String ALPHA = "alpha";
-        public static final String ALPHA_DESC = "Alpha value used when rendering the schematic (1.0 = opaque, 0.5 = half transparent, 0.0 = transparent).";
+        public static final String ALPHA_DESC =
+                "Alpha value used when rendering the schematic (1.0 = opaque, 0.5 = half transparent, 0.0 = transparent).";
         public static final String HIGHLIGHT = "highlight";
         public static final String HIGHLIGHT_DESC = "Highlight invalid placed blocks and to be placed blocks.";
         public static final String HIGHLIGHT_AIR = "highlightAir";
         public static final String HIGHLIGHT_AIR_DESC = "Highlight blocks that should be air.";
         public static final String BLOCK_DELTA = "blockDelta";
-        public static final String BLOCK_DELTA_DESC = "Delta value used for highlighting (if you experience z-fighting increase this).";
+        public static final String BLOCK_DELTA_DESC =
+                "Delta value used for highlighting (if you experience z-fighting increase this).";
         public static final String DRAW_QUADS = "drawQuads";
         public static final String DRAW_QUADS_DESC = "Draw surface areas.";
         public static final String DRAW_LINES = "drawLines";
@@ -41,7 +43,8 @@ public final class Names {
         public static final String DESTROY_INSTANTLY = "destroyInstantly";
         public static final String DESTROY_INSTANTLY_DESC = "Destroy all blocks that can be destroyed in one tick.";
         public static final String PLACE_ADJACENT = "placeAdjacent";
-        public static final String PLACE_ADJACENT_DESC = "Place blocks only if there is an adjacent block next to them.";
+        public static final String PLACE_ADJACENT_DESC =
+                "Place blocks only if there is an adjacent block next to them.";
         public static final String SWAP_SLOT = "swapSlot";
         public static final String SWAP_SLOT_DESC = "Allow the printer to use this hotbar slot.";
 
@@ -55,7 +58,8 @@ public final class Names {
         public static final String SCHEMATIC_DIRECTORY = "schematicDirectory";
         public static final String SCHEMATIC_DIRECTORY_DESC = "Schematic directory.";
         public static final String EXTRA_AIR_BLOCKS = "extraAirBlocks";
-        public static final String EXTRA_AIR_BLOCKS_DESC = "Extra blocks to consider as air for the schematic renderer.";
+        public static final String EXTRA_AIR_BLOCKS_DESC =
+                "Extra blocks to consider as air for the schematic renderer.";
         public static final String SORT_TYPE = "sortType";
         public static final String SORT_TYPE_DESC = "Default sort type for the material list.";
 
@@ -67,14 +71,16 @@ public final class Names {
         public static final String LOAD_ENABLED_DESC = "Allow players to load schematics.";
 
         public static final String PLAYER_QUOTA_KILOBYTES = "playerQuotaKilobytes";
-        public static final String PLAYER_QUOTA_KILOBYTES_DESC = "Amount of storage provided per-player for schematics on the server.";
+        public static final String PLAYER_QUOTA_KILOBYTES_DESC =
+                "Amount of storage provided per-player for schematics on the server.";
 
         public static final String LANG_PREFIX = Reference.MODID.toLowerCase() + ".config";
     }
-        public static final class Chat {
-            public static final String SAVE_COORDINATES_SUCCESS = "Schematica.chat.saveCoordinatesSuccess";
-            public static final String SAVE_COORDINATES_FAIL = "Schematica.chat.saveCoordinatesFail";
-        }
+
+    public static final class Chat {
+        public static final String SAVE_COORDINATES_SUCCESS = "Schematica.chat.saveCoordinatesSuccess";
+        public static final String SAVE_COORDINATES_FAIL = "Schematica.chat.saveCoordinatesFail";
+    }
 
     public static final class Command {
         public static final class Save {
@@ -85,7 +91,8 @@ public final class Names {
                 public static final String SAVE_SUCCESSFUL = "schematica.command.save.saveSucceeded";
                 public static final String SAVE_FAILED = "schematica.command.save.saveFailed";
                 public static final String QUOTA_EXCEEDED = "schematica.command.save.quotaExceeded";
-                public static final String PLAYER_SCHEMATIC_DIR_UNAVAILABLE = "schematica.command.save.playerSchematicDirUnavailable";
+                public static final String PLAYER_SCHEMATIC_DIR_UNAVAILABLE =
+                        "schematica.command.save.playerSchematicDirUnavailable";
             }
 
             public static final String NAME = "schematicaSave";
@@ -144,7 +151,6 @@ public final class Names {
             public static final String POINT_BLUE = "schematica.gui.point.blue";
             public static final String SAVE = "schematica.gui.save";
             public static final String SAVE_SELECTION = "schematica.gui.saveselection";
-
         }
 
         public static final class Control {
@@ -153,6 +159,8 @@ public final class Names {
             public static final String MATERIALS = "schematica.gui.materials";
             public static final String PRINTER = "schematica.gui.printer";
             public static final String OPERATIONS = "schematica.gui.operations";
+
+            public static final String NAME = "schematica.gui.name";
 
             public static final String UNLOAD = "schematica.gui.unload";
             public static final String MODE_ALL = "schematica.gui.all";

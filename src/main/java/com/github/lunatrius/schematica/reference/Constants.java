@@ -41,7 +41,7 @@ public final class Constants {
     }
 
     public static final class Files {
-        //+ .json
+        // + .json
         public static final String Coordinates = "Coordinates";
     }
 }

@@ -1,11 +1,10 @@
 package com.github.lunatrius.schematica.api;
 
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-
-import java.util.List;
 
 public interface ISchematic {
     /**

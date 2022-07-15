@@ -1,5 +1,7 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
+import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
+
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.FileFilterSchematic;
 import com.github.lunatrius.schematica.Schematica;
@@ -9,6 +11,11 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.schematic.SchematicUtil;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -18,13 +25,6 @@ import net.minecraft.item.Item;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.lwjgl.Sys;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
 
 public class GuiSchematicLoad extends GuiScreenBase {
     private static final FileFilterSchematic FILE_FILTER_FOLDER = new FileFilterSchematic(true);
@@ -45,7 +45,8 @@ public class GuiSchematicLoad extends GuiScreenBase {
     public void initGui() {
         int id = 0;
 
-        this.btnOpenDir = new GuiButton(id++, this.width / 2 - 154, this.height - 36, 150, 20, I18n.format(Names.Gui.Load.OPEN_FOLDER));
+        this.btnOpenDir = new GuiButton(
+                id++, this.width / 2 - 154, this.height - 36, 150, 20, I18n.format(Names.Gui.Load.OPEN_FOLDER));
         this.buttonList.add(this.btnOpenDir);
 
         this.btnDone = new GuiButton(id++, this.width / 2 + 4, this.height - 36, 150, 20, I18n.format(Names.Gui.DONE));
@@ -113,8 +114,9 @@ public class GuiSchematicLoad extends GuiScreenBase {
         this.schematicFiles.clear();
 
         try {
-            if (!this.currentDirectory.getCanonicalPath()
-                .equals(ConfigurationHandler.schematicDirectory.getCanonicalPath())) {
+            if (!this.currentDirectory
+                    .getCanonicalPath()
+                    .equals(ConfigurationHandler.schematicDirectory.getCanonicalPath())) {
                 this.schematicFiles.add(new GuiSchematicEntry("..", Items.lava_bucket, 0, true));
             }
         } catch (IOException e) {
@@ -141,12 +143,14 @@ public class GuiSchematicLoad extends GuiScreenBase {
 
         File[] filesSchematics = this.currentDirectory.listFiles(FILE_FILTER_SCHEMATIC);
         if (filesSchematics == null || filesSchematics.length == 0) {
-            this.schematicFiles.add(new GuiSchematicEntry(I18n.format(Names.Gui.Load.NO_SCHEMATIC), Blocks.dirt, 0, false));
+            this.schematicFiles.add(
+                    new GuiSchematicEntry(I18n.format(Names.Gui.Load.NO_SCHEMATIC), Blocks.dirt, 0, false));
         } else {
             for (File file : filesSchematics) {
                 name = file.getName();
 
-                this.schematicFiles.add(new GuiSchematicEntry(name, SchematicUtil.getIconFromFile(file), file.isDirectory()));
+                this.schematicFiles.add(
+                        new GuiSchematicEntry(name, SchematicUtil.getIconFromFile(file), file.isDirectory()));
             }
         }
     }
@@ -160,9 +164,14 @@ public class GuiSchematicLoad extends GuiScreenBase {
                 if (Schematica.proxy.loadSchematic(null, this.currentDirectory, schematicEntry.getName())) {
                     SchematicWorld schematic = ClientProxy.schematic;
                     if (schematic != null) {
-                        ImmutablePair<Boolean, ImmutableTriple<Integer, Integer, Integer>> schematicCoordinate = ClientProxy.getCoordinates(worldServerName(this.mc), schematic.name);
+                        ImmutablePair<Boolean, ImmutableTriple<Integer, Integer, Integer>> schematicCoordinate =
+                                ClientProxy.getCoordinates(worldServerName(this.mc), schematic.name);
                         if (schematicCoordinate.left) {
-                            ClientProxy.moveSchematic(schematic, schematicCoordinate.right.left, schematicCoordinate.right.middle, schematicCoordinate.right.right);
+                            ClientProxy.moveSchematic(
+                                    schematic,
+                                    schematicCoordinate.right.left,
+                                    schematicCoordinate.right.middle,
+                                    schematicCoordinate.right.right);
                         } else {
                             ClientProxy.moveSchematicToPlayer(schematic);
                         }

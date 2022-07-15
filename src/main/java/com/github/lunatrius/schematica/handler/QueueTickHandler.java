@@ -6,12 +6,11 @@ import com.github.lunatrius.schematica.world.chunk.SchematicContainer;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
-
-import java.util.ArrayDeque;
-import java.util.Queue;
 
 public class QueueTickHandler {
     public static final QueueTickHandler INSTANCE = new QueueTickHandler();
@@ -29,7 +28,9 @@ public class QueueTickHandler {
         // TODO: find a better way... maybe?
         try {
             final EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-            if (player != null && player.sendQueue != null && !player.sendQueue.getNetworkManager().isLocalChannel()) {
+            if (player != null
+                    && player.sendQueue != null
+                    && !player.sendQueue.getNetworkManager().isLocalChannel()) {
                 processQueue();
             }
         } catch (Exception e) {
@@ -58,7 +59,8 @@ public class QueueTickHandler {
 
         if (container.hasNext()) {
             if (container.isFirst()) {
-                final ChatComponentTranslation chatComponent = new ChatComponentTranslation(Names.Command.Save.Message.SAVE_STARTED, container.chunkCount, container.file.getName());
+                final ChatComponentTranslation chatComponent = new ChatComponentTranslation(
+                        Names.Command.Save.Message.SAVE_STARTED, container.chunkCount, container.file.getName());
                 container.player.addChatMessage(chatComponent);
             }
 
@@ -69,7 +71,8 @@ public class QueueTickHandler {
             this.queue.offer(container);
         } else {
             final boolean success = SchematicFormat.writeToFile(container.file, container.schematic);
-            final String message = success ? Names.Command.Save.Message.SAVE_SUCCESSFUL : Names.Command.Save.Message.SAVE_FAILED;
+            final String message =
+                    success ? Names.Command.Save.Message.SAVE_SUCCESSFUL : Names.Command.Save.Message.SAVE_FAILED;
             container.player.addChatMessage(new ChatComponentTranslation(message, container.file.getName()));
         }
     }

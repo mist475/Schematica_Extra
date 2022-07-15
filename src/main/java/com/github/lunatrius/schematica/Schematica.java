@@ -12,10 +12,14 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.relauncher.Side;
-
 import java.util.Map;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUI_FACTORY)
+@Mod(
+        modid = Reference.MODID,
+        name = Reference.NAME,
+        version = Reference.VERSION,
+        dependencies = Reference.DEPENDENCIES,
+        guiFactory = Reference.GUI_FACTORY)
 public class Schematica {
     @Instance(Reference.MODID)
     public static Schematica instance;

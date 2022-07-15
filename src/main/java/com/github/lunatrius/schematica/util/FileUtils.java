@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.util;
 
 import com.github.lunatrius.schematica.reference.Reference;
-
 import java.io.File;
 import java.io.IOException;
 

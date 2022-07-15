@@ -9,10 +9,12 @@ import com.github.lunatrius.schematica.world.storage.SaveHandlerSchematic;
 import com.github.lunatrius.schematica.world.storage.Schematic;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntitySkull;
@@ -24,10 +26,9 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.List;
-
 public class SchematicWorld extends World {
-    private static final WorldSettings WORLD_SETTINGS = new WorldSettings(0, WorldSettings.GameType.CREATIVE, false, false, WorldType.FLAT);
+    private static final WorldSettings WORLD_SETTINGS =
+            new WorldSettings(0, WorldSettings.GameType.CREATIVE, false, false, WorldType.FLAT);
 
     public String name = "";
     public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);
@@ -40,7 +41,7 @@ public class SchematicWorld extends World {
     public int renderingLayer;
 
     public SchematicWorld(ISchematic schematic) {
-        super(new SaveHandlerSchematic(), "Schematica", WORLD_SETTINGS, null, null);
+        super(new SaveHandlerSchematic(), "Schematica", WORLD_SETTINGS, null, new Profiler());
         this.schematic = schematic;
 
         for (TileEntity tileEntity : schematic.getTileEntities()) {
@@ -51,9 +52,10 @@ public class SchematicWorld extends World {
         this.isRenderingLayer = false;
         this.renderingLayer = 0;
     }
+
     public SchematicWorld(ISchematic schematic, String filename) {
         this(schematic);
-        this.name = filename.replace(".schematic","");
+        this.name = filename.replace(".schematic", "");
     }
 
     @Override
@@ -240,7 +242,8 @@ public class SchematicWorld extends World {
             final int coord = tileEntity.zCoord;
             tileEntity.zCoord = tileEntity.xCoord;
             tileEntity.xCoord = length - 1 - coord;
-            tileEntity.blockMetadata = schematicRotated.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+            tileEntity.blockMetadata =
+                    schematicRotated.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 
             if (tileEntity instanceof TileEntitySkull && tileEntity.blockMetadata == 0x1) {
                 TileEntitySkull skullTileEntity = (TileEntitySkull) tileEntity;

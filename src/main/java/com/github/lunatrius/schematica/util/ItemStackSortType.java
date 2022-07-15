@@ -2,7 +2,6 @@ package com.github.lunatrius.schematica.util;
 
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.reference.Reference;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -10,7 +9,9 @@ import java.util.List;
 public enum ItemStackSortType {
     NAME_ASC("name", "\u2191", new Comparator<BlockList.WrappedItemStack>() {
         @Override
-        public int compare(final BlockList.WrappedItemStack wrappedItemStackA, final BlockList.WrappedItemStack wrappedItemStackB) {
+        public int compare(
+                final BlockList.WrappedItemStack wrappedItemStackA,
+                final BlockList.WrappedItemStack wrappedItemStackB) {
             final String nameA = wrappedItemStackA.getItemStackDisplayName();
             final String nameB = wrappedItemStackB.getItemStackDisplayName();
 
@@ -19,7 +20,9 @@ public enum ItemStackSortType {
     }),
     NAME_DESC("name", "\u2193", new Comparator<BlockList.WrappedItemStack>() {
         @Override
-        public int compare(final BlockList.WrappedItemStack wrappedItemStackA, final BlockList.WrappedItemStack wrappedItemStackB) {
+        public int compare(
+                final BlockList.WrappedItemStack wrappedItemStackA,
+                final BlockList.WrappedItemStack wrappedItemStackB) {
             final String nameA = wrappedItemStackA.getItemStackDisplayName();
             final String nameB = wrappedItemStackB.getItemStackDisplayName();
 
@@ -28,13 +31,17 @@ public enum ItemStackSortType {
     }),
     SIZE_ASC("amount", "\u2191", new Comparator<BlockList.WrappedItemStack>() {
         @Override
-        public int compare(final BlockList.WrappedItemStack wrappedItemStackA, final BlockList.WrappedItemStack wrappedItemStackB) {
+        public int compare(
+                final BlockList.WrappedItemStack wrappedItemStackA,
+                final BlockList.WrappedItemStack wrappedItemStackB) {
             return wrappedItemStackA.total - wrappedItemStackB.total;
         }
     }),
     SIZE_DESC("amount", "\u2193", new Comparator<BlockList.WrappedItemStack>() {
         @Override
-        public int compare(final BlockList.WrappedItemStack wrappedItemStackA, final BlockList.WrappedItemStack wrappedItemStackB) {
+        public int compare(
+                final BlockList.WrappedItemStack wrappedItemStackA,
+                final BlockList.WrappedItemStack wrappedItemStackB) {
             return wrappedItemStackB.total - wrappedItemStackA.total;
         }
     });
@@ -44,7 +51,8 @@ public enum ItemStackSortType {
     public final String label;
     public final String glyph;
 
-    private ItemStackSortType(final String label, final String glyph, final Comparator<BlockList.WrappedItemStack> comparator) {
+    private ItemStackSortType(
+            final String label, final String glyph, final Comparator<BlockList.WrappedItemStack> comparator) {
         this.label = label;
         this.glyph = glyph;
         this.comparator = comparator;

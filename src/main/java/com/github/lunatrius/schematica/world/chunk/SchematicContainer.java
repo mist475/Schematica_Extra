@@ -3,10 +3,9 @@ package com.github.lunatrius.schematica.world.chunk;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.reference.Reference;
+import java.io.File;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-
-import java.io.File;
 
 public class SchematicContainer {
     public final ISchematic schematic;
@@ -32,7 +31,17 @@ public class SchematicContainer {
     public final int chunkCount;
     public int processedChunks;
 
-    public SchematicContainer(ISchematic schematic, EntityPlayer player, World world, File file, int minX, int maxX, int minY, int maxY, int minZ, int maxZ) {
+    public SchematicContainer(
+            ISchematic schematic,
+            EntityPlayer player,
+            World world,
+            File file,
+            int minX,
+            int maxX,
+            int minY,
+            int maxY,
+            int minZ,
+            int maxZ) {
         this.schematic = schematic;
         this.player = player;
         this.world = world;
@@ -62,7 +71,17 @@ public class SchematicContainer {
         }
 
         Reference.logger.debug("Copying chunk at [{},{}] into {}", this.curChunkX, this.curChunkZ, this.file.getName());
-        Schematica.proxy.copyChunkToSchematic(this.schematic, this.world, this.curChunkX, this.curChunkZ, this.minX, this.maxX, this.minY, this.maxY, this.minZ, this.maxZ);
+        Schematica.proxy.copyChunkToSchematic(
+                this.schematic,
+                this.world,
+                this.curChunkX,
+                this.curChunkZ,
+                this.minX,
+                this.maxX,
+                this.minY,
+                this.maxY,
+                this.minZ,
+                this.maxZ);
 
         this.processedChunks++;
         this.curChunkX++;

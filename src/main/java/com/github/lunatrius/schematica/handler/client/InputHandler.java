@@ -25,11 +25,11 @@ public class InputHandler {
     public static final InputHandler INSTANCE = new InputHandler();
 
     private static final KeyBinding KEY_BINDING_LOAD =
-            new KeyBinding(Names.Keys.LOAD, Keyboard.KEY_DIVIDE, Names.Keys.CATEGORY);
+            new KeyBinding(Names.Keys.LOAD, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_SAVE =
-            new KeyBinding(Names.Keys.SAVE, Keyboard.KEY_MULTIPLY, Names.Keys.CATEGORY);
+            new KeyBinding(Names.Keys.SAVE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_CONTROL =
-            new KeyBinding(Names.Keys.CONTROL, Keyboard.KEY_SUBTRACT, Names.Keys.CATEGORY);
+            new KeyBinding(Names.Keys.CONTROL, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_LAYER_INC =
             new KeyBinding(Names.Keys.LAYER_INC, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_LAYER_DEC =

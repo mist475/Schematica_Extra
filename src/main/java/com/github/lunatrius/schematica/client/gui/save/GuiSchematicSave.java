@@ -1,5 +1,10 @@
 package com.github.lunatrius.schematica.client.gui.save;
 
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.resources.I18n;
+
 import com.github.lunatrius.core.client.gui.GuiNumericField;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.core.util.vector.Vector3i;
@@ -8,12 +13,9 @@ import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.resources.I18n;
 
 public class GuiSchematicSave extends GuiScreenBase {
+
     private int centerX = 0;
     private int centerY = 0;
 
@@ -56,7 +58,12 @@ public class GuiSchematicSave extends GuiScreenBase {
         int id = 0;
 
         this.btnPointA = new GuiButton(
-                id++, this.centerX - 130, this.centerY - 55, 100, 20, I18n.format(Names.Gui.Save.POINT_RED));
+                id++,
+                this.centerX - 130,
+                this.centerY - 55,
+                100,
+                20,
+                I18n.format(Names.Gui.Save.POINT_RED));
         this.buttonList.add(this.btnPointA);
 
         this.numericAX = new GuiNumericField(this.fontRendererObj, id++, this.centerX - 130, this.centerY - 30);
@@ -69,7 +76,12 @@ public class GuiSchematicSave extends GuiScreenBase {
         this.buttonList.add(this.numericAZ);
 
         this.btnPointB = new GuiButton(
-                id++, this.centerX + 30, this.centerY - 55, 100, 20, I18n.format(Names.Gui.Save.POINT_BLUE));
+                id++,
+                this.centerX + 30,
+                this.centerY - 55,
+                100,
+                20,
+                I18n.format(Names.Gui.Save.POINT_BLUE));
         this.buttonList.add(this.btnPointB);
 
         this.numericBX = new GuiNumericField(this.fontRendererObj, id++, this.centerX + 30, this.centerY - 30);

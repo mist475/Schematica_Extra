@@ -1,9 +1,8 @@
 package com.github.lunatrius.schematica.nbt;
 
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.world.WorldDummy;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,13 +11,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.world.WorldDummy;
+
 public class NBTHelper {
+
     public static List<TileEntity> readTileEntitiesFromCompound(final NBTTagCompound compound) {
         return readTileEntitiesFromCompound(compound, new ArrayList<TileEntity>());
     }
 
-    public static List<TileEntity> readTileEntitiesFromCompound(
-            final NBTTagCompound compound, final List<TileEntity> tileEntities) {
+    public static List<TileEntity> readTileEntitiesFromCompound(final NBTTagCompound compound,
+            final List<TileEntity> tileEntities) {
         final NBTTagList tagList = compound.getTagList(Names.NBT.TILE_ENTITIES, Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound tileEntityCompound = tagList.getCompoundTagAt(i);
@@ -33,8 +36,8 @@ public class NBTHelper {
         return writeTileEntitiesToCompound(tileEntities, new NBTTagCompound());
     }
 
-    public static NBTTagCompound writeTileEntitiesToCompound(
-            final List<TileEntity> tileEntities, final NBTTagCompound compound) {
+    public static NBTTagCompound writeTileEntitiesToCompound(final List<TileEntity> tileEntities,
+            final NBTTagCompound compound) {
         final NBTTagList tagList = new NBTTagList();
         for (TileEntity tileEntity : tileEntities) {
             final NBTTagCompound tileEntityCompound = writeTileEntityToCompound(tileEntity);
@@ -58,8 +61,8 @@ public class NBTHelper {
         return readEntitiesFromCompound(compound, null, entities);
     }
 
-    public static List<Entity> readEntitiesFromCompound(
-            final NBTTagCompound compound, final World world, final List<Entity> entities) {
+    public static List<Entity> readEntitiesFromCompound(final NBTTagCompound compound, final World world,
+            final List<Entity> entities) {
         final NBTTagList tagList = compound.getTagList(Names.NBT.ENTITIES, Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound entityCompound = tagList.getCompoundTagAt(i);

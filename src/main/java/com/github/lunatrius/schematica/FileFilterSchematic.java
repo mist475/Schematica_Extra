@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 
 public class FileFilterSchematic implements FileFilter {
+
     private final boolean directory;
 
     public FileFilterSchematic(boolean dir) {

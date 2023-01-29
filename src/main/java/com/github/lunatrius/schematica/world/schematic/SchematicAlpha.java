@@ -1,17 +1,10 @@
 package com.github.lunatrius.schematica.world.schematic;
 
-import com.github.lunatrius.schematica.api.ISchematic;
-import com.github.lunatrius.schematica.api.event.PreSchematicSaveEvent;
-import com.github.lunatrius.schematica.nbt.NBTHelper;
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
-import com.github.lunatrius.schematica.world.storage.Schematic;
-import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
-import cpw.mods.fml.common.registry.GameData;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -22,7 +15,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 
+import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.api.event.PreSchematicSaveEvent;
+import com.github.lunatrius.schematica.nbt.NBTHelper;
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+import com.github.lunatrius.schematica.world.storage.Schematic;
+
+import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
+import cpw.mods.fml.common.registry.GameData;
+
 public class SchematicAlpha extends SchematicFormat {
+
     private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
     @Override

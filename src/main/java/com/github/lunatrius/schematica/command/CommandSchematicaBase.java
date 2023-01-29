@@ -5,6 +5,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public abstract class CommandSchematicaBase extends CommandBase {
+
     @Override
     public int getRequiredPermissionLevel() {
         return 0;

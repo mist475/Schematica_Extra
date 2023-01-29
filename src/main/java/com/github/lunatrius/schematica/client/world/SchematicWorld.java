@@ -1,15 +1,7 @@
 package com.github.lunatrius.schematica.client.world;
 
-import com.github.lunatrius.core.util.vector.Vector3f;
-import com.github.lunatrius.core.util.vector.Vector3i;
-import com.github.lunatrius.schematica.api.ISchematic;
-import com.github.lunatrius.schematica.reference.Reference;
-import com.github.lunatrius.schematica.world.chunk.ChunkProviderSchematic;
-import com.github.lunatrius.schematica.world.storage.SaveHandlerSchematic;
-import com.github.lunatrius.schematica.world.storage.Schematic;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -26,9 +18,25 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.github.lunatrius.core.util.vector.Vector3f;
+import com.github.lunatrius.core.util.vector.Vector3i;
+import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.reference.Reference;
+import com.github.lunatrius.schematica.world.chunk.ChunkProviderSchematic;
+import com.github.lunatrius.schematica.world.storage.SaveHandlerSchematic;
+import com.github.lunatrius.schematica.world.storage.Schematic;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SchematicWorld extends World {
-    private static final WorldSettings WORLD_SETTINGS =
-            new WorldSettings(0, WorldSettings.GameType.CREATIVE, false, false, WorldType.FLAT);
+
+    private static final WorldSettings WORLD_SETTINGS = new WorldSettings(
+            0,
+            WorldSettings.GameType.CREATIVE,
+            false,
+            false,
+            WorldType.FLAT);
 
     public String name = "";
     public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);
@@ -242,8 +250,8 @@ public class SchematicWorld extends World {
             final int coord = tileEntity.zCoord;
             tileEntity.zCoord = tileEntity.xCoord;
             tileEntity.xCoord = length - 1 - coord;
-            tileEntity.blockMetadata =
-                    schematicRotated.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+            tileEntity.blockMetadata = schematicRotated
+                    .getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 
             if (tileEntity instanceof TileEntitySkull && tileEntity.blockMetadata == 0x1) {
                 TileEntitySkull skullTileEntity = (TileEntitySkull) tileEntity;

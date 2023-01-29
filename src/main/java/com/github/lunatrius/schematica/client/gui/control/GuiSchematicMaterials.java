@@ -1,5 +1,18 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Formatter;
+import java.util.List;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+
+import org.apache.commons.io.IOUtils;
+
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.util.BlockList;
@@ -10,18 +23,9 @@ import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.ItemStackSortType;
 import cpw.mods.fml.client.config.GuiUnicodeGlyphButton;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Formatter;
-import java.util.List;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import org.apache.commons.io.IOUtils;
 
 public class GuiSchematicMaterials extends GuiScreenBase {
+
     private GuiSchematicMaterialsSlot guiSchematicMaterialsSlot;
 
     private ItemStackSortType sortType = ItemStackSortType.fromString(ConfigurationHandler.sortType);
@@ -59,7 +63,12 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         this.buttonList.add(this.btnSort);
 
         this.btnDump = new GuiButton(
-                ++id, this.width / 2 - 50, this.height - 30, 100, 20, I18n.format(Names.Gui.Control.DUMP));
+                ++id,
+                this.width / 2 - 50,
+                this.height - 30,
+                100,
+                20,
+                I18n.format(Names.Gui.Control.DUMP));
         this.buttonList.add(this.btnDump);
 
         this.btnDone = new GuiButton(++id, this.width / 2 + 54, this.height - 30, 100, 20, I18n.format(Names.Gui.DONE));
@@ -116,8 +125,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         int maxLengthName = 0;
         int maxSize = 0;
         for (final BlockList.WrappedItemStack wrappedItemStack : blockList) {
-            maxLengthName = Math.max(
-                    maxLengthName, wrappedItemStack.getItemStackDisplayName().length());
+            maxLengthName = Math.max(maxLengthName, wrappedItemStack.getItemStackDisplayName().length());
             maxSize = Math.max(maxSize, wrappedItemStack.total);
         }
 
@@ -136,8 +144,8 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
         final File dumps = Schematica.proxy.getDirectory("dumps");
         try {
-            final FileOutputStream outputStream =
-                    new FileOutputStream(new File(dumps, Reference.MODID + "-materials.txt"));
+            final FileOutputStream outputStream = new FileOutputStream(
+                    new File(dumps, Reference.MODID + "-materials.txt"));
             try {
                 IOUtils.write(stringBuilder.toString(), outputStream);
             } finally {

@@ -1,16 +1,19 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
-import com.github.lunatrius.schematica.client.gui.GuiHelper;
-import com.github.lunatrius.schematica.client.util.BlockList;
-import com.github.lunatrius.schematica.reference.Names;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+
 import org.lwjgl.opengl.GL11;
 
+import com.github.lunatrius.schematica.client.gui.GuiHelper;
+import com.github.lunatrius.schematica.client.util.BlockList;
+import com.github.lunatrius.schematica.reference.Names;
+
 class GuiSchematicMaterialsSlot extends GuiSlot {
+
     private final Minecraft minecraft = Minecraft.getMinecraft();
 
     private final GuiSchematicMaterials guiSchematicMaterials;
@@ -54,8 +57,8 @@ class GuiSchematicMaterialsSlot extends GuiSlot {
 
         final String itemName = wrappedItemStack.getItemStackDisplayName();
         final String amount = wrappedItemStack.getFormattedAmount();
-        final String amountrequired =
-                wrappedItemStack.getFormattedAmountRequired(strMaterialRequired, strMaterialAvailable);
+        final String amountrequired = wrappedItemStack
+                .getFormattedAmountRequired(strMaterialRequired, strMaterialAvailable);
 
         GuiHelper.drawItemStack(this.minecraft.renderEngine, this.minecraft.fontRenderer, x, y, itemStack);
 

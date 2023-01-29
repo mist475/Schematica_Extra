@@ -1,13 +1,15 @@
 package com.github.lunatrius.schematica.handler.client;
 
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.reference.Names;
 import com.github.lunatrius.schematica.reference.Reference;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 public class ChatEventHandler {
+
     public static final ChatEventHandler INSTANCE = new ChatEventHandler();
 
     public int chatLines = 0;

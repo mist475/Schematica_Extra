@@ -1,16 +1,20 @@
 package com.github.lunatrius.schematica.client.renderer.shader;
 
-import com.github.lunatrius.schematica.reference.Reference;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+import com.github.lunatrius.schematica.reference.Reference;
+
 public class ShaderProgram {
+
     private static final Minecraft MINECRAFT = Minecraft.getMinecraft();
 
     private int program;
@@ -92,8 +96,8 @@ public class ShaderProgram {
         GL20.glCompileShader(handle);
 
         if (GL20.glGetShaderi(handle, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
-            Reference.logger.error(
-                    "Could not compile shader {}: {}", filename, GL20.glGetShaderInfoLog(this.program, 1024));
+            Reference.logger
+                    .error("Could not compile shader {}: {}", filename, GL20.glGetShaderInfoLog(this.program, 1024));
             GL20.glDeleteShader(handle);
             return 0;
         }
@@ -104,8 +108,8 @@ public class ShaderProgram {
     private String loadFile(ResourceLocation resourceLocation) {
         try {
             final StringBuilder code = new StringBuilder();
-            final InputStream inputStream =
-                    MINECRAFT.getResourceManager().getResource(resourceLocation).getInputStream();
+            final InputStream inputStream = MINECRAFT.getResourceManager().getResource(resourceLocation)
+                    .getInputStream();
             final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;

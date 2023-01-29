@@ -1,23 +1,27 @@
 package com.github.lunatrius.schematica.handler;
 
-import com.github.lunatrius.schematica.Schematica;
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameData;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import com.github.lunatrius.schematica.Schematica;
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameData;
+
 public class ConfigurationHandler {
+
     public static final ConfigurationHandler INSTANCE = new ConfigurationHandler();
 
     public static final String VERSION = "1";
@@ -38,11 +42,12 @@ public class ConfigurationHandler {
     public static final boolean DESTROY_BLOCKS_DEFAULT = false;
     public static final boolean DESTROY_INSTANTLY_DEFAULT = false;
     public static final boolean PLACE_ADJACENT_DEFAULT = true;
-    public static final boolean[] SWAP_SLOTS_DEFAULT =
-            new boolean[] {false, false, false, false, false, true, true, true, true};
+    public static final boolean[] SWAP_SLOTS_DEFAULT = new boolean[] { false, false, false, false, false, true, true,
+            true, true };
     public static final String SCHEMATIC_DIRECTORY_STR = "schematics";
-    public static final File SCHEMATIC_DIRECTORY_DEFAULT =
-            new File(Schematica.proxy.getDataDirectory(), SCHEMATIC_DIRECTORY_STR);
+    public static final File SCHEMATIC_DIRECTORY_DEFAULT = new File(
+            Schematica.proxy.getDataDirectory(),
+            SCHEMATIC_DIRECTORY_STR);
     public static final String[] EXTRA_AIR_BLOCKS_DEFAULT = {};
     public static final String SORT_TYPE_DEFAULT = "";
     public static final boolean PRINTER_ENABLED_DEFAULT = true;
@@ -124,12 +129,20 @@ public class ConfigurationHandler {
         enableAlpha = propEnableAlpha.getBoolean(ENABLE_ALPHA_DEFAULT);
 
         propAlpha = configuration.get(
-                Names.Config.Category.RENDER, Names.Config.ALPHA, ALPHA_DEFAULT, Names.Config.ALPHA_DESC, 0.0, 1.0);
+                Names.Config.Category.RENDER,
+                Names.Config.ALPHA,
+                ALPHA_DEFAULT,
+                Names.Config.ALPHA_DESC,
+                0.0,
+                1.0);
         propAlpha.setLanguageKey(Names.Config.LANG_PREFIX + "." + Names.Config.ALPHA);
         alpha = (float) propAlpha.getDouble(ALPHA_DEFAULT);
 
         propHighlight = configuration.get(
-                Names.Config.Category.RENDER, Names.Config.HIGHLIGHT, HIGHLIGHT_DEFAULT, Names.Config.HIGHLIGHT_DESC);
+                Names.Config.Category.RENDER,
+                Names.Config.HIGHLIGHT,
+                HIGHLIGHT_DEFAULT,
+                Names.Config.HIGHLIGHT_DESC);
         propHighlight.setLanguageKey(Names.Config.LANG_PREFIX + "." + Names.Config.HIGHLIGHT);
         highlight = propHighlight.getBoolean(HIGHLIGHT_DEFAULT);
 
@@ -247,10 +260,8 @@ public class ConfigurationHandler {
             final String schematicPath = schematicDirectory.getAbsolutePath();
             final String dataPath = Schematica.proxy.getDataDirectory().getAbsolutePath();
             if (schematicPath.contains(dataPath)) {
-                propSchematicDirectory.set(schematicPath
-                        .substring(dataPath.length())
-                        .replace("\\", "/")
-                        .replaceAll("^/+", ""));
+                propSchematicDirectory
+                        .set(schematicPath.substring(dataPath.length()).replace("\\", "/").replaceAll("^/+", ""));
             } else {
                 propSchematicDirectory.set(schematicPath.replace("\\", "/"));
             }
@@ -275,7 +286,10 @@ public class ConfigurationHandler {
         }
 
         propSortType = configuration.get(
-                Names.Config.Category.GENERAL, Names.Config.SORT_TYPE, SORT_TYPE_DEFAULT, Names.Config.SORT_TYPE_DESC);
+                Names.Config.Category.GENERAL,
+                Names.Config.SORT_TYPE,
+                SORT_TYPE_DEFAULT,
+                Names.Config.SORT_TYPE_DESC);
         propSortType.setShowInGui(false);
         sortType = propSortType.getString();
 

@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GuiSchematicEntry {
+
     private final String name;
     private final ItemStack itemStack;
     private final boolean isDirectory;

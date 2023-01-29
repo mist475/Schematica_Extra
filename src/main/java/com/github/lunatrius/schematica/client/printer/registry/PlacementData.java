@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class PlacementData {
+
     public static enum PlacementType {
         BLOCK,
         PLAYER,

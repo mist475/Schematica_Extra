@@ -2,6 +2,12 @@ package com.github.lunatrius.schematica.client.gui.control;
 
 import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
 
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ChatComponentText;
+
 import com.github.lunatrius.core.client.gui.GuiNumericField;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.core.util.vector.Vector3i;
@@ -12,13 +18,9 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ChatComponentText;
 
 public class GuiSchematicControl extends GuiScreenBase {
+
     private final SchematicWorld schematic;
     private final SchematicPrinter printer;
 
@@ -111,26 +113,51 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.buttonList.add(this.btnHide);
 
         this.btnMove = new GuiButton(
-                id++, this.width - 90, this.height - 80, 80, 20, I18n.format(Names.Gui.Control.MOVE_HERE));
+                id++,
+                this.width - 90,
+                this.height - 80,
+                80,
+                20,
+                I18n.format(Names.Gui.Control.MOVE_HERE));
         this.buttonList.add(this.btnMove);
 
-        this.btnFlip =
-                new GuiButton(id++, this.width - 90, this.height - 55, 80, 20, I18n.format(Names.Gui.Control.FLIP));
+        this.btnFlip = new GuiButton(
+                id++,
+                this.width - 90,
+                this.height - 55,
+                80,
+                20,
+                I18n.format(Names.Gui.Control.FLIP));
         this.buttonList.add(this.btnFlip);
 
-        this.btnRotate =
-                new GuiButton(id++, this.width - 90, this.height - 30, 80, 20, I18n.format(Names.Gui.Control.ROTATE));
+        this.btnRotate = new GuiButton(
+                id++,
+                this.width - 90,
+                this.height - 30,
+                80,
+                20,
+                I18n.format(Names.Gui.Control.ROTATE));
         this.buttonList.add(this.btnRotate);
 
         this.btnMaterials = new GuiButton(id++, 10, this.height - 70, 80, 20, this.strMaterials);
         this.buttonList.add(this.btnMaterials);
 
-        this.btnPrint =
-                new GuiButton(id++, 10, this.height - 30, 80, 20, this.printer.isPrinting() ? this.strOn : this.strOff);
+        this.btnPrint = new GuiButton(
+                id++,
+                10,
+                this.height - 30,
+                80,
+                20,
+                this.printer.isPrinting() ? this.strOn : this.strOff);
         this.buttonList.add(this.btnPrint);
 
-        this.btnSaveCoordinates =
-                new GuiButton(id++, this.centerX - 50, this.centerY + 45, 100, 20, this.strSaveCoordinates);
+        this.btnSaveCoordinates = new GuiButton(
+                id++,
+                this.centerX - 50,
+                this.centerY + 45,
+                100,
+                20,
+                this.strSaveCoordinates);
         this.buttonList.add(this.btnSaveCoordinates);
 
         this.numericX.setEnabled(this.schematic != null);
@@ -257,7 +284,11 @@ public class GuiSchematicControl extends GuiScreenBase {
 
         if (this.schematic != null) {
             drawString(
-                    this.fontRendererObj, this.strName + ": " + this.schematic.name, 10, this.height - 195, 0xFFFFFF);
+                    this.fontRendererObj,
+                    this.strName + ": " + this.schematic.name,
+                    10,
+                    this.height - 195,
+                    0xFFFFFF);
         }
         drawString(this.fontRendererObj, this.strX, this.centerX - 65, this.centerY - 24, 0xFFFFFF);
         drawString(this.fontRendererObj, this.strY, this.centerX - 65, this.centerY + 1, 0xFFFFFF);

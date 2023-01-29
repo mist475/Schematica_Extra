@@ -1,15 +1,18 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+
 public class RenderTickHandler {
+
     public static final RenderTickHandler INSTANCE = new RenderTickHandler();
 
     private final Minecraft minecraft = Minecraft.getMinecraft();

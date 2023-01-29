@@ -1,22 +1,26 @@
 package com.github.lunatrius.schematica.client.renderer;
 
-import com.github.lunatrius.core.util.vector.Vector3d;
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import com.github.lunatrius.schematica.reference.Constants;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.culling.Frustrum;
 import net.minecraft.profiler.Profiler;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+
 import org.lwjgl.opengl.GL11;
 
+import com.github.lunatrius.core.util.vector.Vector3d;
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.reference.Constants;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 public class RendererSchematicGlobal {
+
     public static final RendererSchematicGlobal INSTANCE = new RendererSchematicGlobal();
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
@@ -25,8 +29,7 @@ public class RendererSchematicGlobal {
     private final Frustrum frustrum = new Frustrum();
     public RenderBlocks renderBlocks = null;
     public final List<RendererSchematicChunk> sortedRendererSchematicChunk = new ArrayList<RendererSchematicChunk>();
-    private final RendererSchematicChunkComparator rendererSchematicChunkComparator =
-            new RendererSchematicChunkComparator();
+    private final RendererSchematicChunkComparator rendererSchematicChunkComparator = new RendererSchematicChunkComparator();
 
     private RendererSchematicGlobal() {}
 
@@ -87,7 +90,13 @@ public class RendererSchematicGlobal {
         this.profiler.startSection("dataPrep");
         if (schematic != null && schematic.isRendering) {
             RenderHelper.drawCuboidOutline(
-                    RenderHelper.VEC_ZERO, schematic.dimensions(), RenderHelper.LINE_ALL, 0.75f, 0.0f, 0.75f, 0.25f);
+                    RenderHelper.VEC_ZERO,
+                    schematic.dimensions(),
+                    RenderHelper.LINE_ALL,
+                    0.75f,
+                    0.0f,
+                    0.75f,
+                    0.25f);
         }
 
         if (ClientProxy.isRenderingGuide) {
@@ -97,21 +106,51 @@ public class RendererSchematicGlobal {
             ClientProxy.pointMin.toVector3d(start).sub(extra);
             ClientProxy.pointMax.toVector3d(end).sub(extra).add(1, 1, 1);
             RenderHelper.drawCuboidOutline(
-                    start.toVector3f(), end.toVector3f(), RenderHelper.LINE_ALL, 0.0f, 0.75f, 0.0f, 0.25f);
+                    start.toVector3f(),
+                    end.toVector3f(),
+                    RenderHelper.LINE_ALL,
+                    0.0f,
+                    0.75f,
+                    0.0f,
+                    0.25f);
 
             ClientProxy.pointA.toVector3d(start).sub(extra);
             end.set(start).add(1, 1, 1);
             RenderHelper.drawCuboidOutline(
-                    start.toVector3f(), end.toVector3f(), RenderHelper.LINE_ALL, 0.75f, 0.0f, 0.0f, 0.25f);
+                    start.toVector3f(),
+                    end.toVector3f(),
+                    RenderHelper.LINE_ALL,
+                    0.75f,
+                    0.0f,
+                    0.0f,
+                    0.25f);
             RenderHelper.drawCuboidSurface(
-                    start.toVector3f(), end.toVector3f(), RenderHelper.QUAD_ALL, 0.75f, 0.0f, 0.0f, 0.25f);
+                    start.toVector3f(),
+                    end.toVector3f(),
+                    RenderHelper.QUAD_ALL,
+                    0.75f,
+                    0.0f,
+                    0.0f,
+                    0.25f);
 
             ClientProxy.pointB.toVector3d(start).sub(extra);
             end.set(start).add(1, 1, 1);
             RenderHelper.drawCuboidOutline(
-                    start.toVector3f(), end.toVector3f(), RenderHelper.LINE_ALL, 0.0f, 0.0f, 0.75f, 0.25f);
+                    start.toVector3f(),
+                    end.toVector3f(),
+                    RenderHelper.LINE_ALL,
+                    0.0f,
+                    0.0f,
+                    0.75f,
+                    0.25f);
             RenderHelper.drawCuboidSurface(
-                    start.toVector3f(), end.toVector3f(), RenderHelper.QUAD_ALL, 0.0f, 0.0f, 0.75f, 0.25f);
+                    start.toVector3f(),
+                    end.toVector3f(),
+                    RenderHelper.QUAD_ALL,
+                    0.0f,
+                    0.0f,
+                    0.75f,
+                    0.25f);
         }
 
         int quadCount = RenderHelper.getQuadCount();
@@ -160,8 +199,8 @@ public class RendererSchematicGlobal {
                 ClientProxy.playerPosition.y - schematic.position.y,
                 ClientProxy.playerPosition.z - schematic.position.z);
         for (RendererSchematicChunk rendererSchematicChunk : this.sortedRendererSchematicChunk) {
-            rendererSchematicChunk.isInFrustrum =
-                    this.frustrum.isBoundingBoxInFrustum(rendererSchematicChunk.getBoundingBox());
+            rendererSchematicChunk.isInFrustrum = this.frustrum
+                    .isBoundingBoxInFrustum(rendererSchematicChunk.getBoundingBox());
         }
     }
 

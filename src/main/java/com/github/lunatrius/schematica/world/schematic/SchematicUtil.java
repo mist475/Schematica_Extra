@@ -1,17 +1,20 @@
 package com.github.lunatrius.schematica.world.schematic;
 
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
-import cpw.mods.fml.common.registry.GameData;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+import cpw.mods.fml.common.registry.GameData;
+
 public final class SchematicUtil {
+
     public static NBTTagCompound readTagCompoundFromFile(File file) throws IOException {
         try {
             return CompressedStreamTools.readCompressed(new FileInputStream(file));
@@ -32,8 +35,7 @@ public final class SchematicUtil {
             if (parts.length >= 2) {
                 try {
                     damage = Integer.parseInt(parts[1]);
-                } catch (NumberFormatException ignored) {
-                }
+                } catch (NumberFormatException ignored) {}
             }
         }
 

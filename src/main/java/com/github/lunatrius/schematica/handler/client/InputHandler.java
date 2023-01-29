@@ -1,15 +1,5 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import com.github.lunatrius.schematica.client.gui.control.GuiSchematicControl;
-import com.github.lunatrius.schematica.client.gui.load.GuiSchematicLoad;
-import com.github.lunatrius.schematica.client.gui.save.GuiSchematicSave;
-import com.github.lunatrius.schematica.client.renderer.RendererSchematicGlobal;
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -19,25 +9,48 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.ForgeHooks;
+
 import org.lwjgl.input.Keyboard;
 
+import com.github.lunatrius.schematica.client.gui.control.GuiSchematicControl;
+import com.github.lunatrius.schematica.client.gui.load.GuiSchematicLoad;
+import com.github.lunatrius.schematica.client.gui.save.GuiSchematicSave;
+import com.github.lunatrius.schematica.client.renderer.RendererSchematicGlobal;
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
+
 public class InputHandler {
+
     public static final InputHandler INSTANCE = new InputHandler();
 
-    private static final KeyBinding KEY_BINDING_LOAD =
-            new KeyBinding(Names.Keys.LOAD, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
-    private static final KeyBinding KEY_BINDING_SAVE =
-            new KeyBinding(Names.Keys.SAVE, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
-    private static final KeyBinding KEY_BINDING_CONTROL =
-            new KeyBinding(Names.Keys.CONTROL, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
-    private static final KeyBinding KEY_BINDING_LAYER_INC =
-            new KeyBinding(Names.Keys.LAYER_INC, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
-    private static final KeyBinding KEY_BINDING_LAYER_DEC =
-            new KeyBinding(Names.Keys.LAYER_DEC, Keyboard.KEY_NONE, Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_LOAD = new KeyBinding(
+            Names.Keys.LOAD,
+            Keyboard.KEY_NONE,
+            Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_SAVE = new KeyBinding(
+            Names.Keys.SAVE,
+            Keyboard.KEY_NONE,
+            Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_CONTROL = new KeyBinding(
+            Names.Keys.CONTROL,
+            Keyboard.KEY_NONE,
+            Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_LAYER_INC = new KeyBinding(
+            Names.Keys.LAYER_INC,
+            Keyboard.KEY_NONE,
+            Names.Keys.CATEGORY);
+    private static final KeyBinding KEY_BINDING_LAYER_DEC = new KeyBinding(
+            Names.Keys.LAYER_DEC,
+            Keyboard.KEY_NONE,
+            Names.Keys.CATEGORY);
 
-    public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[] {
-        KEY_BINDING_LOAD, KEY_BINDING_SAVE, KEY_BINDING_CONTROL, KEY_BINDING_LAYER_INC, KEY_BINDING_LAYER_DEC
-    };
+    public static final KeyBinding[] KEY_BINDINGS = new KeyBinding[] { KEY_BINDING_LOAD, KEY_BINDING_SAVE,
+            KEY_BINDING_CONTROL, KEY_BINDING_LAYER_INC, KEY_BINDING_LAYER_DEC };
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
 
@@ -61,8 +74,8 @@ public class InputHandler {
             if (KEY_BINDING_LAYER_INC.isPressed()) {
                 final SchematicWorld schematic = ClientProxy.schematic;
                 if (schematic != null && schematic.isRenderingLayer) {
-                    schematic.renderingLayer =
-                            MathHelper.clamp_int(schematic.renderingLayer + 1, 0, schematic.getHeight() - 1);
+                    schematic.renderingLayer = MathHelper
+                            .clamp_int(schematic.renderingLayer + 1, 0, schematic.getHeight() - 1);
                     RendererSchematicGlobal.INSTANCE.refresh();
                 }
             }
@@ -70,8 +83,8 @@ public class InputHandler {
             if (KEY_BINDING_LAYER_DEC.isPressed()) {
                 final SchematicWorld schematic = ClientProxy.schematic;
                 if (schematic != null && schematic.isRenderingLayer) {
-                    schematic.renderingLayer =
-                            MathHelper.clamp_int(schematic.renderingLayer - 1, 0, schematic.getHeight() - 1);
+                    schematic.renderingLayer = MathHelper
+                            .clamp_int(schematic.renderingLayer - 1, 0, schematic.getHeight() - 1);
                     RendererSchematicGlobal.INSTANCE.refresh();
                 }
             }
@@ -127,20 +140,20 @@ public class InputHandler {
             }
 
             if (player.capabilities.isCreativeMode) {
-                final Block block =
-                        schematic.getBlock(objectMouseOver.blockX, objectMouseOver.blockY, objectMouseOver.blockZ);
-                final int metadata = schematic.getBlockMetadata(
-                        objectMouseOver.blockX, objectMouseOver.blockY, objectMouseOver.blockZ);
-                if (block == Blocks.double_stone_slab
-                        || block == Blocks.double_wooden_slab
+                final Block block = schematic
+                        .getBlock(objectMouseOver.blockX, objectMouseOver.blockY, objectMouseOver.blockZ);
+                final int metadata = schematic
+                        .getBlockMetadata(objectMouseOver.blockX, objectMouseOver.blockY, objectMouseOver.blockZ);
+                if (block == Blocks.double_stone_slab || block == Blocks.double_wooden_slab
                         || block == Blocks.snow_layer) {
                     player.inventory.setInventorySlotContents(
-                            player.inventory.currentItem, new ItemStack(block, 1, metadata & 0xF));
+                            player.inventory.currentItem,
+                            new ItemStack(block, 1, metadata & 0xF));
                 }
 
                 final int slot = player.inventoryContainer.inventorySlots.size() - 9 + player.inventory.currentItem;
-                this.minecraft.playerController.sendSlotPacket(
-                        player.inventory.getStackInSlot(player.inventory.currentItem), slot);
+                this.minecraft.playerController
+                        .sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
             }
         }
 

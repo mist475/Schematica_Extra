@@ -3,12 +3,14 @@ package com.github.lunatrius.schematica.network.message;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.reference.Reference;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
 public class MessageCapabilities implements IMessage, IMessageHandler<MessageCapabilities, IMessage> {
+
     public boolean isPrinterEnabled;
     public boolean isSaveEnabled;
     public boolean isLoadEnabled;

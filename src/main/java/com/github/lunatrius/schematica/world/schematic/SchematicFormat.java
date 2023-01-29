@@ -1,19 +1,22 @@
 package com.github.lunatrius.schematica.world.schematic;
 
-import com.github.lunatrius.schematica.api.ISchematic;
-import com.github.lunatrius.schematica.api.event.PostSchematicCaptureEvent;
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.github.lunatrius.schematica.api.ISchematic;
+import com.github.lunatrius.schematica.api.event.PostSchematicCaptureEvent;
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+
 public abstract class SchematicFormat {
+
     public static final Map<String, SchematicFormat> FORMATS = new HashMap<String, SchematicFormat>();
     public static String FORMAT_DEFAULT;
 

@@ -1,15 +1,8 @@
 package com.github.lunatrius.schematica.client.renderer;
 
-import com.github.lunatrius.core.util.vector.Vector3d;
-import com.github.lunatrius.core.util.vector.Vector3f;
-import com.github.lunatrius.schematica.client.renderer.shader.ShaderProgram;
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import com.github.lunatrius.schematica.reference.Constants;
-import com.github.lunatrius.schematica.reference.Reference;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -22,10 +15,21 @@ import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+import com.github.lunatrius.core.util.vector.Vector3d;
+import com.github.lunatrius.core.util.vector.Vector3f;
+import com.github.lunatrius.schematica.client.renderer.shader.ShaderProgram;
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.handler.ConfigurationHandler;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.reference.Constants;
+import com.github.lunatrius.schematica.reference.Reference;
+
 public class RendererSchematicChunk {
+
     private static final ShaderProgram SHADER_ALPHA = new ShaderProgram("schematica", null, "shaders/alpha.frag");
 
     private static boolean canUpdate = false;
@@ -186,12 +190,9 @@ public class RendererSchematicChunk {
             return;
         }
 
-        if (this.distance
-                        .set(ClientProxy.playerPosition)
-                        .sub(this.schematic.position.x, this.schematic.position.y, this.schematic.position.z)
-                        .sub(this.centerPosition)
-                        .lengthSquared()
-                > 25600) {
+        if (this.distance.set(ClientProxy.playerPosition)
+                .sub(this.schematic.position.x, this.schematic.position.y, this.schematic.position.z)
+                .sub(this.centerPosition).lengthSquared() > 25600) {
             return;
         }
 
@@ -286,8 +287,8 @@ public class RendererSchematicChunk {
                         }
 
                         boolean isAirBlock = this.schematic.isAirBlock(x, y, z);
-                        boolean isMcAirBlock =
-                                mcWorld.isAirBlock(wx, wy, wz) || ConfigurationHandler.isExtraAirBlock(mcBlock);
+                        boolean isMcAirBlock = mcWorld.isAirBlock(wx, wy, wz)
+                                || ConfigurationHandler.isExtraAirBlock(mcBlock);
 
                         if (!isMcAirBlock) {
                             if (ConfigurationHandler.highlight && renderPass == 2) {
@@ -296,11 +297,23 @@ public class RendererSchematicChunk {
                                     size.set(x + 1, y + 1, z + 1);
                                     if (ConfigurationHandler.drawQuads) {
                                         RenderHelper.drawCuboidSurface(
-                                                zero, size, RenderHelper.QUAD_ALL, 0.75f, 0.0f, 0.75f, 0.25f);
+                                                zero,
+                                                size,
+                                                RenderHelper.QUAD_ALL,
+                                                0.75f,
+                                                0.0f,
+                                                0.75f,
+                                                0.25f);
                                     }
                                     if (ConfigurationHandler.drawLines) {
                                         RenderHelper.drawCuboidOutline(
-                                                zero, size, RenderHelper.LINE_ALL, 0.75f, 0.0f, 0.75f, 0.25f);
+                                                zero,
+                                                size,
+                                                RenderHelper.LINE_ALL,
+                                                0.75f,
+                                                0.0f,
+                                                0.75f,
+                                                0.25f);
                                     }
                                 } else if (block != mcBlock) {
                                     zero.set(x, y, z);
@@ -313,15 +326,29 @@ public class RendererSchematicChunk {
                                     }
                                 } else if (this.schematic.getBlockMetadata(x, y, z)
                                         != mcWorld.getBlockMetadata(wx, wy, wz)) {
-                                    zero.set(x, y, z);
-                                    size.set(x + 1, y + 1, z + 1);
-                                    if (ConfigurationHandler.drawQuads) {
-                                        RenderHelper.drawCuboidSurface(zero, size, sides, 0.75f, 0.35f, 0.0f, 0.25f);
-                                    }
-                                    if (ConfigurationHandler.drawLines) {
-                                        RenderHelper.drawCuboidOutline(zero, size, sides, 0.75f, 0.35f, 0.0f, 0.25f);
-                                    }
-                                }
+                                            zero.set(x, y, z);
+                                            size.set(x + 1, y + 1, z + 1);
+                                            if (ConfigurationHandler.drawQuads) {
+                                                RenderHelper.drawCuboidSurface(
+                                                        zero,
+                                                        size,
+                                                        sides,
+                                                        0.75f,
+                                                        0.35f,
+                                                        0.0f,
+                                                        0.25f);
+                                            }
+                                            if (ConfigurationHandler.drawLines) {
+                                                RenderHelper.drawCuboidOutline(
+                                                        zero,
+                                                        size,
+                                                        sides,
+                                                        0.75f,
+                                                        0.35f,
+                                                        0.0f,
+                                                        0.25f);
+                                            }
+                                        }
                             }
                         } else if (!isAirBlock) {
                             if (ConfigurationHandler.highlight && renderPass == 2) {
@@ -373,11 +400,13 @@ public class RendererSchematicChunk {
                 }
 
                 final boolean isAirBlock = mcWorld.isAirBlock(
-                        x + this.schematic.position.x, y + this.schematic.position.y, z + this.schematic.position.z);
+                        x + this.schematic.position.x,
+                        y + this.schematic.position.y,
+                        z + this.schematic.position.z);
 
                 if (isAirBlock) {
-                    TileEntitySpecialRenderer tileEntitySpecialRenderer =
-                            TileEntityRendererDispatcher.instance.getSpecialRenderer(tileEntity);
+                    TileEntitySpecialRenderer tileEntitySpecialRenderer = TileEntityRendererDispatcher.instance
+                            .getSpecialRenderer(tileEntity);
                     if (tileEntitySpecialRenderer != null) {
                         try {
                             tileEntitySpecialRenderer.renderTileEntityAt(tileEntity, x, y, z, 0);

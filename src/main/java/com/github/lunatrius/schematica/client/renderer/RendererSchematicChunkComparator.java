@@ -1,11 +1,13 @@
 package com.github.lunatrius.schematica.client.renderer;
 
+import java.util.Comparator;
+
 import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.core.util.vector.Vector3i;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
-import java.util.Comparator;
 
 public class RendererSchematicChunkComparator implements Comparator<RendererSchematicChunk> {
+
     private final Vector3d position = new Vector3d();
     private final Vector3d schematicPosition = new Vector3d();
 

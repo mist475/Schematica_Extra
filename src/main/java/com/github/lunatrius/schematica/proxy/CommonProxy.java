@@ -1,5 +1,17 @@
 package com.github.lunatrius.schematica.proxy;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
 import com.github.lunatrius.core.util.vector.Vector3i;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.command.CommandSchematicaList;
@@ -16,23 +28,15 @@ import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.chunk.SchematicContainer;
 import com.github.lunatrius.schematica.world.schematic.SchematicUtil;
 import com.github.lunatrius.schematica.world.storage.Schematic;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 
 public abstract class CommonProxy {
+
     public boolean isSaveEnabled = true;
     public boolean isLoadEnabled = true;
 
@@ -96,17 +100,8 @@ public abstract class CommonProxy {
 
     public void unloadSchematic() {}
 
-    public void copyChunkToSchematic(
-            final ISchematic schematic,
-            final World world,
-            final int chunkX,
-            final int chunkZ,
-            final int minX,
-            final int maxX,
-            final int minY,
-            final int maxY,
-            final int minZ,
-            final int maxZ) {
+    public void copyChunkToSchematic(final ISchematic schematic, final World world, final int chunkX, final int chunkZ,
+            final int minX, final int maxX, final int minY, final int maxY, final int minZ, final int maxZ) {
         final int localMinX = minX < (chunkX << 4) ? 0 : (minX & 15);
         final int localMaxX = maxX > ((chunkX << 4) + 15) ? 15 : (maxX & 15);
         final int localMinZ = minZ < (chunkZ << 4) ? 0 : (minZ & 15);
@@ -131,12 +126,12 @@ public abstract class CommonProxy {
                             final TileEntity tileEntity = world.getTileEntity(x, y, z);
                             if (tileEntity != null) {
                                 try {
-                                    final TileEntity reloadedTileEntity =
-                                            NBTHelper.reloadTileEntity(tileEntity, minX, minY, minZ);
+                                    final TileEntity reloadedTileEntity = NBTHelper
+                                            .reloadTileEntity(tileEntity, minX, minY, minZ);
                                     schematic.setTileEntity(localX, localY, localZ, reloadedTileEntity);
                                 } catch (NBTConversionException nce) {
-                                    Reference.logger.error(
-                                            "Error while trying to save tile entity '{}'!", tileEntity, nce);
+                                    Reference.logger
+                                            .error("Error while trying to save tile entity '{}'!", tileEntity, nce);
                                     schematic.setBlock(localX, localY, localZ, Blocks.bedrock);
                                 }
                             }
@@ -164,8 +159,8 @@ public abstract class CommonProxy {
         }
     }
 
-    public boolean saveSchematic(
-            EntityPlayer player, File directory, String filename, World world, Vector3i from, Vector3i to) {
+    public boolean saveSchematic(EntityPlayer player, File directory, String filename, World world, Vector3i from,
+            Vector3i to) {
         try {
             String iconName = "";
 
@@ -192,7 +187,16 @@ public abstract class CommonProxy {
 
             final ISchematic schematic = new Schematic(SchematicUtil.getIconFromName(iconName), width, height, length);
             final SchematicContainer container = new SchematicContainer(
-                    schematic, player, world, new File(directory, filename), minX, maxX, minY, maxY, minZ, maxZ);
+                    schematic,
+                    player,
+                    world,
+                    new File(directory, filename),
+                    minX,
+                    maxX,
+                    minY,
+                    maxY,
+                    minZ,
+                    maxZ);
             QueueTickHandler.INSTANCE.queueSchematic(container);
 
             return true;

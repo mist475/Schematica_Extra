@@ -1,10 +1,8 @@
 package com.github.lunatrius.schematica.client.util;
 
-import com.github.lunatrius.core.entity.EntityHelper;
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.reference.Reference;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,9 +10,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 
+import com.github.lunatrius.core.entity.EntityHelper;
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.reference.Reference;
+
 public class BlockList {
-    public List<WrappedItemStack> getList(
-            final EntityPlayer player, final SchematicWorld world, final WorldClient mcWorld) {
+
+    public List<WrappedItemStack> getList(final EntityPlayer player, final SchematicWorld world,
+            final WorldClient mcWorld) {
         final List<WrappedItemStack> blockList = new ArrayList<WrappedItemStack>();
 
         if (world == null) {
@@ -40,8 +43,8 @@ public class BlockList {
                     final int wy = world.position.y + y;
                     final int wz = world.position.z + z;
                     final Block mcBlock = mcWorld.getBlock(wx, wy, wz);
-                    final boolean isPlaced =
-                            block == mcBlock && world.getBlockMetadata(x, y, z) == mcWorld.getBlockMetadata(wx, wy, wz);
+                    final boolean isPlaced = block == mcBlock
+                            && world.getBlockMetadata(x, y, z) == mcWorld.getBlockMetadata(wx, wy, wz);
 
                     ItemStack stack = null;
 
@@ -67,18 +70,17 @@ public class BlockList {
 
         for (WrappedItemStack wrappedItemStack : blockList) {
             if (player.capabilities.isCreativeMode) wrappedItemStack.inventory = -1;
-            else
-                wrappedItemStack.inventory = EntityHelper.getItemCountInInventory(
-                        player.inventory,
-                        wrappedItemStack.itemStack.getItem(),
-                        wrappedItemStack.itemStack.getItemDamage());
+            else wrappedItemStack.inventory = EntityHelper.getItemCountInInventory(
+                    player.inventory,
+                    wrappedItemStack.itemStack.getItem(),
+                    wrappedItemStack.itemStack.getItemDamage());
         }
 
         return blockList;
     }
 
-    private WrappedItemStack findOrCreateWrappedItemStackFor(
-            final List<WrappedItemStack> blockList, final ItemStack itemStack) {
+    private WrappedItemStack findOrCreateWrappedItemStackFor(final List<WrappedItemStack> blockList,
+            final ItemStack itemStack) {
         for (final WrappedItemStack wrappedItemStack : blockList) {
             if (wrappedItemStack.itemStack.isItemEqual(itemStack)) {
                 return wrappedItemStack;
@@ -91,6 +93,7 @@ public class BlockList {
     }
 
     public static class WrappedItemStack {
+
         public ItemStack itemStack;
         public int placed;
         public int total;

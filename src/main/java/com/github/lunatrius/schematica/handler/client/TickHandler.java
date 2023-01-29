@@ -1,5 +1,7 @@
 package com.github.lunatrius.schematica.handler.client;
 
+import net.minecraft.client.Minecraft;
+
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RendererSchematicChunk;
@@ -7,12 +9,13 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
-import net.minecraft.client.Minecraft;
 
 public class TickHandler {
+
     public static final TickHandler INSTANCE = new TickHandler();
 
     private final Minecraft minecraft = Minecraft.getMinecraft();

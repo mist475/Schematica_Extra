@@ -12,6 +12,7 @@ import net.minecraftforge.common.ForgeHooks;
 
 import org.lwjgl.input.Keyboard;
 
+import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.gui.control.GuiSchematicControl;
 import com.github.lunatrius.schematica.client.gui.load.GuiSchematicLoad;
 import com.github.lunatrius.schematica.client.gui.save.GuiSchematicSave;
@@ -30,15 +31,15 @@ public class InputHandler {
 
     private static final KeyBinding KEY_BINDING_LOAD = new KeyBinding(
             Names.Keys.LOAD,
-            Keyboard.KEY_NONE,
+            Schematica.proxy.GTNH ? Keyboard.KEY_NONE : Keyboard.KEY_DIVIDE,
             Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_SAVE = new KeyBinding(
             Names.Keys.SAVE,
-            Keyboard.KEY_NONE,
+            Schematica.proxy.GTNH ? Keyboard.KEY_NONE : Keyboard.KEY_MULTIPLY,
             Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_CONTROL = new KeyBinding(
             Names.Keys.CONTROL,
-            Keyboard.KEY_NONE,
+            Schematica.proxy.GTNH ? Keyboard.KEY_NONE : Keyboard.KEY_SUBTRACT,
             Names.Keys.CATEGORY);
     private static final KeyBinding KEY_BINDING_LAYER_INC = new KeyBinding(
             Names.Keys.LAYER_INC,

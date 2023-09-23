@@ -41,7 +41,9 @@ public class DownloadHandler {
             return;
         }
 
-        final EntityPlayerMP player = this.transferMap.keySet().iterator().next();
+        final EntityPlayerMP player = this.transferMap.keySet()
+            .iterator()
+            .next();
         final SchematicTransfer transfer = this.transferMap.remove(player);
 
         if (transfer == null) {
@@ -56,7 +58,7 @@ public class DownloadHandler {
                 }
 
                 Reference.logger
-                        .warn("{}'s download timed out, retrying (#{})", player.getDisplayName(), transfer.retries);
+                    .warn("{}'s download timed out, retrying (#{})", player.getDisplayName(), transfer.retries);
 
                 sendChunk(player, transfer);
                 transfer.timeout = 0;
@@ -85,10 +87,10 @@ public class DownloadHandler {
 
         Reference.logger.trace("Sending chunk {},{},{}", transfer.baseX, transfer.baseY, transfer.baseZ);
         MessageDownloadChunk message = new MessageDownloadChunk(
-                transfer.schematic,
-                transfer.baseX,
-                transfer.baseY,
-                transfer.baseZ);
+            transfer.schematic,
+            transfer.baseX,
+            transfer.baseY,
+            transfer.baseZ);
         PacketHandler.INSTANCE.sendTo(message, player);
     }
 

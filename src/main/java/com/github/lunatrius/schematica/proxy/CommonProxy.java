@@ -51,8 +51,12 @@ public abstract class CommonProxy {
     public void init(FMLInitializationEvent event) {
         PacketHandler.init();
 
-        FMLCommonHandler.instance().bus().register(QueueTickHandler.INSTANCE);
-        FMLCommonHandler.instance().bus().register(DownloadHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(QueueTickHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(DownloadHandler.INSTANCE);
     }
 
     public void postInit(FMLPostInitializationEvent event) {
@@ -69,8 +73,8 @@ public abstract class CommonProxy {
         if (!ConfigurationHandler.schematicDirectory.exists()) {
             if (!ConfigurationHandler.schematicDirectory.mkdirs()) {
                 Reference.logger.warn(
-                        "Could not create schematic directory [{}]!",
-                        ConfigurationHandler.schematicDirectory.getAbsolutePath());
+                    "Could not create schematic directory [{}]!",
+                    ConfigurationHandler.schematicDirectory.getAbsolutePath());
             }
         }
     }
@@ -104,7 +108,7 @@ public abstract class CommonProxy {
     public void unloadSchematic() {}
 
     public void copyChunkToSchematic(final ISchematic schematic, final World world, final int chunkX, final int chunkZ,
-            final int minX, final int maxX, final int minY, final int maxY, final int minZ, final int maxZ) {
+        final int minX, final int maxX, final int minY, final int maxY, final int minZ, final int maxZ) {
         final int localMinX = minX < (chunkX << 4) ? 0 : (minX & 15);
         final int localMaxX = maxX > ((chunkX << 4) + 15) ? 15 : (maxX & 15);
         final int localMinZ = minZ < (chunkZ << 4) ? 0 : (minZ & 15);
@@ -130,11 +134,11 @@ public abstract class CommonProxy {
                             if (tileEntity != null) {
                                 try {
                                     final TileEntity reloadedTileEntity = NBTHelper
-                                            .reloadTileEntity(tileEntity, minX, minY, minZ);
+                                        .reloadTileEntity(tileEntity, minX, minY, minZ);
                                     schematic.setTileEntity(localX, localY, localZ, reloadedTileEntity);
                                 } catch (NBTConversionException nce) {
                                     Reference.logger
-                                            .error("Error while trying to save tile entity '{}'!", tileEntity, nce);
+                                        .error("Error while trying to save tile entity '{}'!", tileEntity, nce);
                                     schematic.setBlock(localX, localY, localZ, Blocks.bedrock);
                                 }
                             }
@@ -163,7 +167,7 @@ public abstract class CommonProxy {
     }
 
     public boolean saveSchematic(EntityPlayer player, File directory, String filename, World world, Vector3i from,
-            Vector3i to) {
+        Vector3i to) {
         try {
             String iconName = "";
 
@@ -190,16 +194,16 @@ public abstract class CommonProxy {
 
             final ISchematic schematic = new Schematic(SchematicUtil.getIconFromName(iconName), width, height, length);
             final SchematicContainer container = new SchematicContainer(
-                    schematic,
-                    player,
-                    world,
-                    new File(directory, filename),
-                    minX,
-                    maxX,
-                    minY,
-                    maxY,
-                    minZ,
-                    maxZ);
+                schematic,
+                player,
+                world,
+                new File(directory, filename),
+                minX,
+                maxX,
+                minY,
+                maxY,
+                minZ,
+                maxZ);
             QueueTickHandler.INSTANCE.queueSchematic(container);
 
             return true;

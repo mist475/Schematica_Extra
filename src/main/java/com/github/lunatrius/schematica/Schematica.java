@@ -17,11 +17,11 @@ import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(
-        modid = Reference.MODID,
-        name = Reference.NAME,
-        version = Reference.VERSION,
-        dependencies = Reference.DEPENDENCIES,
-        guiFactory = Reference.GUI_FACTORY)
+    modid = Reference.MODID,
+    name = Reference.NAME,
+    version = Reference.VERSION,
+    dependencies = Reference.DEPENDENCIES,
+    guiFactory = Reference.GUI_FACTORY)
 public class Schematica {
 
     @Instance(Reference.MODID)

@@ -53,10 +53,10 @@ public class PreSchematicSaveEvent extends Event {
     public boolean replaceMapping(String oldName, String newName) throws DuplicateMappingException {
         if (this.mappings.containsKey(newName)) {
             throw new DuplicateMappingException(
-                    String.format(
-                            "Could not replace block type %s, the block type %s already exists in the schematic.",
-                            oldName,
-                            newName));
+                String.format(
+                    "Could not replace block type %s, the block type %s already exists in the schematic.",
+                    oldName,
+                    newName));
         }
 
         Short id = this.mappings.get(oldName);

@@ -45,9 +45,9 @@ public class RenderTickHandler {
         final Vec3 vecPosition = renderViewEntity.getPosition(partialTicks);
         final Vec3 vecLook = renderViewEntity.getLook(partialTicks);
         final Vec3 vecExtendedLook = vecPosition.addVector(
-                vecLook.xCoord * blockReachDistance,
-                vecLook.yCoord * blockReachDistance,
-                vecLook.zCoord * blockReachDistance);
+            vecLook.xCoord * blockReachDistance,
+            vecLook.yCoord * blockReachDistance,
+            vecLook.zCoord * blockReachDistance);
 
         renderViewEntity.posX = posX;
         renderViewEntity.posY = posY;

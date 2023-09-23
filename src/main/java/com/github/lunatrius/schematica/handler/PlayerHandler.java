@@ -20,11 +20,11 @@ public class PlayerHandler {
         if (event.player instanceof EntityPlayerMP) {
             try {
                 PacketHandler.INSTANCE.sendTo(
-                        new MessageCapabilities(
-                                ConfigurationHandler.printerEnabled,
-                                ConfigurationHandler.saveEnabled,
-                                ConfigurationHandler.loadEnabled),
-                        (EntityPlayerMP) event.player);
+                    new MessageCapabilities(
+                        ConfigurationHandler.printerEnabled,
+                        ConfigurationHandler.saveEnabled,
+                        ConfigurationHandler.loadEnabled),
+                    (EntityPlayerMP) event.player);
             } catch (Exception ex) {
                 Reference.logger.error("Failed to send capabilities!", ex);
             }

@@ -21,7 +21,7 @@ public class NBTHelper {
     }
 
     public static List<TileEntity> readTileEntitiesFromCompound(final NBTTagCompound compound,
-            final List<TileEntity> tileEntities) {
+        final List<TileEntity> tileEntities) {
         final NBTTagList tagList = compound.getTagList(Names.NBT.TILE_ENTITIES, Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound tileEntityCompound = tagList.getCompoundTagAt(i);
@@ -37,7 +37,7 @@ public class NBTHelper {
     }
 
     public static NBTTagCompound writeTileEntitiesToCompound(final List<TileEntity> tileEntities,
-            final NBTTagCompound compound) {
+        final NBTTagCompound compound) {
         final NBTTagList tagList = new NBTTagList();
         for (TileEntity tileEntity : tileEntities) {
             final NBTTagCompound tileEntityCompound = writeTileEntityToCompound(tileEntity);
@@ -62,7 +62,7 @@ public class NBTHelper {
     }
 
     public static List<Entity> readEntitiesFromCompound(final NBTTagCompound compound, final World world,
-            final List<Entity> entities) {
+        final List<Entity> entities) {
         final NBTTagList tagList = compound.getTagList(Names.NBT.ENTITIES, Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound entityCompound = tagList.getCompoundTagAt(i);
@@ -97,7 +97,7 @@ public class NBTHelper {
     }
 
     public static TileEntity reloadTileEntity(TileEntity tileEntity, int offsetX, int offsetY, int offsetZ)
-            throws NBTConversionException {
+        throws NBTConversionException {
         if (tileEntity == null) {
             return null;
         }
@@ -124,7 +124,7 @@ public class NBTHelper {
     }
 
     public static Entity reloadEntity(Entity entity, int offsetX, int offsetY, int offsetZ)
-            throws NBTConversionException {
+        throws NBTConversionException {
         if (entity == null) {
             return null;
         }
@@ -154,7 +154,8 @@ public class NBTHelper {
     }
 
     public static TileEntity readTileEntityFromCompound(final NBTTagCompound tileEntityCompound) {
-        if (tileEntityCompound.getString("id").equals("savedMultipart")) {
+        if (tileEntityCompound.getString("id")
+            .equals("savedMultipart")) {
             return ForgeMultipart.createFromNBT(tileEntityCompound);
         }
 

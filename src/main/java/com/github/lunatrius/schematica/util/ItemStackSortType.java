@@ -13,7 +13,7 @@ public enum ItemStackSortType {
 
         @Override
         public int compare(final BlockList.WrappedItemStack wrappedItemStackA,
-                final BlockList.WrappedItemStack wrappedItemStackB) {
+            final BlockList.WrappedItemStack wrappedItemStackB) {
             final String nameA = wrappedItemStackA.getItemStackDisplayName();
             final String nameB = wrappedItemStackB.getItemStackDisplayName();
 
@@ -24,7 +24,7 @@ public enum ItemStackSortType {
 
         @Override
         public int compare(final BlockList.WrappedItemStack wrappedItemStackA,
-                final BlockList.WrappedItemStack wrappedItemStackB) {
+            final BlockList.WrappedItemStack wrappedItemStackB) {
             final String nameA = wrappedItemStackA.getItemStackDisplayName();
             final String nameB = wrappedItemStackB.getItemStackDisplayName();
 
@@ -35,7 +35,7 @@ public enum ItemStackSortType {
 
         @Override
         public int compare(final BlockList.WrappedItemStack wrappedItemStackA,
-                final BlockList.WrappedItemStack wrappedItemStackB) {
+            final BlockList.WrappedItemStack wrappedItemStackB) {
             return wrappedItemStackA.total - wrappedItemStackB.total;
         }
     }),
@@ -43,7 +43,7 @@ public enum ItemStackSortType {
 
         @Override
         public int compare(final BlockList.WrappedItemStack wrappedItemStackA,
-                final BlockList.WrappedItemStack wrappedItemStackB) {
+            final BlockList.WrappedItemStack wrappedItemStackB) {
             return wrappedItemStackB.total - wrappedItemStackA.total;
         }
     });
@@ -54,7 +54,7 @@ public enum ItemStackSortType {
     public final String glyph;
 
     private ItemStackSortType(final String label, final String glyph,
-            final Comparator<BlockList.WrappedItemStack> comparator) {
+        final Comparator<BlockList.WrappedItemStack> comparator) {
         this.label = label;
         this.glyph = glyph;
         this.comparator = comparator;

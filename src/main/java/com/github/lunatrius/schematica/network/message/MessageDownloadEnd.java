@@ -43,7 +43,7 @@ public class MessageDownloadEnd implements IMessage, IMessageHandler<MessageDown
 
         if (success) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(
-                    new ChatComponentTranslation(Names.Command.Download.Message.DOWNLOAD_SUCCEEDED, message.name));
+                new ChatComponentTranslation(Names.Command.Download.Message.DOWNLOAD_SUCCEEDED, message.name));
         }
 
         DownloadHandler.INSTANCE.schematic = null;

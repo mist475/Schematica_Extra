@@ -16,7 +16,7 @@ public class GuiHelper {
     private static final RenderItem renderItem = new RenderItem();
 
     public static void drawItemStack(TextureManager textureManager, FontRenderer fontRenderer, int x, int y,
-            ItemStack itemStack) {
+        ItemStack itemStack) {
         drawItemStackSlot(textureManager, x, y);
 
         if (itemStack != null && itemStack.getItem() != null) {

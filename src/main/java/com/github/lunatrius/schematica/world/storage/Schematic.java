@@ -142,7 +142,8 @@ public class Schematic implements ISchematic {
         }
 
         for (final Entity e : this.entities) {
-            if (entity.getUniqueID().equals(e.getUniqueID())) {
+            if (entity.getUniqueID()
+                .equals(e.getUniqueID())) {
                 return;
             }
         }
@@ -159,7 +160,8 @@ public class Schematic implements ISchematic {
         final Iterator<Entity> iterator = this.entities.iterator();
         while (iterator.hasNext()) {
             final Entity e = iterator.next();
-            if (entity.getUniqueID().equals(e.getUniqueID())) {
+            if (entity.getUniqueID()
+                .equals(e.getUniqueID())) {
                 iterator.remove();
             }
         }

@@ -32,11 +32,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class SchematicWorld extends World {
 
     private static final WorldSettings WORLD_SETTINGS = new WorldSettings(
-            0,
-            WorldSettings.GameType.CREATIVE,
-            false,
-            false,
-            WorldType.FLAT);
+        0,
+        WorldSettings.GameType.CREATIVE,
+        false,
+        false,
+        WorldType.FLAT);
 
     public String name = "";
     public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);
@@ -252,7 +252,7 @@ public class SchematicWorld extends World {
             tileEntity.zCoord = tileEntity.xCoord;
             tileEntity.xCoord = length - 1 - coord;
             tileEntity.blockMetadata = schematicRotated
-                    .getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+                .getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 
             if (tileEntity instanceof TileEntitySkull && tileEntity.blockMetadata == 0x1) {
                 TileEntitySkull skullTileEntity = (TileEntitySkull) tileEntity;

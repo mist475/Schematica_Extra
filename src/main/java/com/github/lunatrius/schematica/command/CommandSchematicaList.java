@@ -71,7 +71,7 @@ public class CommandSchematicaList extends CommandSchematicaBase {
         if (!schematicDirectory.exists()) {
             if (!schematicDirectory.mkdirs()) {
                 Reference.logger
-                        .warn("Could not create player schematic directory {}", schematicDirectory.getAbsolutePath());
+                    .warn("Could not create player schematic directory {}", schematicDirectory.getAbsolutePath());
                 throw new CommandException(Names.Command.Save.Message.PLAYER_SCHEMATIC_DIR_UNAVAILABLE);
             }
         }
@@ -82,28 +82,26 @@ public class CommandSchematicaList extends CommandSchematicaBase {
                 String fileName = FilenameUtils.removeExtension(path.getName());
 
                 IChatComponent chatComponent = new ChatComponentText(
-                        String.format(
-                                "%2d (%s): %s [",
-                                currentFile + 1,
-                                FileUtils.humanReadableByteCount(path.length()),
-                                fileName));
+                    String.format(
+                        "%2d (%s): %s [",
+                        currentFile + 1,
+                        FileUtils.humanReadableByteCount(path.length()),
+                        fileName));
                 String removeCommand = String.format("/%s %s", Names.Command.Remove.NAME, fileName);
 
                 IChatComponent removeLink = new ChatComponentTranslation(Names.Command.List.Message.REMOVE)
-                        .setChatStyle(
-                                new ChatStyle()
-                                        .setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, removeCommand))
-                                        .setColor(EnumChatFormatting.RED));
+                    .setChatStyle(
+                        new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, removeCommand))
+                            .setColor(EnumChatFormatting.RED));
                 chatComponent.appendSibling(removeLink);
                 chatComponent.appendText("][");
 
                 String downloadCommand = String.format("/%s %s", Names.Command.Download.NAME, fileName);
                 IChatComponent downloadLink = new ChatComponentTranslation(Names.Command.List.Message.DOWNLOAD)
-                        .setChatStyle(
-                                new ChatStyle()
-                                        .setChatClickEvent(
-                                                new ClickEvent(ClickEvent.Action.RUN_COMMAND, downloadCommand))
-                                        .setColor(EnumChatFormatting.GREEN));
+                    .setChatStyle(
+                        new ChatStyle()
+                            .setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, downloadCommand))
+                            .setColor(EnumChatFormatting.GREEN));
                 chatComponent.appendSibling(downloadLink);
                 chatComponent.appendText("]");
 
@@ -123,8 +121,8 @@ public class CommandSchematicaList extends CommandSchematicaBase {
         }
 
         sender.addChatMessage(
-                new ChatComponentTranslation(Names.Command.List.Message.PAGE_HEADER, page + 1, totalPages + 1)
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GREEN)));
+            new ChatComponentTranslation(Names.Command.List.Message.PAGE_HEADER, page + 1, totalPages + 1)
+                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GREEN)));
         for (IChatComponent chatComponent : componentsToSend) {
             sender.addChatMessage(chatComponent);
         }

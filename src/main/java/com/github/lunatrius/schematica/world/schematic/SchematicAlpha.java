@@ -146,15 +146,16 @@ public class SchematicAlpha extends SchematicFormat {
                 tileEntitiesList.appendTag(tileEntityTagCompound);
             } catch (Exception e) {
                 int pos = tileEntity.xCoord
-                        + (tileEntity.yCoord * schematic.getLength() + tileEntity.zCoord) * schematic.getWidth();
+                    + (tileEntity.yCoord * schematic.getLength() + tileEntity.zCoord) * schematic.getWidth();
                 if (--count > 0) {
                     Block block = schematic.getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
                     Reference.logger.error(
-                            "Block {}[{}] with TileEntity %s failed to save! Replacing with bedrock...",
-                            block,
-                            block != null ? BLOCK_REGISTRY.getNameForObject(block) : "?",
-                            tileEntity.getClass().getName(),
-                            e);
+                        "Block {}[{}] with TileEntity %s failed to save! Replacing with bedrock...",
+                        block,
+                        block != null ? BLOCK_REGISTRY.getNameForObject(block) : "?",
+                        tileEntity.getClass()
+                            .getName(),
+                        e);
                 }
                 localBlocks[pos] = (byte) BLOCK_REGISTRY.getId(Blocks.bedrock);
                 localMetadata[pos] = 0;

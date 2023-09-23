@@ -79,10 +79,10 @@ public class ShaderProgram {
 
         if (handle == 0) {
             Reference.logger.error(
-                    "Could not create shader of type {} for {}: {}",
-                    shaderType,
-                    filename,
-                    GL20.glGetProgramInfoLog(this.program, 1024));
+                "Could not create shader of type {} for {}: {}",
+                shaderType,
+                filename,
+                GL20.glGetProgramInfoLog(this.program, 1024));
             return 0;
         }
 
@@ -97,7 +97,7 @@ public class ShaderProgram {
 
         if (GL20.glGetShaderi(handle, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
             Reference.logger
-                    .error("Could not compile shader {}: {}", filename, GL20.glGetShaderInfoLog(this.program, 1024));
+                .error("Could not compile shader {}: {}", filename, GL20.glGetShaderInfoLog(this.program, 1024));
             GL20.glDeleteShader(handle);
             return 0;
         }
@@ -108,8 +108,9 @@ public class ShaderProgram {
     private String loadFile(ResourceLocation resourceLocation) {
         try {
             final StringBuilder code = new StringBuilder();
-            final InputStream inputStream = MINECRAFT.getResourceManager().getResource(resourceLocation)
-                    .getInputStream();
+            final InputStream inputStream = MINECRAFT.getResourceManager()
+                .getResource(resourceLocation)
+                .getInputStream();
             final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;

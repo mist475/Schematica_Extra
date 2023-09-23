@@ -15,6 +15,6 @@ public abstract class CommandSchematicaBase extends CommandBase {
     public boolean canCommandSenderUseCommand(ICommandSender sender) {
         // TODO: add logic for the client side when ready
         return super.canCommandSenderUseCommand(sender)
-                || (sender instanceof EntityPlayerMP && getRequiredPermissionLevel() <= 0);
+            || (sender instanceof EntityPlayerMP && getRequiredPermissionLevel() <= 0);
     }
 }

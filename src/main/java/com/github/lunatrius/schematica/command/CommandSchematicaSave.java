@@ -67,7 +67,7 @@ public class CommandSchematicaSave extends CommandSchematicaBase {
         if (!schematicDirectory.exists()) {
             if (!schematicDirectory.mkdirs()) {
                 Reference.logger
-                        .warn("Could not create player schematic directory {}", schematicDirectory.getAbsolutePath());
+                    .warn("Could not create player schematic directory {}", schematicDirectory.getAbsolutePath());
                 throw new CommandException(Names.Command.Save.Message.PLAYER_SCHEMATIC_DIR_UNAVAILABLE);
             }
         }

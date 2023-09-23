@@ -25,6 +25,7 @@ public class RendererSchematicChunkComparator implements Comparator<RendererSche
     }
 
     public void setPosition(Vector3i position) {
-        this.position.set(ClientProxy.playerPosition).sub(position.toVector3d(this.schematicPosition));
+        this.position.set(ClientProxy.playerPosition)
+            .sub(position.toVector3d(this.schematicPosition));
     }
 }

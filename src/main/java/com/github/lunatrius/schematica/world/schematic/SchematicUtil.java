@@ -40,12 +40,20 @@ public final class SchematicUtil {
             }
         }
 
-        icon = new ItemStack(GameData.getBlockRegistry().getObject(name), 1, damage);
+        icon = new ItemStack(
+            GameData.getBlockRegistry()
+                .getObject(name),
+            1,
+            damage);
         if (icon.getItem() != null) {
             return icon;
         }
 
-        icon = new ItemStack(GameData.getItemRegistry().getObject(name), 1, damage);
+        icon = new ItemStack(
+            GameData.getItemRegistry()
+                .getObject(name),
+            1,
+            damage);
         if (icon.getItem() != null) {
             return icon;
         }

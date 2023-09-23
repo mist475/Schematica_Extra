@@ -22,7 +22,9 @@ public class ServerProxy extends CommonProxy {
     public void init(FMLInitializationEvent event) {
         super.init(event);
 
-        FMLCommonHandler.instance().bus().register(PlayerHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(PlayerHandler.INSTANCE);
     }
 
     @Override
@@ -33,7 +35,8 @@ public class ServerProxy extends CommonProxy {
 
     @Override
     public File getDataDirectory() {
-        final File file = MinecraftServer.getServer().getFile(".");
+        final File file = MinecraftServer.getServer()
+            .getFile(".");
         try {
             return file.getCanonicalFile();
         } catch (IOException e) {

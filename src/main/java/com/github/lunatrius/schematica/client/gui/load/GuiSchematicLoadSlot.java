@@ -16,12 +16,12 @@ public class GuiSchematicLoadSlot extends GuiSlot {
 
     public GuiSchematicLoadSlot(GuiSchematicLoad guiSchematicLoad) {
         super(
-                Minecraft.getMinecraft(),
-                guiSchematicLoad.width,
-                guiSchematicLoad.height,
-                16,
-                guiSchematicLoad.height - 40,
-                24);
+            Minecraft.getMinecraft(),
+            guiSchematicLoad.width,
+            guiSchematicLoad.height,
+            16,
+            guiSchematicLoad.height - 40,
+            24);
         this.guiSchematicLoad = guiSchematicLoad;
     }
 
@@ -67,12 +67,8 @@ public class GuiSchematicLoadSlot extends GuiSlot {
             schematicName = schematicName.replaceAll("(?i)\\.schematic$", "");
         }
 
-        GuiHelper.drawItemStack(
-                this.minecraft.renderEngine,
-                this.minecraft.fontRenderer,
-                x,
-                y,
-                schematic.getItemStack());
+        GuiHelper
+            .drawItemStack(this.minecraft.renderEngine, this.minecraft.fontRenderer, x, y, schematic.getItemStack());
 
         this.guiSchematicLoad.drawString(this.minecraft.fontRenderer, schematicName, x + 24, y + 6, 0x00FFFFFF);
     }

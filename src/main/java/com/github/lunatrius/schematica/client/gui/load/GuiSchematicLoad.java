@@ -51,12 +51,12 @@ public class GuiSchematicLoad extends GuiScreenBase {
         int id = 0;
 
         this.btnOpenDir = new GuiButton(
-                id++,
-                this.width / 2 - 154,
-                this.height - 36,
-                150,
-                20,
-                I18n.format(Names.Gui.Load.OPEN_FOLDER));
+            id++,
+            this.width / 2 - 154,
+            this.height - 36,
+            150,
+            20,
+            I18n.format(Names.Gui.Load.OPEN_FOLDER));
         this.buttonList.add(this.btnOpenDir);
 
         this.btnDone = new GuiButton(id++, this.width / 2 + 4, this.height - 36, 150, 20, I18n.format(Names.Gui.DONE));
@@ -75,8 +75,10 @@ public class GuiSchematicLoad extends GuiScreenBase {
 
                 try {
                     Class c = Class.forName("java.awt.Desktop");
-                    Object m = c.getMethod("getDesktop").invoke(null);
-                    c.getMethod("browse", URI.class).invoke(m, ConfigurationHandler.schematicDirectory.toURI());
+                    Object m = c.getMethod("getDesktop")
+                        .invoke(null);
+                    c.getMethod("browse", URI.class)
+                        .invoke(m, ConfigurationHandler.schematicDirectory.toURI());
                 } catch (Throwable e) {
                     retry = true;
                 }
@@ -125,7 +127,7 @@ public class GuiSchematicLoad extends GuiScreenBase {
 
         try {
             if (!this.currentDirectory.getCanonicalPath()
-                    .equals(ConfigurationHandler.schematicDirectory.getCanonicalPath())) {
+                .equals(ConfigurationHandler.schematicDirectory.getCanonicalPath())) {
                 this.schematicFiles.add(new GuiSchematicEntry("..", Items.lava_bucket, 0, true));
             }
         } catch (IOException e) {
@@ -153,13 +155,13 @@ public class GuiSchematicLoad extends GuiScreenBase {
         File[] filesSchematics = this.currentDirectory.listFiles(FILE_FILTER_SCHEMATIC);
         if (filesSchematics == null || filesSchematics.length == 0) {
             this.schematicFiles
-                    .add(new GuiSchematicEntry(I18n.format(Names.Gui.Load.NO_SCHEMATIC), Blocks.dirt, 0, false));
+                .add(new GuiSchematicEntry(I18n.format(Names.Gui.Load.NO_SCHEMATIC), Blocks.dirt, 0, false));
         } else {
             for (File file : filesSchematics) {
                 name = file.getName();
 
                 this.schematicFiles
-                        .add(new GuiSchematicEntry(name, SchematicUtil.getIconFromFile(file), file.isDirectory()));
+                    .add(new GuiSchematicEntry(name, SchematicUtil.getIconFromFile(file), file.isDirectory()));
             }
         }
     }
@@ -174,13 +176,13 @@ public class GuiSchematicLoad extends GuiScreenBase {
                     SchematicWorld schematic = ClientProxy.schematic;
                     if (schematic != null) {
                         ImmutableTriple<Boolean, Integer, ImmutableTriple<Integer, Integer, Integer>> schematicCoordinate = ClientProxy
-                                .getCoordinates(worldServerName(this.mc), schematic.name);
+                            .getCoordinates(worldServerName(this.mc), schematic.name);
                         if (schematicCoordinate.left) {
                             ClientProxy.moveSchematic(
-                                    schematic,
-                                    schematicCoordinate.right.left,
-                                    schematicCoordinate.right.middle,
-                                    schematicCoordinate.right.right);
+                                schematic,
+                                schematicCoordinate.right.left,
+                                schematicCoordinate.right.middle,
+                                schematicCoordinate.right.right);
                             for (int i = 0; i < schematicCoordinate.middle; i++) {
                                 schematic.rotate();
                             }

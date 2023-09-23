@@ -17,6 +17,8 @@ public class FileFilterSchematic implements FileFilter {
             return file.isDirectory();
         }
 
-        return file.getName().toLowerCase().endsWith(".schematic");
+        return file.getName()
+            .toLowerCase()
+            .endsWith(".schematic");
     }
 }

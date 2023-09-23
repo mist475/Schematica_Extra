@@ -15,7 +15,9 @@ public class WorldServerName {
     public static String worldServerName(Minecraft mc) {
         String WorldOrServerName;
         if (mc.isSingleplayer()) {
-            WorldOrServerName = FMLCommonHandler.instance().getMinecraftServerInstance().getWorldName();
+            WorldOrServerName = FMLCommonHandler.instance()
+                .getMinecraftServerInstance()
+                .getWorldName();
         } else {
             // Gets the server data, only works if you're playing on a server. if you're using direct connect the name
             // will be "Minecraft Server". Crashes if singleplayer

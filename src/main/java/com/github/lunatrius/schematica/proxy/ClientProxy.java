@@ -17,7 +17,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import com.github.lunatrius.core.util.vector.Vector3d;
@@ -29,7 +28,12 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.compat.ILOTRPresent;
 import com.github.lunatrius.schematica.compat.NoLOTRProxy;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.handler.client.*;
+import com.github.lunatrius.schematica.handler.client.ChatEventHandler;
+import com.github.lunatrius.schematica.handler.client.InputHandler;
+import com.github.lunatrius.schematica.handler.client.OverlayHandler;
+import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
+import com.github.lunatrius.schematica.handler.client.TickHandler;
+import com.github.lunatrius.schematica.handler.client.WorldHandler;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
@@ -206,8 +210,8 @@ public class ClientProxy extends CommonProxy {
         }
     }
 
-    public static boolean addCoordinates(String worldServerName, String schematicName, Integer X, Integer Y,
-            Integer Z) {
+    public static boolean addCoordinatesAndRotation(String worldServerName, String schematicName, Integer X, Integer Y,
+            Integer Z, Integer rotation) {
         try {
             Map<String, Map<String, Map<String, Integer>>> coordinates = openCoordinatesFile();
             if (coordinates.containsKey(worldServerName)) {
@@ -217,6 +221,7 @@ public class ClientProxy extends CommonProxy {
                         put("X", X);
                         put("Y", Y);
                         put("Z", Z);
+                        put("Rotation", rotation);
                     }
                 });
             } else {
@@ -229,6 +234,7 @@ public class ClientProxy extends CommonProxy {
                                 put("X", X);
                                 put("Y", Y);
                                 put("Z", Z);
+                                put("Rotation", rotation);
                             }
                         });
                     }
@@ -244,10 +250,11 @@ public class ClientProxy extends CommonProxy {
     /**
      * gets the coordinates if present
      *
-     * @return {@link ImmutablePair} with bool (true if coordinates found, false if not) and {@link ImmutableTriple}
-     *         storing X,Y,Z {@link Integer}
+     * @return {@link ImmutableTriple} with bool (true if coordinates found, false if not), {@link Integer} rotation
+     *         (number of times schematic has been rotated [0-3]), and {@link ImmutableTriple} storing X,Y,Z
+     *         {@link Integer}
      */
-    public static ImmutablePair<Boolean, ImmutableTriple<Integer, Integer, Integer>> getCoordinates(
+    public static ImmutableTriple<Boolean, Integer, ImmutableTriple<Integer, Integer, Integer>> getCoordinates(
             String worldServerName, String schematicName) {
         try {
             Map<String, Map<String, Map<String, Integer>>> coordinates = openCoordinatesFile();
@@ -257,8 +264,9 @@ public class ClientProxy extends CommonProxy {
                     Map<String, Integer> coordinateMap = schematicMap.get(schematicName);
                     if (coordinateMap.containsKey("X") && coordinateMap.containsKey("Y")
                             && coordinateMap.containsKey("Z")) {
-                        return new ImmutablePair<>(
+                        return new ImmutableTriple<>(
                                 true,
+                                coordinateMap.getOrDefault("Rotation", 0),
                                 new ImmutableTriple<>(
                                         coordinateMap.get("X"),
                                         coordinateMap.get("Y"),
@@ -266,10 +274,10 @@ public class ClientProxy extends CommonProxy {
                     }
                 }
             }
-            return new ImmutablePair<>(false, null);
+            return new ImmutableTriple<>(false, null, null);
         } catch (Exception e) {
 
-            return new ImmutablePair<>(false, null);
+            return new ImmutableTriple<>(false, null, null);
         }
     }
 

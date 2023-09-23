@@ -257,12 +257,13 @@ public class GuiSchematicControl extends GuiScreenBase {
                 // this.numericZ.getValue(), this.schematic.name, worldServerName);
                 EntityPlayerSP player = mc.thePlayer;
                 if (player != null) {
-                    if (ClientProxy.addCoordinates(
+                    if (ClientProxy.addCoordinatesAndRotation(
                             worldServerName,
                             this.schematic.name,
                             this.numericX.getValue(),
                             this.numericY.getValue(),
-                            this.numericZ.getValue())) {
+                            this.numericZ.getValue(),
+                            this.schematic.rotationState)) {
                         mc.thePlayer.addChatMessage(new ChatComponentText(strSaveCoordinatesSuccess));
                     } else {
                         mc.thePlayer.addChatMessage(new ChatComponentText(strSaveCoordinatesFail));

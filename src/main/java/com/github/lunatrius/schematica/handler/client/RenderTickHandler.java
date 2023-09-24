@@ -1,15 +1,18 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+
 public class RenderTickHandler {
+
     public static final RenderTickHandler INSTANCE = new RenderTickHandler();
 
     private final Minecraft minecraft = Minecraft.getMinecraft();
@@ -42,9 +45,9 @@ public class RenderTickHandler {
         final Vec3 vecPosition = renderViewEntity.getPosition(partialTicks);
         final Vec3 vecLook = renderViewEntity.getLook(partialTicks);
         final Vec3 vecExtendedLook = vecPosition.addVector(
-                vecLook.xCoord * blockReachDistance,
-                vecLook.yCoord * blockReachDistance,
-                vecLook.zCoord * blockReachDistance);
+            vecLook.xCoord * blockReachDistance,
+            vecLook.yCoord * blockReachDistance,
+            vecLook.zCoord * blockReachDistance);
 
         renderViewEntity.posX = posX;
         renderViewEntity.posY = posY;

@@ -1,24 +1,30 @@
 package com.github.lunatrius.schematica.proxy;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+
 import com.github.lunatrius.schematica.command.CommandSchematicaDownload;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.handler.PlayerHandler;
 import com.github.lunatrius.schematica.reference.Reference;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
 
 public class ServerProxy extends CommonProxy {
+
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
 
-        FMLCommonHandler.instance().bus().register(PlayerHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(PlayerHandler.INSTANCE);
     }
 
     @Override
@@ -29,7 +35,8 @@ public class ServerProxy extends CommonProxy {
 
     @Override
     public File getDataDirectory() {
-        final File file = MinecraftServer.getServer().getFile(".");
+        final File file = MinecraftServer.getServer()
+            .getFile(".");
         try {
             return file.getCanonicalFile();
         } catch (IOException e) {

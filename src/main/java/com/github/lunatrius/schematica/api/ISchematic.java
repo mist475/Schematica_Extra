@@ -1,12 +1,14 @@
 package com.github.lunatrius.schematica.api;
 
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public interface ISchematic {
+
     /**
      * Gets a block at a given location within the schematic. Requesting a block outside of those bounds returns Air.
      *
@@ -18,8 +20,9 @@ public interface ISchematic {
     Block getBlock(int x, int y, int z);
 
     /**
-     * Sets the block at the given location, metadata will be set to 0. Attempting to set a block outside of the schematic
-     * boundaries or with an invalid block will result in no change being made and this method will return false.
+     * Sets the block at the given location, metadata will be set to 0. Attempting to set a block outside of the
+     * schematic boundaries or with an invalid block will result in no change being made and this method will return
+     * false.
      *
      * @param x     the X coord in world space.
      * @param y     the Y coord in world space.
@@ -30,8 +33,8 @@ public interface ISchematic {
     boolean setBlock(int x, int y, int z, Block block);
 
     /**
-     * Sets the block and metadata at the given location. Attempting to set a block outside of the schematic
-     * boundaries or with an invalid block will result in no change being made and this method will return false.
+     * Sets the block and metadata at the given location. Attempting to set a block outside of the schematic boundaries
+     * or with an invalid block will result in no change being made and this method will return false.
      *
      * @param x        the X coord in world space.
      * @param y        the Y coord in world space.

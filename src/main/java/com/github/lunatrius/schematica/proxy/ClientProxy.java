@@ -1,5 +1,24 @@
 package com.github.lunatrius.schematica.proxy;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Property;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+
 import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.core.util.vector.Vector3i;
 import com.github.lunatrius.schematica.api.ISchematic;
@@ -9,13 +28,19 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.compat.ILOTRPresent;
 import com.github.lunatrius.schematica.compat.NoLOTRProxy;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.handler.client.*;
+import com.github.lunatrius.schematica.handler.client.ChatEventHandler;
+import com.github.lunatrius.schematica.handler.client.InputHandler;
+import com.github.lunatrius.schematica.handler.client.OverlayHandler;
+import com.github.lunatrius.schematica.handler.client.RenderTickHandler;
+import com.github.lunatrius.schematica.handler.client.TickHandler;
+import com.github.lunatrius.schematica.handler.client.WorldHandler;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
 import cpw.mods.fml.client.config.GuiConfigEntries;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -23,25 +48,9 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Property;
-import net.minecraftforge.common.util.ForgeDirection;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 public class ClientProxy extends CommonProxy {
+
     public static final Vector3d playerPosition = new Vector3d();
     public static final Vector3i pointA = new Vector3i();
     public static final Vector3i pointB = new Vector3i();
@@ -161,17 +170,16 @@ public class ClientProxy extends CommonProxy {
     }
 
     public static Map<String, Map<String, Map<String, Integer>>> openCoordinatesFile()
-            throws ClassCastException, IOException {
+        throws ClassCastException, IOException {
         Gson gson = new Gson();
         File coordinatesFile = new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json");
         Map<String, Map<String, Map<String, Integer>>> coordinates = new HashMap<>();
         if (coordinatesFile.exists() && coordinatesFile.canRead() && coordinatesFile.canWrite()) {
             try (Reader reader = Files.newBufferedReader(
-                    new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json")
-                            .toPath())) {
+                new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json").toPath())) {
                 // Map<?,?> test = gson.fromJson(reader, Map.class);
-                coordinates = gson.fromJson(
-                        reader, new TypeToken<Map<String, Map<String, Map<String, Integer>>>>() {}.getType());
+                coordinates = gson
+                    .fromJson(reader, new TypeToken<Map<String, Map<String, Map<String, Integer>>>>() {}.getType());
             } catch (Exception e) {
                 throw new ClassCastException("Failed to convert json file to Map<String,Map<String,Integer>>");
             }
@@ -187,11 +195,12 @@ public class ClientProxy extends CommonProxy {
     }
 
     public static boolean saveCoordinatesFile(Map<String, Map<String, Map<String, Integer>>> map) {
-        Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
+        Gson gsonBuilder = new GsonBuilder().setPrettyPrinting()
+            .create();
         File coordinatesFile = new File(ConfigurationHandler.schematicDirectory, Constants.Files.Coordinates + ".json");
         try (FileWriter writer = new FileWriter(coordinatesFile.getAbsoluteFile())) {
-            gsonBuilder.toJson(
-                    map, new TypeToken<Map<String, Map<String, Map<String, Integer>>>>() {}.getType(), writer);
+            gsonBuilder
+                .toJson(map, new TypeToken<Map<String, Map<String, Map<String, Integer>>>>() {}.getType(), writer);
             writer.flush();
             Reference.logger.info("Successfully written to coordinates file");
             return true;
@@ -201,26 +210,32 @@ public class ClientProxy extends CommonProxy {
         }
     }
 
-    public static boolean addCoordinates(
-            String worldServerName, String schematicName, Integer X, Integer Y, Integer Z) {
+    public static boolean addCoordinatesAndRotation(String worldServerName, String schematicName, Integer X, Integer Y,
+        Integer Z, Integer rotation) {
         try {
             Map<String, Map<String, Map<String, Integer>>> coordinates = openCoordinatesFile();
             if (coordinates.containsKey(worldServerName)) {
-                coordinates.get(worldServerName).put(schematicName, new HashMap<String, Integer>() {
-                    {
-                        put("X", X);
-                        put("Y", Y);
-                        put("Z", Z);
-                    }
-                });
+                coordinates.get(worldServerName)
+                    .put(schematicName, new HashMap<String, Integer>() {
+
+                        {
+                            put("X", X);
+                            put("Y", Y);
+                            put("Z", Z);
+                            put("Rotation", rotation);
+                        }
+                    });
             } else {
                 coordinates.put(worldServerName, new HashMap<String, Map<String, Integer>>() {
+
                     {
                         put(schematicName, new HashMap<String, Integer>() {
+
                             {
                                 put("X", X);
                                 put("Y", Y);
                                 put("Z", Z);
+                                put("Rotation", rotation);
                             }
                         });
                     }
@@ -236,30 +251,34 @@ public class ClientProxy extends CommonProxy {
     /**
      * gets the coordinates if present
      *
-     * @return {@link ImmutablePair} with bool (true if coordinates found, false if not) and {@link ImmutableTriple} storing X,Y,Z {@link Integer}
+     * @return {@link ImmutableTriple} with bool (true if coordinates found, false if not), {@link Integer} rotation
+     *         (number of times schematic has been rotated [0-3]), and {@link ImmutableTriple} storing X,Y,Z
+     *         {@link Integer}
      */
-    public static ImmutablePair<Boolean, ImmutableTriple<Integer, Integer, Integer>> getCoordinates(
-            String worldServerName, String schematicName) {
+    public static ImmutableTriple<Boolean, Integer, ImmutableTriple<Integer, Integer, Integer>> getCoordinates(
+        String worldServerName, String schematicName) {
         try {
             Map<String, Map<String, Map<String, Integer>>> coordinates = openCoordinatesFile();
             if (coordinates.containsKey(worldServerName)) {
                 Map<String, Map<String, Integer>> schematicMap = coordinates.get(worldServerName);
                 if (schematicMap.containsKey(schematicName)) {
                     Map<String, Integer> coordinateMap = schematicMap.get(schematicName);
-                    if (coordinateMap.containsKey("X")
-                            && coordinateMap.containsKey("Y")
-                            && coordinateMap.containsKey("Z")) {
-                        return new ImmutablePair<>(
-                                true,
-                                new ImmutableTriple<>(
-                                        coordinateMap.get("X"), coordinateMap.get("Y"), coordinateMap.get("Z")));
+                    if (coordinateMap.containsKey("X") && coordinateMap.containsKey("Y")
+                        && coordinateMap.containsKey("Z")) {
+                        return new ImmutableTriple<>(
+                            true,
+                            coordinateMap.getOrDefault("Rotation", 0),
+                            new ImmutableTriple<>(
+                                coordinateMap.get("X"),
+                                coordinateMap.get("Y"),
+                                coordinateMap.get("Z")));
                     }
                 }
             }
-            return new ImmutablePair<>(false, null);
+            return new ImmutableTriple<>(false, null, null);
         } catch (Exception e) {
 
-            return new ImmutablePair<>(false, null);
+            return new ImmutableTriple<>(false, null, null);
         }
     }
 
@@ -267,12 +286,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
 
-        final Property[] sliders = {
-            ConfigurationHandler.propAlpha,
-            ConfigurationHandler.propBlockDelta,
-            ConfigurationHandler.propPlaceDelay,
-            ConfigurationHandler.propTimeout
-        };
+        final Property[] sliders = { ConfigurationHandler.propAlpha, ConfigurationHandler.propBlockDelta,
+            ConfigurationHandler.propPlaceDelay, ConfigurationHandler.propTimeout };
         for (Property prop : sliders) {
             prop.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class);
         }
@@ -286,10 +301,18 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent event) {
         super.init(event);
 
-        FMLCommonHandler.instance().bus().register(InputHandler.INSTANCE);
-        FMLCommonHandler.instance().bus().register(TickHandler.INSTANCE);
-        FMLCommonHandler.instance().bus().register(RenderTickHandler.INSTANCE);
-        FMLCommonHandler.instance().bus().register(ConfigurationHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(InputHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(TickHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(RenderTickHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(ConfigurationHandler.INSTANCE);
 
         MinecraftForge.EVENT_BUS.register(RendererSchematicGlobal.INSTANCE);
         MinecraftForge.EVENT_BUS.register(ChatEventHandler.INSTANCE);
@@ -304,8 +327,8 @@ public class ClientProxy extends CommonProxy {
             if (Loader.isModLoaded("lotr")) {
                 Reference.logger.info("Lotr mod detected, creating proxy");
                 lotrProxy = Class.forName(Reference.LOTR_PROXY)
-                        .asSubclass(ILOTRPresent.class)
-                        .newInstance();
+                    .asSubclass(ILOTRPresent.class)
+                    .newInstance();
             } else {
                 lotrProxy = new NoLOTRProxy();
             }
@@ -360,8 +383,8 @@ public class ClientProxy extends CommonProxy {
 
         SchematicWorld world = new SchematicWorld(schematic, filename);
 
-        Reference.logger.debug(
-                "Loaded {} [w:{},h:{},l:{}]", filename, world.getWidth(), world.getHeight(), world.getLength());
+        Reference.logger
+            .debug("Loaded {} [w:{},h:{},l:{}]", filename, world.getWidth(), world.getHeight(), world.getLength());
 
         ClientProxy.schematic = world;
         RendererSchematicGlobal.INSTANCE.createRendererSchematicChunks(world);

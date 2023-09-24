@@ -1,17 +1,20 @@
 package com.github.lunatrius.schematica.command;
 
-import com.github.lunatrius.core.util.vector.Vector3i;
-import com.github.lunatrius.schematica.Schematica;
-import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
 import java.io.File;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentTranslation;
 
+import com.github.lunatrius.core.util.vector.Vector3i;
+import com.github.lunatrius.schematica.Schematica;
+import com.github.lunatrius.schematica.reference.Names;
+import com.github.lunatrius.schematica.reference.Reference;
+
 public class CommandSchematicaSave extends CommandSchematicaBase {
+
     @Override
     public String getCommandName() {
         return Names.Command.Save.NAME;
@@ -63,8 +66,8 @@ public class CommandSchematicaSave extends CommandSchematicaBase {
 
         if (!schematicDirectory.exists()) {
             if (!schematicDirectory.mkdirs()) {
-                Reference.logger.warn(
-                        "Could not create player schematic directory {}", schematicDirectory.getAbsolutePath());
+                Reference.logger
+                    .warn("Could not create player schematic directory {}", schematicDirectory.getAbsolutePath());
                 throw new CommandException(Names.Command.Save.Message.PLAYER_SCHEMATIC_DIR_UNAVAILABLE);
             }
         }

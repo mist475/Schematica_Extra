@@ -1,18 +1,8 @@
 package com.github.lunatrius.schematica.client.printer;
 
-import com.github.lunatrius.core.util.vector.Vector3i;
-import com.github.lunatrius.schematica.client.printer.registry.PlacementData;
-import com.github.lunatrius.schematica.client.printer.registry.PlacementRegistry;
-import com.github.lunatrius.schematica.client.util.BlockToItemStack;
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import com.github.lunatrius.schematica.reference.Constants;
-import com.github.lunatrius.schematica.reference.Reference;
-import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
-import cpw.mods.fml.common.registry.GameData;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPistonBase;
@@ -32,7 +22,21 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import com.github.lunatrius.core.util.vector.Vector3i;
+import com.github.lunatrius.schematica.client.printer.registry.PlacementData;
+import com.github.lunatrius.schematica.client.printer.registry.PlacementRegistry;
+import com.github.lunatrius.schematica.client.util.BlockToItemStack;
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.handler.ConfigurationHandler;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.reference.Constants;
+import com.github.lunatrius.schematica.reference.Reference;
+
+import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
+import cpw.mods.fml.common.registry.GameData;
+
 public class SchematicPrinter {
+
     public static final SchematicPrinter INSTANCE = new SchematicPrinter();
     public static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
@@ -89,10 +93,9 @@ public class SchematicPrinter {
 
         syncSneaking(player, true);
 
-        final Vector3i trans = ClientProxy.playerPosition
-                .clone()
-                .sub(this.schematic.position.x, this.schematic.position.y, this.schematic.position.z)
-                .toVector3i();
+        final Vector3i trans = ClientProxy.playerPosition.clone()
+            .sub(this.schematic.position.x, this.schematic.position.y, this.schematic.position.z)
+            .toVector3i();
         final int minX = Math.max(0, trans.x - 3);
         final int maxX = Math.min(this.schematic.getWidth(), trans.x + 4);
         final int minY = Math.max(0, trans.y - 3);
@@ -152,9 +155,8 @@ public class SchematicPrinter {
             return false;
         }
 
-        if (ConfigurationHandler.destroyBlocks
-                && !world.isAirBlock(wx, wy, wz)
-                && this.minecraft.playerController.isInCreativeMode()) {
+        if (ConfigurationHandler.destroyBlocks && !world.isAirBlock(wx, wy, wz)
+            && this.minecraft.playerController.isInCreativeMode()) {
             this.minecraft.playerController.clickBlock(wx, wy, wz, 0);
 
             this.timeout[x][y][z] = (byte) ConfigurationHandler.timeout;
@@ -226,8 +228,8 @@ public class SchematicPrinter {
         return list.toArray(sides);
     }
 
-    private boolean placeBlock(
-            World world, EntityPlayer player, int x, int y, int z, Block block, int metadata, ItemStack itemStack) {
+    private boolean placeBlock(World world, EntityPlayer player, int x, int y, int z, Block block, int metadata,
+        ItemStack itemStack) {
         if (isBlacklisted(block, itemStack)) {
             return false;
         }
@@ -308,7 +310,7 @@ public class SchematicPrinter {
                     Integer integer = data.mapping.get(ClientProxy.orientation);
                     if (integer != null) {
                         return BlockPistonBase.determineOrientation(null, x, y, z, player)
-                                == BlockPistonBase.getPistonOrientation(metadata);
+                            == BlockPistonBase.getPistonOrientation(metadata);
                     }
                     break;
                 }
@@ -319,23 +321,13 @@ public class SchematicPrinter {
         return true;
     }
 
-    private boolean placeBlock(
-            World world,
-            EntityPlayer player,
-            int x,
-            int y,
-            int z,
-            ForgeDirection direction,
-            float offsetX,
-            float offsetY,
-            float offsetZ,
-            int extraClicks) {
+    private boolean placeBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection direction,
+        float offsetX, float offsetY, float offsetZ, int extraClicks) {
         ItemStack itemStack = player.getCurrentEquippedItem();
         boolean success = false;
 
-        if (!this.minecraft.playerController.isInCreativeMode()
-                && itemStack != null
-                && itemStack.stackSize <= extraClicks) {
+        if (!this.minecraft.playerController.isInCreativeMode() && itemStack != null
+            && itemStack.stackSize <= extraClicks) {
             return false;
         }
 
@@ -343,7 +335,8 @@ public class SchematicPrinter {
         y += direction.offsetY;
         z += direction.offsetZ;
 
-        int side = direction.getOpposite().ordinal();
+        int side = direction.getOpposite()
+            .ordinal();
         final Vec3 hitVec = Vec3.createVectorHelper(x + offsetX, y + offsetY, z + offsetZ);
 
         success = placeBlock(world, player, itemStack, x, y, z, side, hitVec);
@@ -358,13 +351,13 @@ public class SchematicPrinter {
         return success;
     }
 
-    private boolean placeBlock(
-            World world, EntityPlayer player, ItemStack itemStack, int x, int y, int z, int side, Vec3 hitVec) {
+    private boolean placeBlock(World world, EntityPlayer player, ItemStack itemStack, int x, int y, int z, int side,
+        Vec3 hitVec) {
         boolean success = !ForgeEventFactory.onPlayerInteract(player, Action.RIGHT_CLICK_BLOCK, x, y, z, side, world)
-                .isCanceled();
+            .isCanceled();
         if (success) {
-            success =
-                    this.minecraft.playerController.onPlayerRightClick(player, world, itemStack, x, y, z, side, hitVec);
+            success = this.minecraft.playerController
+                .onPlayerRightClick(player, world, itemStack, x, y, z, side, hitVec);
             if (success) {
                 player.swingItem();
             }
@@ -386,28 +379,27 @@ public class SchematicPrinter {
         int slot = getInventorySlotWithItem(inventory, itemStack);
 
         if (this.minecraft.playerController.isInCreativeMode()
-                && (slot < Constants.Inventory.InventoryOffset.HOTBAR
-                        || slot >= Constants.Inventory.InventoryOffset.HOTBAR + Constants.Inventory.Size.HOTBAR)
-                && ConfigurationHandler.swapSlotsQueue.size() > 0) {
+            && (slot < Constants.Inventory.InventoryOffset.HOTBAR
+                || slot >= Constants.Inventory.InventoryOffset.HOTBAR + Constants.Inventory.Size.HOTBAR)
+            && ConfigurationHandler.swapSlotsQueue.size() > 0) {
             inventory.currentItem = getNextSlot();
             inventory.setInventorySlotContents(inventory.currentItem, itemStack.copy());
             this.minecraft.playerController.sendSlotPacket(
-                    inventory.getStackInSlot(inventory.currentItem),
-                    Constants.Inventory.SlotOffset.HOTBAR + inventory.currentItem);
+                inventory.getStackInSlot(inventory.currentItem),
+                Constants.Inventory.SlotOffset.HOTBAR + inventory.currentItem);
             return true;
         }
 
         if (slot >= Constants.Inventory.InventoryOffset.HOTBAR
-                && slot < Constants.Inventory.InventoryOffset.HOTBAR + Constants.Inventory.Size.HOTBAR) {
+            && slot < Constants.Inventory.InventoryOffset.HOTBAR + Constants.Inventory.Size.HOTBAR) {
             inventory.currentItem = slot;
             return true;
-        } else if (swapSlots
-                && slot >= Constants.Inventory.InventoryOffset.INVENTORY
-                && slot < Constants.Inventory.InventoryOffset.INVENTORY + Constants.Inventory.Size.INVENTORY) {
-            if (swapSlots(inventory, slot)) {
-                return swapToItem(inventory, itemStack, false);
+        } else if (swapSlots && slot >= Constants.Inventory.InventoryOffset.INVENTORY
+            && slot < Constants.Inventory.InventoryOffset.INVENTORY + Constants.Inventory.Size.INVENTORY) {
+                if (swapSlots(inventory, slot)) {
+                    return swapToItem(inventory, itemStack, false);
+                }
             }
-        }
         return false;
     }
 
@@ -438,8 +430,8 @@ public class SchematicPrinter {
     }
 
     private boolean swapSlots(final int from, final int to) {
-        return this.minecraft.playerController.windowClick(
-                        this.minecraft.thePlayer.inventoryContainer.windowId, from, to, 2, this.minecraft.thePlayer)
-                == null;
+        return this.minecraft.playerController
+            .windowClick(this.minecraft.thePlayer.inventoryContainer.windowId, from, to, 2, this.minecraft.thePlayer)
+            == null;
     }
 }

@@ -1,5 +1,10 @@
 package com.github.lunatrius.schematica.handler;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import net.minecraft.entity.player.EntityPlayerMP;
+
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.network.PacketHandler;
 import com.github.lunatrius.schematica.network.message.MessageDownloadBegin;
@@ -8,19 +13,17 @@ import com.github.lunatrius.schematica.network.message.MessageDownloadEnd;
 import com.github.lunatrius.schematica.network.transfer.SchematicTransfer;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Reference;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import net.minecraft.entity.player.EntityPlayerMP;
 
 public class DownloadHandler {
+
     public static final DownloadHandler INSTANCE = new DownloadHandler();
 
     public ISchematic schematic = null;
 
-    public final Map<EntityPlayerMP, SchematicTransfer> transferMap =
-            new LinkedHashMap<EntityPlayerMP, SchematicTransfer>();
+    public final Map<EntityPlayerMP, SchematicTransfer> transferMap = new LinkedHashMap<EntityPlayerMP, SchematicTransfer>();
 
     private DownloadHandler() {}
 
@@ -38,7 +41,9 @@ public class DownloadHandler {
             return;
         }
 
-        final EntityPlayerMP player = this.transferMap.keySet().iterator().next();
+        final EntityPlayerMP player = this.transferMap.keySet()
+            .iterator()
+            .next();
         final SchematicTransfer transfer = this.transferMap.remove(player);
 
         if (transfer == null) {
@@ -52,8 +57,8 @@ public class DownloadHandler {
                     return;
                 }
 
-                Reference.logger.warn(
-                        "{}'s download timed out, retrying (#{})", player.getDisplayName(), transfer.retries);
+                Reference.logger
+                    .warn("{}'s download timed out, retrying (#{})", player.getDisplayName(), transfer.retries);
 
                 sendChunk(player, transfer);
                 transfer.timeout = 0;
@@ -81,8 +86,11 @@ public class DownloadHandler {
         transfer.setState(SchematicTransfer.State.CHUNK);
 
         Reference.logger.trace("Sending chunk {},{},{}", transfer.baseX, transfer.baseY, transfer.baseZ);
-        MessageDownloadChunk message =
-                new MessageDownloadChunk(transfer.schematic, transfer.baseX, transfer.baseY, transfer.baseZ);
+        MessageDownloadChunk message = new MessageDownloadChunk(
+            transfer.schematic,
+            transfer.baseX,
+            transfer.baseY,
+            transfer.baseZ);
         PacketHandler.INSTANCE.sendTo(message, player);
     }
 

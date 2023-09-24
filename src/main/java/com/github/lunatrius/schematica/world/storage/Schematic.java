@@ -1,11 +1,9 @@
 package com.github.lunatrius.schematica.world.storage;
 
-import com.github.lunatrius.schematica.api.ISchematic;
-import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
-import cpw.mods.fml.common.registry.GameData;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +11,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
+import com.github.lunatrius.schematica.api.ISchematic;
+
+import cpw.mods.fml.common.registry.FMLControlledNamespacedRegistry;
+import cpw.mods.fml.common.registry.GameData;
+
 public class Schematic implements ISchematic {
+
     private static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);
     private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
@@ -138,7 +142,8 @@ public class Schematic implements ISchematic {
         }
 
         for (final Entity e : this.entities) {
-            if (entity.getUniqueID().equals(e.getUniqueID())) {
+            if (entity.getUniqueID()
+                .equals(e.getUniqueID())) {
                 return;
             }
         }
@@ -155,7 +160,8 @@ public class Schematic implements ISchematic {
         final Iterator<Entity> iterator = this.entities.iterator();
         while (iterator.hasNext()) {
             final Entity e = iterator.next();
-            if (entity.getUniqueID().equals(e.getUniqueID())) {
+            if (entity.getUniqueID()
+                .equals(e.getUniqueID())) {
                 iterator.remove();
             }
         }

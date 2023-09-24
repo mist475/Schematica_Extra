@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 
 public class FileFilterSchematic implements FileFilter {
+
     private final boolean directory;
 
     public FileFilterSchematic(boolean dir) {
@@ -16,6 +17,8 @@ public class FileFilterSchematic implements FileFilter {
             return file.isDirectory();
         }
 
-        return file.getName().toLowerCase().endsWith(".schematic");
+        return file.getName()
+            .toLowerCase()
+            .endsWith(".schematic");
     }
 }

@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 
 public class NBTConversionException extends Exception {
+
     public NBTConversionException(String message, Throwable cause) {
         super(message, cause);
     }

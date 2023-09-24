@@ -2,8 +2,11 @@ package com.github.lunatrius.schematica.reference;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public final class Names {
+
     public static final class Config {
+
         public static final class Category {
+
             public static final String DEBUG = "debug";
             public static final String RENDER = "render";
             public static final String PRINTER = "printer";
@@ -18,15 +21,13 @@ public final class Names {
         public static final String ALPHA_ENABLED = "alphaEnabled";
         public static final String ALPHA_ENABLED_DESC = "Enable transparent textures.";
         public static final String ALPHA = "alpha";
-        public static final String ALPHA_DESC =
-                "Alpha value used when rendering the schematic (1.0 = opaque, 0.5 = half transparent, 0.0 = transparent).";
+        public static final String ALPHA_DESC = "Alpha value used when rendering the schematic (1.0 = opaque, 0.5 = half transparent, 0.0 = transparent).";
         public static final String HIGHLIGHT = "highlight";
         public static final String HIGHLIGHT_DESC = "Highlight invalid placed blocks and to be placed blocks.";
         public static final String HIGHLIGHT_AIR = "highlightAir";
         public static final String HIGHLIGHT_AIR_DESC = "Highlight blocks that should be air.";
         public static final String BLOCK_DELTA = "blockDelta";
-        public static final String BLOCK_DELTA_DESC =
-                "Delta value used for highlighting (if you experience z-fighting increase this).";
+        public static final String BLOCK_DELTA_DESC = "Delta value used for highlighting (if you experience z-fighting increase this).";
         public static final String DRAW_QUADS = "drawQuads";
         public static final String DRAW_QUADS_DESC = "Draw surface areas.";
         public static final String DRAW_LINES = "drawLines";
@@ -43,8 +44,7 @@ public final class Names {
         public static final String DESTROY_INSTANTLY = "destroyInstantly";
         public static final String DESTROY_INSTANTLY_DESC = "Destroy all blocks that can be destroyed in one tick.";
         public static final String PLACE_ADJACENT = "placeAdjacent";
-        public static final String PLACE_ADJACENT_DESC =
-                "Place blocks only if there is an adjacent block next to them.";
+        public static final String PLACE_ADJACENT_DESC = "Place blocks only if there is an adjacent block next to them.";
         public static final String SWAP_SLOT = "swapSlot";
         public static final String SWAP_SLOT_DESC = "Allow the printer to use this hotbar slot.";
 
@@ -58,8 +58,7 @@ public final class Names {
         public static final String SCHEMATIC_DIRECTORY = "schematicDirectory";
         public static final String SCHEMATIC_DIRECTORY_DESC = "Schematic directory.";
         public static final String EXTRA_AIR_BLOCKS = "extraAirBlocks";
-        public static final String EXTRA_AIR_BLOCKS_DESC =
-                "Extra blocks to consider as air for the schematic renderer.";
+        public static final String EXTRA_AIR_BLOCKS_DESC = "Extra blocks to consider as air for the schematic renderer.";
         public static final String SORT_TYPE = "sortType";
         public static final String SORT_TYPE_DESC = "Default sort type for the material list.";
 
@@ -71,35 +70,39 @@ public final class Names {
         public static final String LOAD_ENABLED_DESC = "Allow players to load schematics.";
 
         public static final String PLAYER_QUOTA_KILOBYTES = "playerQuotaKilobytes";
-        public static final String PLAYER_QUOTA_KILOBYTES_DESC =
-                "Amount of storage provided per-player for schematics on the server.";
+        public static final String PLAYER_QUOTA_KILOBYTES_DESC = "Amount of storage provided per-player for schematics on the server.";
 
         public static final String LANG_PREFIX = Reference.MODID.toLowerCase() + ".config";
     }
 
     public static final class Chat {
+
         public static final String SAVE_COORDINATES_SUCCESS = "Schematica.chat.saveCoordinatesSuccess";
         public static final String SAVE_COORDINATES_FAIL = "Schematica.chat.saveCoordinatesFail";
     }
 
     public static final class Command {
+
         public static final class Save {
+
             public static final class Message {
+
                 public static final String USAGE = "schematica.command.save.usage";
                 public static final String PLAYERS_ONLY = "schematica.command.save.playersOnly";
                 public static final String SAVE_STARTED = "schematica.command.save.started";
                 public static final String SAVE_SUCCESSFUL = "schematica.command.save.saveSucceeded";
                 public static final String SAVE_FAILED = "schematica.command.save.saveFailed";
                 public static final String QUOTA_EXCEEDED = "schematica.command.save.quotaExceeded";
-                public static final String PLAYER_SCHEMATIC_DIR_UNAVAILABLE =
-                        "schematica.command.save.playerSchematicDirUnavailable";
+                public static final String PLAYER_SCHEMATIC_DIR_UNAVAILABLE = "schematica.command.save.playerSchematicDirUnavailable";
             }
 
             public static final String NAME = "schematicaSave";
         }
 
         public static final class List {
+
             public static final class Message {
+
                 public static final String USAGE = "schematica.command.list.usage";
                 public static final String LIST_NOT_AVAILABLE = "schematica.command.list.notAvailable";
                 public static final String REMOVE = "schematica.command.list.remove";
@@ -113,7 +116,9 @@ public final class Names {
         }
 
         public static final class Remove {
+
             public static final class Message {
+
                 public static final String USAGE = "schematica.command.remove.usage";
                 public static final String PLAYERS_ONLY = "schematica.command.save.playersOnly";
                 public static final String SCHEMATIC_REMOVED = "schematica.command.remove.schematicRemoved";
@@ -126,7 +131,9 @@ public final class Names {
         }
 
         public static final class Download {
+
             public static final class Message {
+
                 public static final String USAGE = "schematica.command.download.usage";
                 public static final String PLAYERS_ONLY = "schematica.command.save.playersOnly";
                 public static final String DOWNLOAD_STARTED = "schematica.command.download.started";
@@ -139,7 +146,9 @@ public final class Names {
     }
 
     public static final class Gui {
+
         public static final class Load {
+
             public static final String TITLE = "schematica.gui.title";
             public static final String FOLDER_INFO = "schematica.gui.folderInfo";
             public static final String OPEN_FOLDER = "schematica.gui.openFolder";
@@ -147,6 +156,7 @@ public final class Names {
         }
 
         public static final class Save {
+
             public static final String POINT_RED = "schematica.gui.point.red";
             public static final String POINT_BLUE = "schematica.gui.point.blue";
             public static final String SAVE = "schematica.gui.save";
@@ -154,6 +164,7 @@ public final class Names {
         }
 
         public static final class Control {
+
             public static final String SAVE_COORDINATES = "schematica.gui.savecoordinates";
             public static final String MOVE_SCHEMATIC = "schematica.gui.moveschematic";
             public static final String MATERIALS = "schematica.gui.materials";
@@ -190,10 +201,12 @@ public final class Names {
     }
 
     public static final class ModId {
+
         public static final String MINECRAFT = "minecraft";
     }
 
     public static final class Keys {
+
         public static final String CATEGORY = "schematica.key.category";
         public static final String LOAD = "schematica.key.load";
         public static final String SAVE = "schematica.key.save";
@@ -203,6 +216,7 @@ public final class Names {
     }
 
     public static final class NBT {
+
         public static final String ROOT = "Schematic";
 
         public static final String MATERIALS = "Materials";
@@ -225,6 +239,7 @@ public final class Names {
     }
 
     public static final class SBC {
+
         public static final String DISABLE_PRINTER = "\u00a70\u00a72\u00a70\u00a70\u00a7e\u00a7f";
         public static final String DISABLE_SAVE = "\u00a70\u00a72\u00a71\u00a70\u00a7e\u00a7f";
         public static final String DISABLE_LOAD = "\u00a70\u00a72\u00a71\u00a71\u00a7e\u00a7f";

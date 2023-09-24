@@ -1,15 +1,8 @@
 package com.github.lunatrius.schematica.client.renderer;
 
-import com.github.lunatrius.core.util.vector.Vector3d;
-import com.github.lunatrius.core.util.vector.Vector3f;
-import com.github.lunatrius.schematica.client.renderer.shader.ShaderProgram;
-import com.github.lunatrius.schematica.client.world.SchematicWorld;
-import com.github.lunatrius.schematica.handler.ConfigurationHandler;
-import com.github.lunatrius.schematica.proxy.ClientProxy;
-import com.github.lunatrius.schematica.reference.Constants;
-import com.github.lunatrius.schematica.reference.Reference;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -22,10 +15,21 @@ import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+import com.github.lunatrius.core.util.vector.Vector3d;
+import com.github.lunatrius.core.util.vector.Vector3f;
+import com.github.lunatrius.schematica.client.renderer.shader.ShaderProgram;
+import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.lunatrius.schematica.handler.ConfigurationHandler;
+import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.lunatrius.schematica.reference.Constants;
+import com.github.lunatrius.schematica.reference.Reference;
+
 public class RendererSchematicChunk {
+
     private static final ShaderProgram SHADER_ALPHA = new ShaderProgram("schematica", null, "shaders/alpha.frag");
 
     private static boolean canUpdate = false;
@@ -50,12 +54,12 @@ public class RendererSchematicChunk {
     public RendererSchematicChunk(SchematicWorld schematicWorld, int baseX, int baseY, int baseZ) {
         this.schematic = schematicWorld;
         this.boundingBox.setBounds(
-                baseX * Constants.SchematicChunk.WIDTH,
-                baseY * Constants.SchematicChunk.HEIGHT,
-                baseZ * Constants.SchematicChunk.LENGTH,
-                (baseX + 1) * Constants.SchematicChunk.WIDTH,
-                (baseY + 1) * Constants.SchematicChunk.HEIGHT,
-                (baseZ + 1) * Constants.SchematicChunk.LENGTH);
+            baseX * Constants.SchematicChunk.WIDTH,
+            baseY * Constants.SchematicChunk.HEIGHT,
+            baseZ * Constants.SchematicChunk.LENGTH,
+            (baseX + 1) * Constants.SchematicChunk.WIDTH,
+            (baseY + 1) * Constants.SchematicChunk.HEIGHT,
+            (baseZ + 1) * Constants.SchematicChunk.LENGTH);
 
         this.centerPosition.x = (int) ((baseX + 0.5) * Constants.SchematicChunk.WIDTH);
         this.centerPosition.y = (int) ((baseY + 0.5) * Constants.SchematicChunk.HEIGHT);
@@ -186,12 +190,10 @@ public class RendererSchematicChunk {
             return;
         }
 
-        if (this.distance
-                        .set(ClientProxy.playerPosition)
-                        .sub(this.schematic.position.x, this.schematic.position.y, this.schematic.position.z)
-                        .sub(this.centerPosition)
-                        .lengthSquared()
-                > 25600) {
+        if (this.distance.set(ClientProxy.playerPosition)
+            .sub(this.schematic.position.x, this.schematic.position.y, this.schematic.position.z)
+            .sub(this.centerPosition)
+            .lengthSquared() > 25600) {
             return;
         }
 
@@ -204,8 +206,8 @@ public class RendererSchematicChunk {
         if (OpenGlHelper.shadersSupported && ConfigurationHandler.enableAlpha) {
             GL20.glUseProgram(SHADER_ALPHA.getProgram());
             GL20.glUniform1f(
-                    GL20.glGetUniformLocation(SHADER_ALPHA.getProgram(), "alpha_multiplier"),
-                    ConfigurationHandler.alpha);
+                GL20.glGetUniformLocation(SHADER_ALPHA.getProgram(), "alpha_multiplier"),
+                ConfigurationHandler.alpha);
         }
 
         GL11.glCallList(this.glList + renderPass);
@@ -286,8 +288,8 @@ public class RendererSchematicChunk {
                         }
 
                         boolean isAirBlock = this.schematic.isAirBlock(x, y, z);
-                        boolean isMcAirBlock =
-                                mcWorld.isAirBlock(wx, wy, wz) || ConfigurationHandler.isExtraAirBlock(mcBlock);
+                        boolean isMcAirBlock = mcWorld.isAirBlock(wx, wy, wz)
+                            || ConfigurationHandler.isExtraAirBlock(mcBlock);
 
                         if (!isMcAirBlock) {
                             if (ConfigurationHandler.highlight && renderPass == 2) {
@@ -296,11 +298,23 @@ public class RendererSchematicChunk {
                                     size.set(x + 1, y + 1, z + 1);
                                     if (ConfigurationHandler.drawQuads) {
                                         RenderHelper.drawCuboidSurface(
-                                                zero, size, RenderHelper.QUAD_ALL, 0.75f, 0.0f, 0.75f, 0.25f);
+                                            zero,
+                                            size,
+                                            RenderHelper.QUAD_ALL,
+                                            0.75f,
+                                            0.0f,
+                                            0.75f,
+                                            0.25f);
                                     }
                                     if (ConfigurationHandler.drawLines) {
                                         RenderHelper.drawCuboidOutline(
-                                                zero, size, RenderHelper.LINE_ALL, 0.75f, 0.0f, 0.75f, 0.25f);
+                                            zero,
+                                            size,
+                                            RenderHelper.LINE_ALL,
+                                            0.75f,
+                                            0.0f,
+                                            0.75f,
+                                            0.25f);
                                     }
                                 } else if (block != mcBlock) {
                                     zero.set(x, y, z);
@@ -312,16 +326,18 @@ public class RendererSchematicChunk {
                                         RenderHelper.drawCuboidOutline(zero, size, sides, 1.0f, 0.0f, 0.0f, 0.25f);
                                     }
                                 } else if (this.schematic.getBlockMetadata(x, y, z)
-                                        != mcWorld.getBlockMetadata(wx, wy, wz)) {
-                                    zero.set(x, y, z);
-                                    size.set(x + 1, y + 1, z + 1);
-                                    if (ConfigurationHandler.drawQuads) {
-                                        RenderHelper.drawCuboidSurface(zero, size, sides, 0.75f, 0.35f, 0.0f, 0.25f);
+                                    != mcWorld.getBlockMetadata(wx, wy, wz)) {
+                                        zero.set(x, y, z);
+                                        size.set(x + 1, y + 1, z + 1);
+                                        if (ConfigurationHandler.drawQuads) {
+                                            RenderHelper
+                                                .drawCuboidSurface(zero, size, sides, 0.75f, 0.35f, 0.0f, 0.25f);
+                                        }
+                                        if (ConfigurationHandler.drawLines) {
+                                            RenderHelper
+                                                .drawCuboidOutline(zero, size, sides, 0.75f, 0.35f, 0.0f, 0.25f);
+                                        }
                                     }
-                                    if (ConfigurationHandler.drawLines) {
-                                        RenderHelper.drawCuboidOutline(zero, size, sides, 0.75f, 0.35f, 0.0f, 0.25f);
-                                    }
-                                }
                             }
                         } else if (!isAirBlock) {
                             if (ConfigurationHandler.highlight && renderPass == 2) {
@@ -373,11 +389,13 @@ public class RendererSchematicChunk {
                 }
 
                 final boolean isAirBlock = mcWorld.isAirBlock(
-                        x + this.schematic.position.x, y + this.schematic.position.y, z + this.schematic.position.z);
+                    x + this.schematic.position.x,
+                    y + this.schematic.position.y,
+                    z + this.schematic.position.z);
 
                 if (isAirBlock) {
-                    TileEntitySpecialRenderer tileEntitySpecialRenderer =
-                            TileEntityRendererDispatcher.instance.getSpecialRenderer(tileEntity);
+                    TileEntitySpecialRenderer tileEntitySpecialRenderer = TileEntityRendererDispatcher.instance
+                        .getSpecialRenderer(tileEntity);
                     if (tileEntitySpecialRenderer != null) {
                         try {
                             tileEntitySpecialRenderer.renderTileEntityAt(tileEntity, x, y, z, 0);

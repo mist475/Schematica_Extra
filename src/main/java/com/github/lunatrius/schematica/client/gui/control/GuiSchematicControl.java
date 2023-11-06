@@ -2,8 +2,6 @@ package com.github.lunatrius.schematica.client.gui.control;
 
 import static com.github.lunatrius.schematica.client.util.WorldServerName.worldServerName;
 
-import java.util.Objects;
-
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -20,7 +18,6 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Constants;
 import com.github.lunatrius.schematica.reference.Names;
-import com.github.lunatrius.schematica.reference.Reference;
 
 public class GuiSchematicControl extends GuiScreenBase {
 
@@ -177,8 +174,7 @@ public class GuiSchematicControl extends GuiScreenBase {
         this.btnFlip.enabled = false;
         this.btnRotate.enabled = this.schematic != null;
         this.btnMaterials.enabled = this.schematic != null;
-        this.btnPrint.enabled = Objects.equals(Reference.MODID, "Schematica")
-            && (this.schematic != null && this.printer.isEnabled());
+        this.btnPrint.enabled = this.schematic != null && this.printer.isEnabled();
 
         this.btnSaveCoordinates.enabled = this.schematic != null;
 
@@ -256,8 +252,10 @@ public class GuiSchematicControl extends GuiScreenBase {
                 this.btnPrint.displayString = isPrinting ? this.strOn : this.strOff;
             } else if (guiButton.id == this.btnSaveCoordinates.id) {
                 String worldServerName = worldServerName(this.mc);
-                // Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {} {}\nSchematic Name:
-                // {}\nWorld Name/server Name: {}", this.numericX.getValue(), this.numericY.getValue(),
+                // Reference.logger.info("Saved coordinates, stored data:\nCoordinates: {} {}
+                // {}\nSchematic Name:
+                // {}\nWorld Name/server Name: {}", this.numericX.getValue(),
+                // this.numericY.getValue(),
                 // this.numericZ.getValue(), this.schematic.name, worldServerName);
                 EntityPlayerSP player = mc.thePlayer;
                 if (player != null) {

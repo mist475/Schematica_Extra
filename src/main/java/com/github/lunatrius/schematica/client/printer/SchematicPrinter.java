@@ -2,6 +2,7 @@ package com.github.lunatrius.schematica.client.printer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -48,8 +49,13 @@ public class SchematicPrinter {
     private SchematicWorld schematic = null;
     private byte[][][] timeout = null;
 
+    private boolean isFairplay() {
+        return Objects.equals(Reference.MODID, "Schematica")
+            || (minecraft.thePlayer != null && minecraft.thePlayer.capabilities.isCreativeMode);
+    }
+
     public boolean isEnabled() {
-        return this.isEnabled;
+        return isFairplay() ? this.isEnabled : false;
     }
 
     public void setEnabled(boolean isEnabled) {

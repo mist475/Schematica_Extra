@@ -5,6 +5,7 @@ import java.util.Queue;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.github.lunatrius.schematica.reference.Names;
@@ -19,7 +20,7 @@ public class QueueTickHandler {
 
     public static final QueueTickHandler INSTANCE = new QueueTickHandler();
 
-    private final Queue<SchematicContainer> queue = new ArrayDeque<SchematicContainer>();
+    private final Queue<SchematicContainer> queue = new ArrayDeque<>();
 
     private QueueTickHandler() {}
 
@@ -50,7 +51,7 @@ public class QueueTickHandler {
     }
 
     private void processQueue() {
-        if (this.queue.size() == 0) {
+        if (this.queue.isEmpty()) {
             return;
         }
 
@@ -74,7 +75,15 @@ public class QueueTickHandler {
         if (container.hasNext()) {
             this.queue.offer(container);
         } else {
-            final boolean success = SchematicFormat.writeToFile(container.file, container.schematic);
+            if (container.world != null) {
+                for (TileEntity entity : container.schematic.getTileEntities()) {
+                    if (!entity.hasWorldObj()) {
+                        entity.setWorldObj(container.world);
+                    }
+                }
+            }
+
+            final boolean success = SchematicFormat.writeToFile(container.file, container.schematic, container.world);
             final String message = success ? Names.Command.Save.Message.SAVE_SUCCESSFUL
                     : Names.Command.Save.Message.SAVE_FAILED;
             container.player.addChatMessage(new ChatComponentTranslation(message, container.file.getName()));

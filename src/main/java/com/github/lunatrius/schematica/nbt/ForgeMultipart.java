@@ -37,60 +37,58 @@ public class ForgeMultipart {
 
     public static void init() {
         enabled = Loader.isModLoaded("ForgeMultipart");
-        client = FMLCommonHandler.instance()
-            .getSide()
-            .isClient();
+        client = FMLCommonHandler.instance().getSide().isClient();
 
         if (enabled) {
             try {
                 final ClassLoader classLoader = ForgeMultipart.class.getClassLoader();
 
                 final Class<? super Object> classMultiPartRegistry$ = ReflectionHelper
-                    .getClass(classLoader, "codechicken.multipart.MultiPartRegistry$");
+                        .getClass(classLoader, "codechicken.multipart.MultiPartRegistry$");
                 final Field fieldMultiPartRegistry$module$ = ReflectionHelper
-                    .findField(classMultiPartRegistry$, "MODULE$");
+                        .findField(classMultiPartRegistry$, "MODULE$");
                 final Field field$typeMap = ReflectionHelper
-                    .findField(classMultiPartRegistry$, "codechicken$multipart$MultiPartRegistry$$typeMap");
+                        .findField(classMultiPartRegistry$, "codechicken$multipart$MultiPartRegistry$$typeMap");
                 final Object instanceMultiPartRegistry$module$ = fieldMultiPartRegistry$module$
-                    .get(classMultiPartRegistry$);
+                        .get(classMultiPartRegistry$);
                 instancesTypeMap = (Map<String, Object>) field$typeMap.get(instanceMultiPartRegistry$module$);
 
                 final Class<? super Object> classMicroMaterialRegistry = ReflectionHelper
-                    .getClass(classLoader, "codechicken.microblock.MicroMaterialRegistry");
+                        .getClass(classLoader, "codechicken.microblock.MicroMaterialRegistry");
                 methodMaterialID = ReflectionHelper
-                    .findMethod(classMicroMaterialRegistry, null, new String[] { "materialID" }, String.class);
+                        .findMethod(classMicroMaterialRegistry, null, new String[] { "materialID" }, String.class);
 
                 final Class<? super Object> classMicroblockClass = ReflectionHelper
-                    .getClass(classLoader, "codechicken.microblock.MicroblockClass");
+                        .getClass(classLoader, "codechicken.microblock.MicroblockClass");
                 methodCreatePart = ReflectionHelper
-                    .findMethod(classMicroblockClass, null, new String[] { "create" }, boolean.class, int.class);
+                        .findMethod(classMicroblockClass, null, new String[] { "create" }, boolean.class, int.class);
 
                 final Class<? super Object> classTMultiPart = ReflectionHelper
-                    .getClass(classLoader, "codechicken.multipart.TMultiPart");
+                        .getClass(classLoader, "codechicken.multipart.TMultiPart");
                 methodLoad = ReflectionHelper
-                    .findMethod(classTMultiPart, null, new String[] { "load" }, NBTTagCompound.class);
+                        .findMethod(classTMultiPart, null, new String[] { "load" }, NBTTagCompound.class);
                 methodOnPartChanged = ReflectionHelper
-                    .findMethod(classTMultiPart, null, new String[] { "onPartChanged" }, classTMultiPart);
+                        .findMethod(classTMultiPart, null, new String[] { "onPartChanged" }, classTMultiPart);
 
                 final Class<? super Object> classMultipartGenerator$ = ReflectionHelper
-                    .getClass(classLoader, "codechicken.multipart.MultipartGenerator$");
+                        .getClass(classLoader, "codechicken.multipart.MultipartGenerator$");
                 final Field fieldMultipartGenerator$module$ = ReflectionHelper
-                    .findField(classMultipartGenerator$, "MODULE$");
+                        .findField(classMultipartGenerator$, "MODULE$");
                 instanceMultipartGenerator$ = fieldMultipartGenerator$module$.get(classMultipartGenerator$);
                 methodGenerateCompositeTile = ReflectionHelper.findMethod(
-                    classMultipartGenerator$,
-                    null,
-                    new String[] { "generateCompositeTile" },
-                    TileEntity.class,
-                    Iterable.class,
-                    boolean.class);
+                        classMultipartGenerator$,
+                        null,
+                        new String[] { "generateCompositeTile" },
+                        TileEntity.class,
+                        Iterable.class,
+                        boolean.class);
 
                 final Class<? super Object> classTileMultipart = ReflectionHelper
-                    .getClass(classLoader, "codechicken.multipart.TileMultipart");
+                        .getClass(classLoader, "codechicken.multipart.TileMultipart");
                 methodLoadParts = ReflectionHelper
-                    .findMethod(classTileMultipart, null, new String[] { "loadParts" }, Iterable.class);
+                        .findMethod(classTileMultipart, null, new String[] { "loadParts" }, Iterable.class);
                 methodCreateFromNBT = ReflectionHelper
-                    .findMethod(classTileMultipart, null, new String[] { "createFromNBT" }, NBTTagCompound.class);
+                        .findMethod(classTileMultipart, null, new String[] { "createFromNBT" }, NBTTagCompound.class);
             } catch (final Exception e) {
                 Reference.logger.error("Something went wrong, disabling FMP integration.", e);
                 enabled = false;
@@ -122,7 +120,7 @@ public class ForgeMultipart {
 
     // ಠ_ಠ
     private static TileEntity createFromNBTClient(final NBTTagCompound tileEntityCompound)
-        throws ReflectiveOperationException {
+            throws ReflectiveOperationException {
         final NBTTagList partList = tileEntityCompound.getTagList("parts", Constants.NBT.TAG_COMPOUND);
         final List<Object> parts = new ArrayList<Object>();
         final boolean client = true;
@@ -174,7 +172,7 @@ public class ForgeMultipart {
     }
 
     private static Object createPart(final String partID, final boolean client, final int materialID)
-        throws ReflectiveOperationException {
+            throws ReflectiveOperationException {
         final Option<Object> option = instancesTypeMap.get(partID);
         if (option.isEmpty()) {
             Reference.logger.trace("Invalid type (found: {})", option);
@@ -193,13 +191,16 @@ public class ForgeMultipart {
     }
 
     private static TileEntity generateCompositeTile(final TileEntity tileEntity, final List<Object> parts,
-        final boolean client) throws ReflectiveOperationException {
-        return (TileEntity) methodGenerateCompositeTile
-            .invoke(instanceMultipartGenerator$, tileEntity, JavaConversions.collectionAsScalaIterable(parts), client);
+            final boolean client) throws ReflectiveOperationException {
+        return (TileEntity) methodGenerateCompositeTile.invoke(
+                instanceMultipartGenerator$,
+                tileEntity,
+                JavaConversions.collectionAsScalaIterable(parts),
+                client);
     }
 
     private static void loadParts(final TileEntity tileEntity, final List<Object> parts)
-        throws ReflectiveOperationException {
+            throws ReflectiveOperationException {
         methodLoadParts.invoke(tileEntity, JavaConversions.collectionAsScalaIterable(parts));
     }
 }

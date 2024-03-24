@@ -32,9 +32,7 @@ public class QueueTickHandler {
         // TODO: find a better way... maybe?
         try {
             final EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-            if (player != null && player.sendQueue != null
-                && !player.sendQueue.getNetworkManager()
-                    .isLocalChannel()) {
+            if (player != null && player.sendQueue != null && !player.sendQueue.getNetworkManager().isLocalChannel()) {
                 processQueue();
             }
         } catch (Exception e) {
@@ -64,9 +62,9 @@ public class QueueTickHandler {
         if (container.hasNext()) {
             if (container.isFirst()) {
                 final ChatComponentTranslation chatComponent = new ChatComponentTranslation(
-                    Names.Command.Save.Message.SAVE_STARTED,
-                    container.chunkCount,
-                    container.file.getName());
+                        Names.Command.Save.Message.SAVE_STARTED,
+                        container.chunkCount,
+                        container.file.getName());
                 container.player.addChatMessage(chatComponent);
             }
 
@@ -78,7 +76,7 @@ public class QueueTickHandler {
         } else {
             final boolean success = SchematicFormat.writeToFile(container.file, container.schematic);
             final String message = success ? Names.Command.Save.Message.SAVE_SUCCESSFUL
-                : Names.Command.Save.Message.SAVE_FAILED;
+                    : Names.Command.Save.Message.SAVE_FAILED;
             container.player.addChatMessage(new ChatComponentTranslation(message, container.file.getName()));
         }
     }

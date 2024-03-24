@@ -58,12 +58,12 @@ public class GuiSchematicSave extends GuiScreenBase {
         int id = 0;
 
         this.btnPointA = new GuiButton(
-            id++,
-            this.centerX - 130,
-            this.centerY - 55,
-            100,
-            20,
-            I18n.format(Names.Gui.Save.POINT_RED));
+                id++,
+                this.centerX - 130,
+                this.centerY - 55,
+                100,
+                20,
+                I18n.format(Names.Gui.Save.POINT_RED));
         this.buttonList.add(this.btnPointA);
 
         this.numericAX = new GuiNumericField(this.fontRendererObj, id++, this.centerX - 130, this.centerY - 30);
@@ -76,12 +76,12 @@ public class GuiSchematicSave extends GuiScreenBase {
         this.buttonList.add(this.numericAZ);
 
         this.btnPointB = new GuiButton(
-            id++,
-            this.centerX + 30,
-            this.centerY - 55,
-            100,
-            20,
-            I18n.format(Names.Gui.Save.POINT_BLUE));
+                id++,
+                this.centerX + 30,
+                this.centerY - 55,
+                100,
+                20,
+                I18n.format(Names.Gui.Save.POINT_BLUE));
         this.buttonList.add(this.btnPointB);
 
         this.numericBX = new GuiNumericField(this.fontRendererObj, id++, this.centerX + 30, this.centerY - 30);
@@ -94,12 +94,12 @@ public class GuiSchematicSave extends GuiScreenBase {
         this.buttonList.add(this.numericBZ);
 
         this.btnEnable = new GuiButton(
-            id++,
-            this.width - 210,
-            this.height - 30,
-            50,
-            20,
-            ClientProxy.isRenderingGuide ? this.strOn : this.strOff);
+                id++,
+                this.width - 210,
+                this.height - 30,
+                50,
+                20,
+                ClientProxy.isRenderingGuide ? this.strOn : this.strOff);
         this.buttonList.add(this.btnEnable);
 
         this.tfFilename = new GuiTextField(this.fontRendererObj, this.width - 155, this.height - 29, 100, 18);
@@ -170,12 +170,12 @@ public class GuiSchematicSave extends GuiScreenBase {
             } else if (guiButton.id == this.btnSave.id) {
                 String path = this.tfFilename.getText() + ".schematic";
                 if (Schematica.proxy.saveSchematic(
-                    this.mc.thePlayer,
-                    ConfigurationHandler.schematicDirectory,
-                    path,
-                    this.mc.theWorld,
-                    ClientProxy.pointMin,
-                    ClientProxy.pointMax)) {
+                        this.mc.thePlayer,
+                        ConfigurationHandler.schematicDirectory,
+                        path,
+                        this.mc.theWorld,
+                        ClientProxy.pointMin,
+                        ClientProxy.pointMax)) {
                     this.filename = "";
                     this.tfFilename.setText(this.filename);
                 }
@@ -197,51 +197,51 @@ public class GuiSchematicSave extends GuiScreenBase {
 
         drawString(this.fontRendererObj, this.strX, this.centerX - 145, this.centerY - 24, 0xFFFFFF);
         drawString(
-            this.fontRendererObj,
-            Integer.toString(ClientProxy.pointA.x),
-            this.centerX - 25,
-            this.centerY - 24,
-            0xFFFFFF);
+                this.fontRendererObj,
+                Integer.toString(ClientProxy.pointA.x),
+                this.centerX - 25,
+                this.centerY - 24,
+                0xFFFFFF);
 
         drawString(this.fontRendererObj, this.strY, this.centerX - 145, this.centerY + 1, 0xFFFFFF);
         drawString(
-            this.fontRendererObj,
-            Integer.toString(ClientProxy.pointA.y),
-            this.centerX - 25,
-            this.centerY + 1,
-            0xFFFFFF);
+                this.fontRendererObj,
+                Integer.toString(ClientProxy.pointA.y),
+                this.centerX - 25,
+                this.centerY + 1,
+                0xFFFFFF);
 
         drawString(this.fontRendererObj, this.strZ, this.centerX - 145, this.centerY + 26, 0xFFFFFF);
         drawString(
-            this.fontRendererObj,
-            Integer.toString(ClientProxy.pointA.z),
-            this.centerX - 25,
-            this.centerY + 26,
-            0xFFFFFF);
+                this.fontRendererObj,
+                Integer.toString(ClientProxy.pointA.z),
+                this.centerX - 25,
+                this.centerY + 26,
+                0xFFFFFF);
 
         drawString(this.fontRendererObj, this.strX, this.centerX + 15, this.centerY - 24, 0xFFFFFF);
         drawString(
-            this.fontRendererObj,
-            Integer.toString(ClientProxy.pointB.x),
-            this.centerX + 135,
-            this.centerY - 24,
-            0xFFFFFF);
+                this.fontRendererObj,
+                Integer.toString(ClientProxy.pointB.x),
+                this.centerX + 135,
+                this.centerY - 24,
+                0xFFFFFF);
 
         drawString(this.fontRendererObj, this.strY, this.centerX + 15, this.centerY + 1, 0xFFFFFF);
         drawString(
-            this.fontRendererObj,
-            Integer.toString(ClientProxy.pointB.y),
-            this.centerX + 135,
-            this.centerY + 1,
-            0xFFFFFF);
+                this.fontRendererObj,
+                Integer.toString(ClientProxy.pointB.y),
+                this.centerX + 135,
+                this.centerY + 1,
+                0xFFFFFF);
 
         drawString(this.fontRendererObj, this.strZ, this.centerX + 15, this.centerY + 26, 0xFFFFFF);
         drawString(
-            this.fontRendererObj,
-            Integer.toString(ClientProxy.pointB.z),
-            this.centerX + 135,
-            this.centerY + 26,
-            0xFFFFFF);
+                this.fontRendererObj,
+                Integer.toString(ClientProxy.pointB.z),
+                this.centerX + 135,
+                this.centerY + 26,
+                0xFFFFFF);
 
         super.drawScreen(par1, par2, par3);
     }

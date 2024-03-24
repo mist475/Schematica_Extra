@@ -82,7 +82,7 @@ public class CommandSchematicaDownload extends CommandSchematicaBase {
         if (schematic != null) {
             DownloadHandler.INSTANCE.transferMap.put(player, new SchematicTransfer(schematic, filename));
             sender.addChatMessage(
-                new ChatComponentTranslation(Names.Command.Download.Message.DOWNLOAD_STARTED, filename));
+                    new ChatComponentTranslation(Names.Command.Download.Message.DOWNLOAD_STARTED, filename));
         } else {
             throw new CommandException(Names.Command.Download.Message.DOWNLOAD_FAILED);
         }

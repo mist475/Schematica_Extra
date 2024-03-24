@@ -59,9 +59,7 @@ public class CommandSchematicaRemove extends CommandSchematicaBase {
                 // The name then should be everything except the last element
                 name = Strings.join(a, " ");
 
-                String hash = Hashing.md5()
-                    .hashString(name, Charsets.UTF_8)
-                    .toString();
+                String hash = Hashing.md5().hashString(name, Charsets.UTF_8).toString();
 
                 if (potentialNameHash.equals(hash)) {
                     delete = true;
@@ -81,24 +79,21 @@ public class CommandSchematicaRemove extends CommandSchematicaBase {
             if (delete) {
                 if (file.delete()) {
                     sender.addChatMessage(
-                        new ChatComponentTranslation(Names.Command.Remove.Message.SCHEMATIC_REMOVED, name));
+                            new ChatComponentTranslation(Names.Command.Remove.Message.SCHEMATIC_REMOVED, name));
                 } else {
                     throw new CommandException(Names.Command.Remove.Message.SCHEMATIC_NOT_FOUND);
                 }
             } else {
-                String hash = Hashing.md5()
-                    .hashString(name, Charsets.UTF_8)
-                    .toString();
+                String hash = Hashing.md5().hashString(name, Charsets.UTF_8).toString();
                 String confirmCommand = String.format("/%s %s %s", Names.Command.Remove.NAME, name, hash);
                 final IChatComponent chatComponent = new ChatComponentTranslation(
-                    Names.Command.Remove.Message.ARE_YOU_SURE_START,
-                    name).appendSibling(new ChatComponentText(" ["))
-                        .appendSibling(
-                            // Confirmation link
-                            new ChatComponentTranslation(Names.Command.Remove.Message.YES).setChatStyle(
-                                new ChatStyle().setColor(EnumChatFormatting.RED)
-                                    .setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, confirmCommand))))
-                        .appendSibling(new ChatComponentText("]"));
+                        Names.Command.Remove.Message.ARE_YOU_SURE_START,
+                        name).appendSibling(new ChatComponentText(" [")).appendSibling(
+                                // Confirmation link
+                                new ChatComponentTranslation(Names.Command.Remove.Message.YES).setChatStyle(
+                                        new ChatStyle().setColor(EnumChatFormatting.RED).setChatClickEvent(
+                                                new ClickEvent(ClickEvent.Action.RUN_COMMAND, confirmCommand))))
+                                .appendSibling(new ChatComponentText("]"));
 
                 sender.addChatMessage(chatComponent);
             }

@@ -53,23 +53,23 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         int id = 0;
 
         this.btnSort = new GuiUnicodeGlyphButton(
-            ++id,
-            this.width / 2 - 154,
-            this.height - 30,
-            100,
-            20,
-            " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label),
-            this.sortType.glyph,
-            2.0f);
+                ++id,
+                this.width / 2 - 154,
+                this.height - 30,
+                100,
+                20,
+                " " + I18n.format(Names.Gui.Control.SORT_PREFIX + this.sortType.label),
+                this.sortType.glyph,
+                2.0f);
         this.buttonList.add(this.btnSort);
 
         this.btnDump = new GuiButton(
-            ++id,
-            this.width / 2 - 50,
-            this.height - 30,
-            100,
-            20,
-            I18n.format(Names.Gui.Control.DUMP));
+                ++id,
+                this.width / 2 - 50,
+                this.height - 30,
+                100,
+                20,
+                I18n.format(Names.Gui.Control.DUMP));
         this.buttonList.add(this.btnDump);
 
         this.btnDone = new GuiButton(++id, this.width / 2 + 54, this.height - 30, 100, 20, I18n.format(Names.Gui.DONE));
@@ -110,11 +110,11 @@ public class GuiSchematicMaterials extends GuiScreenBase {
 
         drawString(this.fontRendererObj, this.strMaterialName, this.width / 2 - 108, 4, 0x00FFFFFF);
         drawString(
-            this.fontRendererObj,
-            this.strMaterialAmount,
-            this.width / 2 + 108 - this.fontRendererObj.getStringWidth(this.strMaterialAmount),
-            4,
-            0x00FFFFFF);
+                this.fontRendererObj,
+                this.strMaterialAmount,
+                this.width / 2 + 108 - this.fontRendererObj.getStringWidth(this.strMaterialAmount),
+                4,
+                0x00FFFFFF);
         super.drawScreen(x, y, partialTicks);
     }
 
@@ -126,15 +126,11 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         int maxLengthName = 0;
         int maxSize = 0;
         for (final BlockList.WrappedItemStack wrappedItemStack : blockList) {
-            maxLengthName = Math.max(
-                maxLengthName,
-                wrappedItemStack.getItemStackDisplayName()
-                    .length());
+            maxLengthName = Math.max(maxLengthName, wrappedItemStack.getItemStackDisplayName().length());
             maxSize = Math.max(maxSize, wrappedItemStack.total);
         }
 
-        final int maxLengthSize = String.valueOf(maxSize)
-            .length();
+        final int maxLengthSize = String.valueOf(maxSize).length();
         final String formatName = "%-" + maxLengthName + "s";
         final String formatSize = "%" + maxLengthSize + "d";
 
@@ -150,7 +146,7 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         final File dumps = Schematica.proxy.getDirectory("dumps");
         try {
             final FileOutputStream outputStream = new FileOutputStream(
-                new File(dumps, Reference.MODID + "-materials.txt"));
+                    new File(dumps, Reference.MODID + "-materials.txt"));
             try {
                 IOUtils.write(stringBuilder.toString(), outputStream);
             } finally {

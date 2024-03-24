@@ -17,7 +17,7 @@ import com.github.lunatrius.schematica.reference.Reference;
 public class BlockList {
 
     public List<WrappedItemStack> getList(final EntityPlayer player, final SchematicWorld world,
-        final WorldClient mcWorld) {
+            final WorldClient mcWorld) {
         final List<WrappedItemStack> blockList = new ArrayList<WrappedItemStack>();
 
         if (world == null) {
@@ -44,7 +44,7 @@ public class BlockList {
                     final int wz = world.position.z + z;
                     final Block mcBlock = mcWorld.getBlock(wx, wy, wz);
                     final boolean isPlaced = block == mcBlock
-                        && world.getBlockMetadata(x, y, z) == mcWorld.getBlockMetadata(wx, wy, wz);
+                            && world.getBlockMetadata(x, y, z) == mcWorld.getBlockMetadata(wx, wy, wz);
 
                     ItemStack stack = null;
 
@@ -71,16 +71,16 @@ public class BlockList {
         for (WrappedItemStack wrappedItemStack : blockList) {
             if (player.capabilities.isCreativeMode) wrappedItemStack.inventory = -1;
             else wrappedItemStack.inventory = EntityHelper.getItemCountInInventory(
-                player.inventory,
-                wrappedItemStack.itemStack.getItem(),
-                wrappedItemStack.itemStack.getItemDamage());
+                    player.inventory,
+                    wrappedItemStack.itemStack.getItem(),
+                    wrappedItemStack.itemStack.getItemDamage());
         }
 
         return blockList;
     }
 
     private WrappedItemStack findOrCreateWrappedItemStackFor(final List<WrappedItemStack> blockList,
-        final ItemStack itemStack) {
+            final ItemStack itemStack) {
         for (final WrappedItemStack wrappedItemStack : blockList) {
             if (wrappedItemStack.itemStack.isItemEqual(itemStack)) {
                 return wrappedItemStack;
@@ -110,17 +110,16 @@ public class BlockList {
         }
 
         public String getItemStackDisplayName() {
-            return this.itemStack.getItem()
-                .getItemStackDisplayName(this.itemStack);
+            return this.itemStack.getItem().getItemStackDisplayName(this.itemStack);
         }
 
         public String getFormattedAmount() {
             final char color = this.placed < this.total ? 'c' : 'a';
             return String.format(
-                "\u00a7%c%s\u00a7r/%s",
-                color,
-                getFormattedStackAmount(itemStack, this.placed),
-                getFormattedStackAmount(itemStack, this.total));
+                    "\u00a7%c%s\u00a7r/%s",
+                    color,
+                    getFormattedStackAmount(itemStack, this.placed),
+                    getFormattedStackAmount(itemStack, this.total));
         }
 
         public String getFormattedAmountRequired(final String reqstr, final String avastr) {
